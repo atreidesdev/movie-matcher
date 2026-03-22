@@ -1,0 +1,399 @@
+/* Область редактора TipTap */
+.rich-text-editor .ProseMirror {
+  min-height: var(--rich-text-editor-min-h, 88px);
+  max-height: var(--rich-text-editor-max-h, 220px);
+  overflow-y: auto;
+  padding: 0.5rem 0.75rem;
+  outline: none;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--theme-text, inherit);
+}
+
+.rich-text-editor .ProseMirror p {
+  margin: 0.25em 0;
+}
+
+.rich-text-editor .ProseMirror p:first-child {
+  margin-top: 0;
+}
+
+.rich-text-editor .ProseMirror p:last-child {
+  margin-bottom: 0;
+}
+
+/* WYSIWYG: в поле ввода те же визуальные отличия, что и в опубликованном тексте */
+.rich-text-editor .ProseMirror strong,
+.rich-text-editor .ProseMirror b {
+  font-weight: 700;
+}
+
+.rich-text-editor .ProseMirror em,
+.rich-text-editor .ProseMirror i {
+  font-style: italic;
+}
+
+.rich-text-editor .ProseMirror u {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rich-text-editor .ProseMirror s,
+.rich-text-editor .ProseMirror strike,
+.rich-text-editor .ProseMirror del {
+  text-decoration: line-through;
+  opacity: 0.9;
+}
+
+.rich-text-editor .ProseMirror a.rich-text-link {
+  color: var(--theme-primary, #3b82f6);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Preflight (Tailwind base) ставит ul/ol { list-style: none } — вернуть маркеры */
+.rich-text-editor .ProseMirror ul,
+.rich-text-editor .ProseMirror ol {
+  margin: 0.35em 0;
+  padding-left: 0.5rem;
+  /* inside: иначе маркеры режутся при overflow:hidden у предков (строка комментария, поле ввода) */
+  list-style-position: inside;
+}
+
+.rich-text-editor .ProseMirror ul {
+  list-style-type: disc;
+}
+
+.rich-text-editor .ProseMirror ol {
+  list-style-type: decimal;
+}
+
+.rich-text-editor .ProseMirror li {
+  display: list-item;
+}
+
+/* TipTap: пункт = <li><p>текст</p></li> — при list-style:inside маркер уезжает на строку выше блочного p */
+.rich-text-editor .ProseMirror li > p {
+  margin: 0;
+}
+
+.rich-text-editor .ProseMirror li > p:first-of-type {
+  display: inline;
+}
+
+.rich-text-editor .ProseMirror li > p:not(:first-of-type) {
+  display: block;
+  margin-top: 0.35em;
+}
+
+.rich-text-editor .ProseMirror ul ul {
+  list-style-type: circle;
+}
+
+.rich-text-editor .ProseMirror ul ul ul {
+  list-style-type: square;
+}
+
+.rich-text-editor .ProseMirror ol ol {
+  list-style-type: lower-alpha;
+}
+
+.rich-text-editor .ProseMirror ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.rich-text-editor .ProseMirror blockquote {
+  margin: 0.35em 0;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--theme-border, #ccc);
+  color: var(--theme-text-muted, #666);
+}
+
+.rich-text-editor .ProseMirror code {
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--theme-bg-alt, rgba(0, 0, 0, 0.06));
+}
+
+.rich-text-editor .ProseMirror pre {
+  margin: 0.35em 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  background: var(--theme-bg-alt, rgba(0, 0, 0, 0.06));
+  overflow-x: auto;
+}
+
+.rich-text-editor .ProseMirror pre code {
+  padding: 0;
+  background: none;
+}
+
+/* Спойлер в редакторе — заметная рамка, чтобы отличать от обычного текста */
+.rich-text-editor .ProseMirror span[data-rich-spoiler] {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 4px;
+  border: 1px dashed var(--theme-primary, #6366f1);
+  background: var(--theme-bg-alt, rgba(0, 0, 0, 0.08));
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Отображение сохранённого контента */
+.rich-text-content {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--theme-text, inherit);
+  word-break: break-word;
+}
+
+.rich-text-content p {
+  margin: 0.35em 0;
+}
+
+.rich-text-content p:first-child {
+  margin-top: 0;
+}
+
+.rich-text-content p:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text-content ul,
+.rich-text-content ol {
+  margin: 0.35em 0;
+  padding-left: 0.5rem;
+  list-style-position: inside;
+}
+
+.rich-text-content ul {
+  list-style-type: disc;
+}
+
+.rich-text-content ol {
+  list-style-type: decimal;
+}
+
+.rich-text-content li {
+  display: list-item;
+}
+
+.rich-text-content li > p {
+  margin: 0;
+}
+
+.rich-text-content li > p:first-of-type {
+  display: inline;
+}
+
+.rich-text-content li > p:not(:first-of-type) {
+  display: block;
+  margin-top: 0.35em;
+}
+
+.rich-text-content ul ul {
+  list-style-type: circle;
+}
+
+.rich-text-content ul ul ul {
+  list-style-type: square;
+}
+
+.rich-text-content ol ol {
+  list-style-type: lower-alpha;
+}
+
+.rich-text-content ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.rich-text-content blockquote {
+  margin: 0.35em 0;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--theme-border, #ccc);
+  color: var(--theme-text-muted, #666);
+}
+
+.rich-text-content code {
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--theme-bg-alt, rgba(0, 0, 0, 0.06));
+}
+
+.rich-text-content pre {
+  margin: 0.35em 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  background: var(--theme-bg-alt, rgba(0, 0, 0, 0.06));
+  overflow-x: auto;
+}
+
+.rich-text-content pre code {
+  padding: 0;
+  background: none;
+}
+
+.rich-text-content a.rich-text-link {
+  color: var(--theme-primary, #3b82f6);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rich-text-content a.rich-text-link:hover {
+  opacity: 0.9;
+}
+
+/* Спойлер: размытие до клика */
+.rich-text-content span[data-rich-spoiler] {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 3px;
+  transition: filter 0.2s ease, background 0.2s ease;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.rich-text-content span[data-rich-spoiler]:not(.rich-spoiler--revealed) {
+  filter: blur(6px);
+  user-select: none;
+  background: var(--theme-bg-alt, rgba(0, 0, 0, 0.12));
+}
+
+.rich-text-content span[data-rich-spoiler].rich-spoiler--revealed {
+  filter: none;
+  user-select: text;
+  background: transparent;
+}
+
+/* Панель кнопок */
+.rich-text-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--theme-border, #e5e7eb);
+  background: var(--theme-bg-alt, rgba(0, 0, 0, 0.03));
+}
+
+.rich-text-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 6px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--theme-text-muted, #6b7280);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.rich-text-toolbar__btn:hover:not(:disabled) {
+  background: var(--theme-surface, rgba(0, 0, 0, 0.06));
+  color: var(--theme-text, inherit);
+}
+
+.rich-text-toolbar__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rich-text-toolbar__btn--active {
+  background: color-mix(in srgb, var(--theme-primary, #3b82f6) 16%, var(--theme-surface, rgba(0, 0, 0, 0.06)));
+  color: var(--theme-primary, #3b82f6);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-primary, #3b82f6) 45%, transparent);
+}
+
+.rich-text-editor-wrap {
+  border: 1px solid var(--theme-border, #e5e7eb);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: var(--theme-bg, #fff);
+}
+
+.rich-text-editor-wrap:focus-within {
+  outline: 2px solid var(--theme-primary, #3b82f6);
+  outline-offset: 0;
+}
+
+.rich-text-editor-wrap--disabled {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Комментарии: как однострочный инпут, без своей рамки (рамка у .comments-form) */
+.rich-text-editor-wrap--comment {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  min-width: 0;
+}
+
+.rich-text-editor--comment .ProseMirror {
+  min-height: 38px;
+  /* Списки/цитаты не обрезаются в одну строку */
+  max-height: min(200px, 40vh);
+  padding: 8px 4px 6px;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--theme-text, inherit);
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: none;
+}
+
+.rich-text-editor--comment .ProseMirror p {
+  margin: 0;
+}
+
+.rich-text-editor--comment .ProseMirror p:not(:last-child) {
+  margin-bottom: 2px;
+}
+
+/* Нижний ряд: иконки слева, кнопки справа */
+.rich-text-editor-comment-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--theme-border, rgba(0, 0, 0, 0.12));
+}
+
+.rich-text-editor-comment-footer__toolbar {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.rich-text-editor-comment-footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Панель под строкой ввода (только иконки) */
+.rich-text-toolbar--comment-below {
+  flex-wrap: wrap;
+  row-gap: 4px;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.rich-text-toolbar__btn--comment {
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 4px;
+  border-radius: 6px;
+}

@@ -1,0 +1,511 @@
+openapi: 3.0.3
+info:
+  title: Movie Matcher API
+  description: REST API for Movie Matcher application - a platform for tracking movies, anime, games, and getting personalized recommendations.
+  version: 1.0.0
+  contact:
+    name: Movie Matcher Team
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Development server
+
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Movies
+    description: Movie-related endpoints
+  - name: Anime
+    description: Anime-related endpoints
+  - name: Games
+    description: Game-related endpoints
+  - name: Lists
+    description: User list management
+  - name: Reviews
+    description: User reviews
+  - name: Recommendations
+    description: Recommendation engine
+
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 6
+                name:
+                  type: string
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid request body
+        '409':
+          description: User already exists
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Logged out successfully
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Get current user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /movies:
+    get:
+      tags: [Movies]
+      summary: Get movies list
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: genreId
+          in: query
+          schema:
+            type: integer
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            default: createdAt
+        - name: order
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+      responses:
+        '200':
+          description: Paginated list of movies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMovies'
+
+  /movies/{id}:
+    get:
+      tags: [Movies]
+      summary: Get movie by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Movie details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Movie not found
+
+  /movies/popular:
+    get:
+      tags: [Movies]
+      summary: Get popular movies
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of popular movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+
+  /movies/search:
+    get:
+      tags: [Movies]
+      summary: Search movies
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMovies'
+
+  /lists/movies:
+    get:
+      tags: [Lists]
+      summary: Get user's movie list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/ListStatus'
+      responses:
+        '200':
+          description: User's movie list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListItem'
+
+  /lists/movies/{movieId}:
+    post:
+      tags: [Lists]
+      summary: Add movie to list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  $ref: '#/components/schemas/ListStatus'
+                comment:
+                  type: string
+      responses:
+        '201':
+          description: Added to list
+        '409':
+          description: Already in list
+
+    put:
+      tags: [Lists]
+      summary: Update movie in list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/ListStatus'
+                comment:
+                  type: string
+      responses:
+        '200':
+          description: Updated successfully
+
+    delete:
+      tags: [Lists]
+      summary: Remove movie from list
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Removed from list
+
+  /reviews/movies/{movieId}:
+    post:
+      tags: [Reviews]
+      summary: Create movie review
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReview'
+      responses:
+        '201':
+          description: Review created
+        '409':
+          description: Review already exists
+
+  /recommendations:
+    get:
+      tags: [Recommendations]
+      summary: Get personalized recommendations
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: mediaType
+          in: query
+          schema:
+            type: string
+            default: movie
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Recommendations list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
+        avatar:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+
+    Genre:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        emoji:
+          type: string
+
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        releaseDate:
+          type: string
+          format: date-time
+        poster:
+          type: string
+        rating:
+          type: number
+        ageRating:
+          type: string
+        duration:
+          type: integer
+        country:
+          type: string
+        genres:
+          type: array
+          items:
+            $ref: '#/components/schemas/Genre'
+
+    PaginatedMovies:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Movie'
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+
+    ListStatus:
+      type: string
+      enum: [watching, planned, completed, onHold, dropped, rewatching]
+
+    ListItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ListStatus'
+        comment:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        movie:
+          $ref: '#/components/schemas/Movie'
+
+    CreateReview:
+      type: object
+      required: [overallRating]
+      properties:
+        overallRating:
+          type: integer
+          minimum: 1
+          maximum: 10
+        review:
+          type: string
+        reviewStatus:
+          type: string
+        storyRating:
+          type: integer
+        productionRating:
+          type: integer
+        actingRating:
+          type: integer
+        musicRating:
+          type: integer
+        visualsRating:
+          type: integer
+        characterRating:
+          type: integer
+
+    RecommendedItem:
+      type: object
+      properties:
+        mediaId:
+          type: integer
+        title:
+          type: string
+        score:
+          type: number
+        poster:
+          type: string
+        description:
+          type: string
+
+    RecommendationResponse:
+      type: object
+      properties:
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecommendedItem'
+        userId:
+          type: integer
+        mediaType:
+          type: string

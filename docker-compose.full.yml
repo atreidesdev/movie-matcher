@@ -1,0 +1,104 @@
+# Полный стек: приложение + мониторинг (Postgres, Backend, Recommendation, Frontend, Prometheus, Grafana).
+# Запуск: docker compose -f docker-compose.full.yml up -d
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: movie-matcher-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: movie_matcher
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: movie-matcher-backend
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/movie_matcher?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
+      PORT: 8080
+      RECOMMENDATION_SERVICE_URL: http://recommendation:8000
+      OWNER_EMAIL: ${OWNER_EMAIL:-admin@example.com}
+      OWNER_PASSWORD: ${OWNER_PASSWORD:-admin}
+      OWNER_NAME: ${OWNER_NAME:-Admin}
+      OWNER_USERNAME: ${OWNER_USERNAME:-admin}
+      MAX_UPLOAD_SIZE_IMAGE: ${MAX_UPLOAD_SIZE_IMAGE:-10485760}
+      MAX_UPLOAD_SIZE_VIDEO: ${MAX_UPLOAD_SIZE_VIDEO:-1073741824}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  recommendation:
+    build:
+      context: ./recommendation-service
+      dockerfile: Dockerfile
+    container_name: movie-matcher-recommendation
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/movie_matcher
+      EMBEDDING_MODEL: all-MiniLM-L6-v2
+      VECTOR_DIM: 384
+      USE_FAISS: "true"
+      HOST: 0.0.0.0
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - recommendation_data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: movie-matcher-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: movie-matcher-prometheus
+    volumes:
+      - ./prometheus.full.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-lifecycle
+    depends_on:
+      - backend
+      - recommendation
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: movie-matcher-grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:
+  recommendation_data:

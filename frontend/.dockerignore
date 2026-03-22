@@ -1,0 +1,11 @@
+# Не попадать в образ — иначе в сборку вшивается локальный VITE_API_URL и запросы уходят не на тот хост
+.env
+.env.*
+!.env.example
+
+node_modules
+dist
+*.log
+.git
+.gitignore
+README.md

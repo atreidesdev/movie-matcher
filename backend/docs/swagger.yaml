@@ -1,0 +1,6206 @@
+definitions:
+  github_com_movie-matcher_backend_internal_models.AgeRating:
+    enum:
+    - g
+    - pg
+    - pg13
+    - r
+    - nc17
+    - nc21
+    - tvY
+    - tvY7
+    - tvG
+    - tvPg
+    - tv14
+    - tvMa
+    type: string
+    x-enum-varnames:
+    - AgeRatingG
+    - AgeRatingPG
+    - AgeRatingPG13
+    - AgeRatingR
+    - AgeRatingNC17
+    - AgeRatingNC21
+    - AgeRatingTVY
+    - AgeRatingTVY7
+    - AgeRatingTVG
+    - AgeRatingTVPG
+    - AgeRatingTV14
+    - AgeRatingTVMA
+  github_com_movie-matcher_backend_internal_models.AnimeMovie:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovieComment'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      duration:
+        type: integer
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovieFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovieList'
+        type: array
+      poster:
+        type: string
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovieReview'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovieSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      studios:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Studio'
+        type: array
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeMovieComment:
+    properties:
+      animeMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+      animeMovieId:
+        type: integer
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovieComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovieComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeMovieFavorite:
+    properties:
+      animeMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+      animeMovieId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeMovieList:
+    properties:
+      animeMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+      animeMovieId:
+        type: integer
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeMovieReview:
+    properties:
+      actingRating:
+        type: integer
+      animeMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+      animeMovieId:
+        type: integer
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      musicRating:
+        type: integer
+      overallRating:
+        type: integer
+      productionRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      visualsRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeMovieSite:
+    properties:
+      animeMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+      animeMovieId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeSeason:
+    enum:
+    - winter
+    - spring
+    - summer
+    - autumn
+    type: string
+    x-enum-varnames:
+    - AnimeSeasonWinter
+    - AnimeSeasonSpring
+    - AnimeSeasonSummer
+    - AnimeSeasonAutumn
+  github_com_movie-matcher_backend_internal_models.AnimeSeries:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesComment'
+        type: array
+      createdAt:
+        type: string
+      currentEpisode:
+        type: integer
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      episodeDuration:
+        type: integer
+      episodesCount:
+        type: integer
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesList'
+        type: array
+      poster:
+        type: string
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      releaseSchedule:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.JSONMap'
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesReview'
+        type: array
+      season:
+        allOf:
+        - $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeason'
+        description: winter, spring, summer, autumn — сезон выхода (зима/весна/лето/осень)
+      seasonNumber:
+        type: integer
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      studios:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Studio'
+        type: array
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      titleKatakana:
+        description: Оригинальное название на катакане (или кане)
+        type: string
+      titleRomaji:
+        description: 'Транслитерация: Yuusha-kei ni Shosu: Choubatsu...'
+        type: string
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeSeriesComment:
+    properties:
+      animeSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+      animeSeriesId:
+        type: integer
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeSeriesFavorite:
+    properties:
+      animeSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+      animeSeriesId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeSeriesList:
+    properties:
+      animeSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+      animeSeriesId:
+        type: integer
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      currentEpisode:
+        type: integer
+      currentProgress:
+        type: number
+      id:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeSeriesReview:
+    properties:
+      actingRating:
+        type: integer
+      animeSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+      animeSeriesId:
+        type: integer
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      musicRating:
+        type: integer
+      overallRating:
+        type: integer
+      productionRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      visualsRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.AnimeSeriesSite:
+    properties:
+      animeSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+      animeSeriesId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Book:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      authors:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+        type: array
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookComment'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookList'
+        type: array
+      pages:
+        type: integer
+      poster:
+        type: string
+      publishers:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Publisher'
+        type: array
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      readingDurationMinutes:
+        type: integer
+      releaseDate:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookReview'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.BookComment:
+    properties:
+      book:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+      bookId:
+        type: integer
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.BookFavorite:
+    properties:
+      book:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+      bookId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.BookList:
+    properties:
+      book:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+      bookId:
+        type: integer
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      currentPage:
+        type: integer
+      id:
+        type: integer
+      maxPages:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.BookReview:
+    properties:
+      book:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+      bookId:
+        type: integer
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      overallRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      worldBuildingRating:
+        type: integer
+      writingRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.BookSite:
+    properties:
+      book:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+      bookId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonMovie:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieComment'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      duration:
+        type: integer
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieList'
+        type: array
+      poster:
+        type: string
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieReview'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      studios:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Studio'
+        type: array
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonMovieComment:
+    properties:
+      cartoonMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+      cartoonMovieId:
+        type: integer
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonMovieFavorite:
+    properties:
+      cartoonMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+      cartoonMovieId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonMovieList:
+    properties:
+      cartoonMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+      cartoonMovieId:
+        type: integer
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonMovieReview:
+    properties:
+      actingRating:
+        type: integer
+      cartoonMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+      cartoonMovieId:
+        type: integer
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      musicRating:
+        type: integer
+      overallRating:
+        type: integer
+      productionRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      visualsRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonMovieSite:
+    properties:
+      cartoonMovie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+      cartoonMovieId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonSeries:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesComment'
+        type: array
+      createdAt:
+        type: string
+      currentEpisode:
+        type: integer
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      episodeDuration:
+        type: integer
+      episodesCount:
+        type: integer
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesList'
+        type: array
+      poster:
+        type: string
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      releaseSchedule:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.JSONMap'
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesReview'
+        type: array
+      seasonNumber:
+        type: integer
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      studios:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Studio'
+        type: array
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonSeriesComment:
+    properties:
+      cartoonSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+      cartoonSeriesId:
+        type: integer
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonSeriesFavorite:
+    properties:
+      cartoonSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+      cartoonSeriesId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonSeriesList:
+    properties:
+      cartoonSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+      cartoonSeriesId:
+        type: integer
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      currentEpisode:
+        type: integer
+      currentProgress:
+        type: number
+      id:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonSeriesReview:
+    properties:
+      actingRating:
+        type: integer
+      cartoonSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+      cartoonSeriesId:
+        type: integer
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      musicRating:
+        type: integer
+      overallRating:
+        type: integer
+      productionRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      visualsRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CartoonSeriesSite:
+    properties:
+      cartoonSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+      cartoonSeriesId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Cast:
+    properties:
+      character:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Character'
+      characterId:
+        type: integer
+      createdAt:
+        type: string
+      dubbings:
+        description: 'Дубляж: даббер и язык'
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Dubbing'
+        type: array
+      episodeNumber:
+        type: integer
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      person:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+      personId:
+        type: integer
+      poster:
+        description: 'CastPoster: изображение для карточки каста'
+        type: string
+      role:
+        type: string
+      roleType:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.RoleType'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CastFavorite:
+    properties:
+      cast:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+      castId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.Character:
+    properties:
+      avatar:
+        type: string
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CharacterFavorite:
+    properties:
+      character:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Character'
+      characterId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.Collection:
+    properties:
+      animeMovies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionAnimeMovie'
+        type: array
+      animeSeries:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionAnimeSeries'
+        type: array
+      books:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionBook'
+        type: array
+      cartoonMovies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionCartoonMovie'
+        type: array
+      cartoonSeries:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionCartoonSeries'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      games:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionGame'
+        type: array
+      id:
+        type: integer
+      lightNovels:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionLightNovel'
+        type: array
+      manga:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionManga'
+        type: array
+      movies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionMovie'
+        type: array
+      name:
+        type: string
+      poster:
+        type: string
+      tvSeries:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CollectionTVSeries'
+        type: array
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionAnimeMovie:
+    properties:
+      animeMovieId:
+        type: integer
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionAnimeSeries:
+    properties:
+      animeSeriesId:
+        type: integer
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionBook:
+    properties:
+      bookId:
+        type: integer
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionCartoonMovie:
+    properties:
+      cartoonMovieId:
+        type: integer
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionCartoonSeries:
+    properties:
+      cartoonSeriesId:
+        type: integer
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionGame:
+    properties:
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      gameId:
+        type: integer
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionLightNovel:
+    properties:
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      lightNovelId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionManga:
+    properties:
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      mangaId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionMovie:
+    properties:
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      movieId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.CollectionTVSeries:
+    properties:
+      collectionId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      tvSeriesId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Developer:
+    properties:
+      country:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      id:
+        type: integer
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      poster:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Discussion:
+    properties:
+      commentsCount:
+        type: integer
+      createdAt:
+        type: string
+      description:
+        type: string
+      entityId:
+        type: integer
+      entityType:
+        description: movie, tv_series, anime, ...
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.Dubbing:
+    properties:
+      cast:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+      castId:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      language:
+        description: 'Код языка: ru, en, ja и т.д.'
+        type: string
+      person:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+      personId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Franchise:
+    properties:
+      aliases:
+        items:
+          type: string
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      links:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.FranchiseMediaLink'
+        type: array
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      poster:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.FranchiseMediaLink:
+    properties:
+      createdAt:
+        type: string
+      franchise:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Franchise'
+      franchiseId:
+        type: integer
+      fromMediaId:
+        type: integer
+      fromMediaType:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaType'
+      id:
+        type: integer
+      isCanon:
+        type: boolean
+      note:
+        type: string
+      orderNumber:
+        type: integer
+      relationType:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaRelationType'
+      toMediaId:
+        type: integer
+      toMediaType:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaType'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Game:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameComment'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      developers:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Developer'
+        type: array
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameList'
+        type: array
+      platforms:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Platform'
+        type: array
+      poster:
+        type: string
+      publishers:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Publisher'
+        type: array
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameReview'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.GameComment:
+    properties:
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      game:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+      gameId:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.GameFavorite:
+    properties:
+      createdAt:
+        type: string
+      game:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+      gameId:
+        type: integer
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.GameList:
+    properties:
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      currentProgress:
+        type: integer
+      game:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+      gameId:
+        type: integer
+      id:
+        type: integer
+      playthroughs:
+        items: {}
+        type: array
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      totalTime:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.GameReview:
+    properties:
+      createdAt:
+        type: string
+      game:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+      gameId:
+        type: integer
+      gameplayRating:
+        type: integer
+      id:
+        type: integer
+      overallRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      visualsRating:
+        type: integer
+      worldBuildingRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.GameSite:
+    properties:
+      createdAt:
+        type: string
+      game:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+      gameId:
+        type: integer
+      id:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Genre:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      emoji:
+        type: string
+      id:
+        type: integer
+      mediaTypes:
+        items: {}
+        type: array
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.JSONMap:
+    additionalProperties: true
+    type: object
+  github_com_movie-matcher_backend_internal_models.LightNovel:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      authors:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+        type: array
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelComment'
+        type: array
+      createdAt:
+        type: string
+      currentVolume:
+        type: integer
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      illustrators:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+        type: array
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelList'
+        type: array
+      pages:
+        type: integer
+      poster:
+        type: string
+      publishers:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Publisher'
+        type: array
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelReview'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+      volumes:
+        description: Максимум томов (nil = выходит без фиксированного числа)
+        type: integer
+      volumesList:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.LightNovelComment:
+    properties:
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      lightNovel:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+      lightNovelId:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.LightNovelFavorite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      lightNovel:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+      lightNovelId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.LightNovelList:
+    properties:
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      currentChapterNumber:
+        type: integer
+      currentPage:
+        type: integer
+      currentProgress:
+        type: number
+      currentVolumeNumber:
+        type: integer
+      id:
+        type: integer
+      lightNovel:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+      lightNovelId:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.LightNovelReview:
+    properties:
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      lightNovel:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+      lightNovelId:
+        type: integer
+      overallRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      worldBuildingRating:
+        type: integer
+      writingRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.LightNovelSite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      lightNovel:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+      lightNovelId:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.ListCountsByStatus:
+    properties:
+      completed:
+        type: integer
+      dropped:
+        type: integer
+      onHold:
+        type: integer
+      planned:
+        type: integer
+      rewatching:
+        type: integer
+      total:
+        type: integer
+      watching:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.ListStatus:
+    enum:
+    - watching
+    - planned
+    - completed
+    - onHold
+    - dropped
+    - rewatching
+    type: string
+    x-enum-varnames:
+    - ListStatusWatching
+    - ListStatusPlanned
+    - ListStatusCompleted
+    - ListStatusOnHold
+    - ListStatusDropped
+    - ListStatusRewatching
+  github_com_movie-matcher_backend_internal_models.LocalizedString:
+    additionalProperties:
+      type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Manga:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      authors:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+        type: array
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MangaComment'
+        type: array
+      createdAt:
+        type: string
+      currentChapter:
+        description: Текущая вышедшая глава
+        type: integer
+      currentVolume:
+        description: Текущий вышедший том
+        type: integer
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MangaFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MangaList'
+        type: array
+      poster:
+        type: string
+      publishers:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Publisher'
+        type: array
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MangaReview'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MangaSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+      volumes:
+        description: Максимум томов (nil = выходит, без фиксированного числа)
+        type: integer
+      volumesList:
+        description: 'По томам: [{ "chapters": N }, ...]'
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.MangaComment:
+    properties:
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      manga:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+      mangaId:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MangaComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MangaComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MangaFavorite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      manga:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+      mangaId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MangaList:
+    properties:
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      currentChapter:
+        type: integer
+      currentProgress:
+        type: number
+      currentVolume:
+        type: integer
+      id:
+        type: integer
+      manga:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+      mangaId:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MangaReview:
+    properties:
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      manga:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+      mangaId:
+        type: integer
+      overallRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      worldBuildingRating:
+        type: integer
+      writingRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MangaSite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      manga:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+      mangaId:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.MediaRelationType:
+    enum:
+    - prequel
+    - sequel
+    - spinOff
+    - alternativeVersion
+    - sideStory
+    - crossover
+    - compilation
+    - remake
+    - remaster
+    - adaptation
+    type: string
+    x-enum-varnames:
+    - MediaRelationPrequel
+    - MediaRelationSequel
+    - MediaRelationSpinOff
+    - MediaRelationAlternativeVersion
+    - MediaRelationSideStory
+    - MediaRelationCrossover
+    - MediaRelationCompilation
+    - MediaRelationRemake
+    - MediaRelationRemaster
+    - MediaRelationAdaptation
+  github_com_movie-matcher_backend_internal_models.MediaStaff:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      mediaId:
+        type: integer
+      mediaType:
+        type: string
+      person:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+      personId:
+        type: integer
+      profession:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Profession'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.MediaStatus:
+    enum:
+    - announced
+    - in_production
+    - released
+    - finished
+    - cancelled
+    - postponed
+    type: string
+    x-enum-comments:
+      MediaStatusAnnounced: Анонсировано
+      MediaStatusCancelled: Отменено
+      MediaStatusFinished: Завершено
+      MediaStatusInProduction: В производстве
+      MediaStatusPostponed: Отложено
+      MediaStatusReleased: Вышло / выходит
+    x-enum-varnames:
+    - MediaStatusAnnounced
+    - MediaStatusInProduction
+    - MediaStatusReleased
+    - MediaStatusFinished
+    - MediaStatusCancelled
+    - MediaStatusPostponed
+  github_com_movie-matcher_backend_internal_models.MediaType:
+    enum:
+    - movie
+    - tvSeries
+    - animeMovie
+    - animeSeries
+    - cartoonMovie
+    - cartoonSeries
+    - game
+    - manga
+    - book
+    - lightNovel
+    type: string
+    x-enum-varnames:
+    - MediaTypeMovie
+    - MediaTypeTVSeries
+    - MediaTypeAnimeMovie
+    - MediaTypeAnimeSeries
+    - MediaTypeCartoonMovie
+    - MediaTypeCartoonSeries
+    - MediaTypeGame
+    - MediaTypeManga
+    - MediaTypeBook
+    - MediaTypeLightNovel
+  github_com_movie-matcher_backend_internal_models.Movie:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieComment'
+        type: array
+      countries:
+        items: {}
+        type: array
+      country:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      duration:
+        type: integer
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        description: 'Скрыт: не показывать в каталоге; на странице тайтла — «Заблокирован»'
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieList'
+        type: array
+      poster:
+        type: string
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieReview'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieStaff'
+        type: array
+      status:
+        allOf:
+        - $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+        description: announced, in_production, released, finished, cancelled, postponed
+      studios:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Studio'
+        type: array
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.MovieComment:
+    properties:
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      movie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+      movieId:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieComment'
+        type: array
+      repliesCount:
+        description: число прямых ответов в БД
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MovieFavorite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      movie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+      movieId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MovieList:
+    properties:
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      movie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+      movieId:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MovieReview:
+    properties:
+      actingRating:
+        type: integer
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      movie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+      movieId:
+        type: integer
+      musicRating:
+        type: integer
+      overallRating:
+        type: integer
+      productionRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      visualsRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.MovieSite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      movie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+      movieId:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.MovieStaff:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      movie:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+      movieId:
+        type: integer
+      person:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+      personId:
+        type: integer
+      profession:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Profession'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Person:
+    properties:
+      avatar:
+        type: string
+      biography:
+        type: string
+      biographyI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      birthDate:
+        type: string
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      country:
+        type: string
+      createdAt:
+        type: string
+      firstName:
+        type: string
+      firstNameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      lastName:
+        type: string
+      lastNameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      profession:
+        items: {}
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.PersonFavorite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      person:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Person'
+      personId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.Platform:
+    properties:
+      createdAt:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.PopularityStats:
+    properties:
+      avgRating:
+        type: number
+      commentsCount:
+        type: integer
+      createdAt:
+        type: string
+      entityId:
+        type: integer
+      entityType:
+        type: string
+      favoritesCount:
+        type: integer
+      id:
+        type: integer
+      lastDecayAt:
+        type: string
+      listsCount:
+        type: integer
+      popularityScore:
+        type: number
+      reviewsCount:
+        type: integer
+      updatedAt:
+        type: string
+      viewsTotal:
+        type: integer
+      viewsWeekly:
+        type: number
+    type: object
+  github_com_movie-matcher_backend_internal_models.Profession:
+    enum:
+    - actor
+    - actress
+    - director
+    - producer
+    - writer
+    - cinematographer
+    - composer
+    - editor
+    - animator
+    - voiceActor
+    - author
+    - illustrator
+    - artist
+    - gameDesigner
+    - levelDesigner
+    - translator
+    - literaryEditor
+    type: string
+    x-enum-comments:
+      ProfessionArtist: Художник (манга, комиксы)
+      ProfessionAuthor: Книги, манга, ранобэ
+      ProfessionGameDesigner: Геймдизайнер (игры)
+      ProfessionIllustrator: Иллюстратор (книги, ранобэ)
+      ProfessionLiteraryEditor: Литературный редактор (книги)
+      ProfessionTranslator: Переводчик (книги, локализация)
+    x-enum-varnames:
+    - ProfessionActor
+    - ProfessionActress
+    - ProfessionDirector
+    - ProfessionProducer
+    - ProfessionWriter
+    - ProfessionCinematographer
+    - ProfessionComposer
+    - ProfessionEditor
+    - ProfessionAnimator
+    - ProfessionVoiceActor
+    - ProfessionAuthor
+    - ProfessionIllustrator
+    - ProfessionArtist
+    - ProfessionGameDesigner
+    - ProfessionLevelDesigner
+    - ProfessionTranslator
+    - ProfessionLiteraryEditor
+  github_com_movie-matcher_backend_internal_models.Publisher:
+    properties:
+      country:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      id:
+        type: integer
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      poster:
+        type: string
+      publicationTypes:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.ReviewStatus:
+    enum:
+    - neutral
+    - positive
+    - negative
+    - surprised
+    - disappointed
+    - excited
+    - confused
+    - laugh
+    - boring
+    - cry
+    - cool
+    - cold
+    - scary
+    - shushing
+    - exploding_head
+    - face_holding_back_tears
+    - kiss
+    - pleading_face
+    - saluting_face
+    type: string
+    x-enum-varnames:
+    - ReviewStatusNeutral
+    - ReviewStatusPositive
+    - ReviewStatusNegative
+    - ReviewStatusSurprised
+    - ReviewStatusDisappointed
+    - ReviewStatusExcited
+    - ReviewStatusConfused
+    - ReviewStatusLaugh
+    - ReviewStatusBoring
+    - ReviewStatusCry
+    - ReviewStatusCool
+    - ReviewStatusCold
+    - ReviewStatusScary
+    - ReviewStatusShushing
+    - ReviewStatusExplodingHead
+    - ReviewStatusFaceHoldingBackTears
+    - ReviewStatusKiss
+    - ReviewStatusPleadingFace
+    - ReviewStatusSalutingFace
+  github_com_movie-matcher_backend_internal_models.RoleType:
+    enum:
+    - main
+    - supporting
+    - cameo
+    - extra
+    - narrator
+    - guest
+    - background
+    type: string
+    x-enum-varnames:
+    - RoleTypeMain
+    - RoleTypeSupporting
+    - RoleTypeCameo
+    - RoleTypeExtra
+    - RoleTypeNarrator
+    - RoleTypeGuest
+    - RoleTypeBackground
+  github_com_movie-matcher_backend_internal_models.Site:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.SocialLinksMap:
+    additionalProperties:
+      type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Studio:
+    properties:
+      country:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      id:
+        type: integer
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      poster:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.TVSeries:
+    properties:
+      ageRating:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AgeRating'
+      cast:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+        type: array
+      comments:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesComment'
+        type: array
+      createdAt:
+        type: string
+      currentEpisode:
+        description: Текущая вышедшая серия
+        type: integer
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      episodeDuration:
+        type: integer
+      episodesCount:
+        type: integer
+      favorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesFavorite'
+        type: array
+      genres:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+        type: array
+      id:
+        type: integer
+      images:
+        items: {}
+        type: array
+      isHidden:
+        type: boolean
+      listStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      lists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesList'
+        type: array
+      poster:
+        type: string
+      rating:
+        type: number
+      ratingCount:
+        type: integer
+      releaseDate:
+        type: string
+      releaseSchedule:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.JSONMap'
+      reviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesReview'
+        type: array
+      seasonNumber:
+        type: integer
+      similar:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesSite'
+        type: array
+      staff:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStaff'
+        type: array
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MediaStatus'
+      studios:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Studio'
+        type: array
+      themes:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+        type: array
+      title:
+        type: string
+      titleI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+      videos:
+        items: {}
+        type: array
+    type: object
+  github_com_movie-matcher_backend_internal_models.TVSeriesComment:
+    properties:
+      createdAt:
+        type: string
+      depth:
+        type: integer
+      id:
+        type: integer
+      minusCount:
+        type: integer
+      parent:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesComment'
+      parentId:
+        type: integer
+      plusCount:
+        type: integer
+      replies:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesComment'
+        type: array
+      repliesCount:
+        type: integer
+      text:
+        type: string
+      tvSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+      tvSeriesId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.TVSeriesFavorite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      tvSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+      tvSeriesId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.TVSeriesList:
+    properties:
+      comment:
+        type: string
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      currentEpisode:
+        type: integer
+      currentProgress:
+        type: number
+      id:
+        type: integer
+      rating:
+        type: integer
+      startedAt:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListStatus'
+      titleReaction:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TitleReaction'
+      tvSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+      tvSeriesId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.TVSeriesReview:
+    properties:
+      actingRating:
+        type: integer
+      characterRating:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      musicRating:
+        type: integer
+      overallRating:
+        type: integer
+      productionRating:
+        type: integer
+      review:
+        type: string
+      reviewStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ReviewStatus'
+      storyRating:
+        type: integer
+      tvSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+      tvSeriesId:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.User'
+      userId:
+        type: integer
+      visualsRating:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_models.TVSeriesSite:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      site:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Site'
+      siteId:
+        type: integer
+      tvSeries:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+      tvSeriesId:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.Theme:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      descriptionI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      emoji:
+        type: string
+      id:
+        type: integer
+      mediaTypes:
+        items: {}
+        type: array
+      name:
+        type: string
+      nameI18n:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LocalizedString'
+      updatedAt:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.TitleReaction:
+    enum:
+    - surprised
+    - disappointed
+    - sad
+    - joyful
+    - inspiring
+    - scary
+    - funny
+    - angry
+    - love
+    - neutral
+    - boring
+    - exciting
+    - touching
+    - thoughtful
+    type: string
+    x-enum-comments:
+      TitleReactionAngry: "\U0001F620"
+      TitleReactionBoring: "\U0001F634"
+      TitleReactionDisappointed: "\U0001F61E"
+      TitleReactionExciting: "\U0001F929"
+      TitleReactionFunny: "\U0001F602"
+      TitleReactionInspiring: ✨
+      TitleReactionJoyful: "\U0001F60A"
+      TitleReactionLove: "\U0001F60D"
+      TitleReactionNeutral: "\U0001F610"
+      TitleReactionSad: "\U0001F622"
+      TitleReactionScary: "\U0001F631"
+      TitleReactionSurprised: "\U0001F632"
+      TitleReactionThoughtful: "\U0001F914"
+      TitleReactionTouching: "\U0001F972"
+    x-enum-varnames:
+    - TitleReactionSurprised
+    - TitleReactionDisappointed
+    - TitleReactionSad
+    - TitleReactionJoyful
+    - TitleReactionInspiring
+    - TitleReactionScary
+    - TitleReactionFunny
+    - TitleReactionAngry
+    - TitleReactionLove
+    - TitleReactionNeutral
+    - TitleReactionBoring
+    - TitleReactionExciting
+    - TitleReactionTouching
+    - TitleReactionThoughtful
+  github_com_movie-matcher_backend_internal_models.User:
+    properties:
+      animeSeriesFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesFavorite'
+        type: array
+      animeSeriesLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesList'
+        type: array
+      animeSeriesReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeriesReview'
+        type: array
+      avatar:
+        type: string
+      bookFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookFavorite'
+        type: array
+      bookLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookList'
+        type: array
+      bookReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.BookReview'
+        type: array
+      cartoonMovieFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieFavorite'
+        type: array
+      cartoonMovieLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieList'
+        type: array
+      cartoonMovieReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovieReview'
+        type: array
+      cartoonSeriesFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesFavorite'
+        type: array
+      cartoonSeriesLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesList'
+        type: array
+      cartoonSeriesReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeriesReview'
+        type: array
+      castFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CastFavorite'
+        type: array
+      characterFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CharacterFavorite'
+        type: array
+      collections:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Collection'
+        type: array
+      commentBanUntil:
+        type: string
+      createdAt:
+        type: string
+      email:
+        type: string
+      gameFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameFavorite'
+        type: array
+      gameLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameList'
+        type: array
+      gameReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.GameReview'
+        type: array
+      id:
+        type: integer
+      lightNovelFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelFavorite'
+        type: array
+      lightNovelLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelList'
+        type: array
+      lightNovelReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovelReview'
+        type: array
+      movieFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieFavorite'
+        type: array
+      movieLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieList'
+        type: array
+      movieReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieReview'
+        type: array
+      name:
+        type: string
+      personFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.PersonFavorite'
+        type: array
+      role:
+        type: string
+      settings:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.UserSettings'
+      socialLinks:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.SocialLinksMap'
+      tvSeriesFavorites:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesFavorite'
+        type: array
+      tvSeriesLists:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesList'
+        type: array
+      tvSeriesReviews:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeriesReview'
+        type: array
+      updatedAt:
+        type: string
+      username:
+        description: уникальный для URL, латиница/цифры (nullable для старых записей)
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.UserResponse:
+    properties:
+      avatar:
+        type: string
+      createdAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      role:
+        type: string
+      socialLinks:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.SocialLinksMap'
+      username:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_models.UserSettings:
+    properties:
+      createdAt:
+        type: string
+      emailNotifications:
+        description: Уведомления по email
+        type: boolean
+      id:
+        type: integer
+      locale:
+        description: Язык интерфейса
+        type: string
+      notifyCommentReplies:
+        description: Уведомления об ответах на комментарии
+        type: boolean
+      notifyNewFollowers:
+        description: Уведомления о новых подписчиках
+        type: boolean
+      profileVisibility:
+        description: 'Видимость профиля: public | friends | private'
+        type: string
+      theme:
+        description: 'Тема: "light", "dark", "system"'
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: integer
+    type: object
+  github_com_movie-matcher_backend_internal_services.ListStatsResult:
+    properties:
+      byStatus:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListCountsByStatus'
+      byType:
+        additionalProperties:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.ListCountsByStatus'
+        type: object
+    type: object
+  github_com_movie-matcher_backend_internal_services.SemanticSearchItem:
+    properties:
+      description:
+        type: string
+      media_id:
+        type: integer
+      media_type:
+        type: string
+      poster:
+        type: string
+      score:
+        type: number
+      title:
+        type: string
+    type: object
+  github_com_movie-matcher_backend_internal_services.SemanticSearchResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/github_com_movie-matcher_backend_internal_services.SemanticSearchItem'
+        type: array
+    type: object
+  internal_handlers.AuthResponse:
+    properties:
+      accessToken:
+        type: string
+      expiresIn:
+        description: секунды до истечения access
+        type: integer
+      refreshToken:
+        type: string
+      sessionId:
+        description: ID сессии для отображения «где авторизован»
+        type: integer
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.UserResponse'
+    type: object
+  internal_handlers.CalendarRelease:
+    properties:
+      id:
+        type: integer
+      listStatus:
+        type: string
+      mediaType:
+        type: string
+      poster:
+        type: string
+      releaseDate:
+        description: YYYY-MM-DD
+        type: string
+      title:
+        type: string
+      titleI18n: {}
+    type: object
+  internal_handlers.ChangePasswordRequest:
+    properties:
+      currentPassword:
+        type: string
+      newPassword:
+        minLength: 6
+        type: string
+    required:
+    - currentPassword
+    - newPassword
+    type: object
+  internal_handlers.CreateDiscussionRequest:
+    properties:
+      description:
+        type: string
+      entityId:
+        type: integer
+      entityType:
+        type: string
+      title:
+        type: string
+    required:
+    - entityId
+    - entityType
+    - title
+    type: object
+  internal_handlers.ExtendedPaginatedResponse:
+    properties:
+      data: {}
+      filters:
+        $ref: '#/definitions/internal_handlers.FilterInfo'
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      total:
+        type: integer
+      totalPages:
+        type: integer
+    type: object
+  internal_handlers.FilterInfo:
+    properties:
+      ageRatings:
+        items:
+          type: string
+        type: array
+      authorIds:
+        items:
+          type: string
+        type: array
+      countries:
+        items:
+          type: string
+        type: array
+      developerIds:
+        items:
+          type: string
+        type: array
+      genreIds:
+        items:
+          type: string
+        type: array
+      genreMode:
+        type: string
+      illustratorIds:
+        items:
+          type: string
+        type: array
+      maxRating:
+        type: number
+      minRating:
+        type: number
+      order:
+        type: string
+      platformIds:
+        items:
+          type: string
+        type: array
+      publisherIds:
+        items:
+          type: string
+        type: array
+      search:
+        type: string
+      sortBy:
+        type: string
+      studioIds:
+        items:
+          type: string
+        type: array
+      themeIds:
+        items:
+          type: string
+        type: array
+      themeMode:
+        type: string
+      year:
+        type: integer
+      yearFrom:
+        type: integer
+      yearTo:
+        type: integer
+    type: object
+  internal_handlers.ForgotPasswordRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  internal_handlers.LoginRequest:
+    properties:
+      deviceName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  internal_handlers.LogoutRequest:
+    properties:
+      refreshToken:
+        type: string
+    required:
+    - refreshToken
+    type: object
+  internal_handlers.MeResponse:
+    properties:
+      settings:
+        $ref: '#/definitions/internal_handlers.MeResponseSettings'
+      user:
+        $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.UserResponse'
+    type: object
+  internal_handlers.MeResponseSettings:
+    properties:
+      profileVisibility:
+        type: string
+    type: object
+  internal_handlers.PaginatedResponse:
+    properties:
+      data: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      total:
+        type: integer
+      totalPages:
+        type: integer
+    type: object
+  internal_handlers.PrecomputedSimilarResponse:
+    properties:
+      crossType:
+        description: среди других типов
+        items:
+          $ref: '#/definitions/internal_handlers.SimilarItem'
+        type: array
+      entityId:
+        type: integer
+      entityType:
+        type: string
+      sameType:
+        description: среди своего типа (content + users)
+        items:
+          $ref: '#/definitions/internal_handlers.SimilarItem'
+        type: array
+    type: object
+  internal_handlers.PublicProfileResponse:
+    properties:
+      avatar:
+        type: string
+      collectionsCount:
+        type: integer
+      createdAt:
+        description: только при открытом профиле
+        type: string
+      favoritesCount:
+        type: integer
+      followersCount:
+        type: integer
+      friendsCount:
+        type: integer
+      id:
+        type: integer
+      lastSeenAt:
+        type: string
+      listCounts:
+        allOf:
+        - $ref: '#/definitions/github_com_movie-matcher_backend_internal_services.ListStatsResult'
+        description: 'Разбивка списков: по типам контента (movie, tvSeries, ...) и
+          сводка по статусам. Берётся из user_list_stats.'
+      name:
+        type: string
+      profileHidden:
+        description: true = профиль закрыт или только для друзей, а зритель не друг
+          — детальные данные недоступны
+        type: boolean
+      restrictedWhenHidden:
+        description: 'При profileHidden == true: что именно недоступно по API (списки,
+          коллекции, избранное, рецензии).'
+        items:
+          type: string
+        type: array
+      reviewsCount:
+        type: integer
+      socialLinks:
+        additionalProperties:
+          type: string
+        description: Ссылки на соцсети (telegram, vk и т.д.). Показываются при открытом
+          профиле.
+        type: object
+      username:
+        type: string
+    type: object
+  internal_handlers.RefreshRequest:
+    properties:
+      deviceName:
+        type: string
+      refreshToken:
+        type: string
+    required:
+    - refreshToken
+    type: object
+  internal_handlers.RegisterRequest:
+    properties:
+      deviceName:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  internal_handlers.ResetPasswordRequest:
+    properties:
+      newPassword:
+        minLength: 6
+        type: string
+      token:
+        type: string
+    required:
+    - newPassword
+    - token
+    type: object
+  internal_handlers.SimilarItem:
+    properties:
+      sameType:
+        type: boolean
+      score:
+        type: number
+      similarEntityId:
+        type: integer
+      similarEntityType:
+        type: string
+      source:
+        description: '"content" | "users"'
+        type: string
+    type: object
+  internal_handlers.UpdateMySettingsRequest:
+    properties:
+      emailNotifications:
+        type: boolean
+      locale:
+        type: string
+      notifyCommentReplies:
+        type: boolean
+      notifyNewFollowers:
+        type: boolean
+      profileVisibility:
+        type: string
+      theme:
+        type: string
+    type: object
+  internal_handlers.UpdateProfileRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      socialLinks:
+        additionalProperties:
+          type: string
+        type: object
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /achievements:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: achievements
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get achievements (with progress if authenticated)
+      tags:
+      - Achievements
+  /anime:
+    get:
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: pageSize
+        type: integer
+      - default: created_at
+        description: 'Sort field: created_at, title, rating, release_date, popularity'
+        in: query
+        name: sortBy
+        type: string
+      - default: DESC
+        description: 'Sort order: ASC, DESC'
+        in: query
+        name: order
+        type: string
+      - description: Search in title and description
+        in: query
+        name: search
+        type: string
+      - description: Filter by genre ID
+        in: query
+        name: genreId
+        type: integer
+      - description: Filter by theme ID
+        in: query
+        name: themeId
+        type: integer
+      - description: Filter by release year
+        in: query
+        name: year
+        type: integer
+      - description: Filter by release year from
+        in: query
+        name: yearFrom
+        type: integer
+      - description: Filter by release year to
+        in: query
+        name: yearTo
+        type: integer
+      - description: Minimum rating
+        in: query
+        name: minRating
+        type: number
+      - description: Maximum rating
+        in: query
+        name: maxRating
+        type: number
+      - description: Filter by age rating
+        in: query
+        name: ageRating
+        type: string
+      - description: Filter by studio ID
+        in: query
+        name: studioId
+        type: integer
+      - description: Filter by airing status
+        in: query
+        name: status
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get anime series list
+      tags:
+      - anime
+  /anime-movies:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get anime movies list
+      tags:
+      - Anime Movies
+  /anime-movies/{id}:
+    get:
+      parameters:
+      - description: Anime Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+      summary: Get anime movie by ID
+      tags:
+      - Anime Movies
+  /anime-movies/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeMovie'
+            type: array
+      summary: Get popular anime movies
+      tags:
+      - Anime Movies
+  /anime-movies/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search anime movies
+      tags:
+      - Anime Movies
+  /anime/{id}:
+    get:
+      parameters:
+      - description: Anime ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get anime series by ID
+      tags:
+      - Anime
+  /anime/{id}/cast:
+    get:
+      parameters:
+      - description: Anime ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+            type: array
+      summary: Get anime cast
+      tags:
+      - Cast
+  /anime/filters:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get anime filter options
+      tags:
+      - Anime
+  /anime/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: popular
+        description: popular|trending|rating
+        in: query
+        name: mode
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.AnimeSeries'
+            type: array
+      summary: Get popular anime series
+      tags:
+      - Anime
+  /anime/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search anime series
+      tags:
+      - Anime
+  /auth/forgot-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: email
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.ForgotPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Request password reset email
+      tags:
+      - Auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: email, password, deviceName?
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.AuthResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login user
+      tags:
+      - Auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: refreshToken
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.LogoutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Logout (invalidate refresh token)
+      tags:
+      - Auth
+  /auth/logout-others:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: refreshToken of current device
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.LogoutRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Logout from all other devices (keep current session)
+      tags:
+      - Auth
+  /auth/me:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.MeResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get current authenticated user (me)
+      tags:
+      - Auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: refreshToken, deviceName?
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.RefreshRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.AuthResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Exchange refresh token for new access and refresh tokens
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: email, password, username, name?, deviceName?
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/internal_handlers.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register a new user
+      tags:
+      - Auth
+  /auth/reset-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token, newPassword
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Set new password using token from email
+      tags:
+      - Auth
+  /auth/sessions:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: sessions
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: List current user sessions
+      tags:
+      - Auth
+  /auth/sessions/{id}:
+    delete:
+      parameters:
+      - description: Session ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Revoke one session by ID
+      tags:
+      - Auth
+  /books:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get books list
+      tags:
+      - Books
+  /books/{id}:
+    get:
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get book by ID
+      tags:
+      - Books
+  /books/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: popular
+        description: popular|trending|rating
+        in: query
+        name: mode
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Book'
+            type: array
+      summary: Get popular books
+      tags:
+      - Books
+  /books/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search books
+      tags:
+      - Books
+  /calendar/releases:
+    get:
+      parameters:
+      - description: From date YYYY-MM-DD
+        in: query
+        name: from
+        required: true
+        type: string
+      - description: To date YYYY-MM-DD
+        in: query
+        name: to
+        required: true
+        type: string
+      - default: movie
+        description: movie|tv-series|anime|...
+        in: query
+        name: mediaType
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_handlers.CalendarRelease'
+            type: array
+      summary: Get calendar releases
+      tags:
+      - Calendar
+  /cartoon-movies:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get cartoon movies list
+      tags:
+      - Cartoons
+  /cartoon-movies/{id}:
+    get:
+      parameters:
+      - description: Cartoon Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+      summary: Get cartoon movie by ID
+      tags:
+      - Cartoons
+  /cartoon-movies/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonMovie'
+            type: array
+      summary: Get popular cartoon movies
+      tags:
+      - Cartoons
+  /cartoon-movies/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search cartoon movies
+      tags:
+      - Cartoons
+  /cartoon-series:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get cartoon series list
+      tags:
+      - Cartoons
+  /cartoon-series/{id}:
+    get:
+      parameters:
+      - description: Cartoon Series ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+      summary: Get cartoon series by ID
+      tags:
+      - Cartoons
+  /cartoon-series/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.CartoonSeries'
+            type: array
+      summary: Get popular cartoon series
+      tags:
+      - Cartoons
+  /cartoon-series/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search cartoon series
+      tags:
+      - Cartoons
+  /cast:
+    get:
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: pageSize
+        type: integer
+      - description: Filter by role type
+        in: query
+        name: roleType
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.PaginatedResponse'
+      summary: Get casts list
+      tags:
+      - Cast
+  /cast/{id}:
+    get:
+      parameters:
+      - description: Cast ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+      summary: Get cast by ID
+      tags:
+      - Cast
+  /cast/{id}/media:
+    get:
+      parameters:
+      - description: Cast ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get media for cast
+      tags:
+      - Cast
+  /cast/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+            type: array
+      summary: Search casts
+      tags:
+      - Cast
+  /characters:
+    get:
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: pageSize
+        type: integer
+      - default: created_at
+        description: 'Sort field: created_at, name, popularity'
+        in: query
+        name: sortBy
+        type: string
+      - default: DESC
+        description: 'Sort order: ASC, DESC'
+        in: query
+        name: order
+        type: string
+      - description: Search in name and description
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get characters list
+      tags:
+      - characters
+  /comment-emoji-reactions:
+    get:
+      parameters:
+      - description: Entity type
+        in: query
+        name: entityType
+        required: true
+        type: string
+      - description: Comma-separated comment IDs
+        in: query
+        name: commentIds
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get comment emoji reactions
+      tags:
+      - Comment Reactions
+  /developers:
+    get:
+      parameters:
+      - description: Search by name
+        in: query
+        name: search
+        type: string
+      - description: Comma-separated IDs
+        in: query
+        name: ids
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Developer'
+            type: array
+      summary: Get developers list
+      tags:
+      - Catalog
+  /developers/{id}:
+    get:
+      parameters:
+      - description: Developer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get developer by ID with projects
+      tags:
+      - Catalog
+  /discussions:
+    get:
+      parameters:
+      - description: Entity type (e.g. tv-series)
+        in: query
+        name: entityType
+        required: true
+        type: string
+      - description: Entity ID
+        in: query
+        name: entityId
+        required: true
+        type: integer
+      - default: 0
+        description: Page
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Page size
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: discussions, total
+          schema:
+            additionalProperties: true
+            type: object
+      summary: List discussions for entity
+      tags:
+      - Discussions
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: entityType, entityId, title, description
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.CreateDiscussionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Discussion'
+      security:
+      - BearerAuth: []
+      summary: Create discussion (auth required)
+      tags:
+      - Discussions
+  /franchises:
+    get:
+      parameters:
+      - default: 1
+        description: Page
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Page size
+        in: query
+        name: pageSize
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.PaginatedResponse'
+      summary: Get franchises list
+      tags:
+      - Franchises
+  /franchises/{id}:
+    get:
+      parameters:
+      - description: Franchise ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Franchise'
+      summary: Get franchise by ID
+      tags:
+      - Franchises
+  /franchises/{id}/media:
+    get:
+      parameters:
+      - description: Franchise ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.FranchiseMediaLink'
+            type: array
+      summary: Get franchise media links
+      tags:
+      - Franchises
+  /franchises/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Franchise'
+            type: array
+      summary: Search franchises
+      tags:
+      - Franchises
+  /games:
+    get:
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: pageSize
+        type: integer
+      - default: created_at
+        description: Sort field
+        in: query
+        name: sortBy
+        type: string
+      - default: DESC
+        description: Sort order
+        in: query
+        name: order
+        type: string
+      - description: Search in title and description
+        in: query
+        name: search
+        type: string
+      - description: Filter by genre ID
+        in: query
+        name: genreId
+        type: integer
+      - description: Filter by theme ID
+        in: query
+        name: themeId
+        type: integer
+      - description: Filter by platform ID
+        in: query
+        name: platformId
+        type: integer
+      - description: Filter by developer ID
+        in: query
+        name: developerId
+        type: integer
+      - description: Filter by publisher ID
+        in: query
+        name: publisherId
+        type: integer
+      - description: Filter by release year
+        in: query
+        name: year
+        type: integer
+      - description: Minimum rating
+        in: query
+        name: minRating
+        type: number
+      - description: Maximum rating
+        in: query
+        name: maxRating
+        type: number
+      - description: Filter by age rating
+        in: query
+        name: ageRating
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get games list
+      tags:
+      - games
+  /games/{id}:
+    get:
+      parameters:
+      - description: Game ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get game by ID
+      tags:
+      - Games
+  /games/{id}/cast:
+    get:
+      parameters:
+      - description: Game ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+            type: array
+      summary: Get game cast
+      tags:
+      - Cast
+  /games/filters:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get game filter options
+      tags:
+      - Games
+  /games/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: popular
+        description: popular|trending|rating
+        in: query
+        name: mode
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Game'
+            type: array
+      summary: Get popular games
+      tags:
+      - Games
+  /games/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search games
+      tags:
+      - Games
+  /genres:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+            type: array
+      summary: Get all genres
+      tags:
+      - Catalog
+  /genres/{id}:
+    get:
+      parameters:
+      - description: Genre ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Genre'
+      summary: Get genre by ID
+      tags:
+      - Catalog
+  /light-novels:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get light novels list
+      tags:
+      - Light Novels
+  /light-novels/{id}:
+    get:
+      parameters:
+      - description: Light Novel ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get light novel by ID
+      tags:
+      - Light Novels
+  /light-novels/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: popular
+        description: popular|trending|rating
+        in: query
+        name: mode
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.LightNovel'
+            type: array
+      summary: Get popular light novels
+      tags:
+      - Light Novels
+  /light-novels/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search light novels
+      tags:
+      - Light Novels
+  /manga:
+    get:
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: pageSize
+        type: integer
+      - default: created_at
+        description: Sort field
+        in: query
+        name: sortBy
+        type: string
+      - default: DESC
+        description: Sort order
+        in: query
+        name: order
+        type: string
+      - description: Search in title and description
+        in: query
+        name: search
+        type: string
+      - description: Filter by genre ID
+        in: query
+        name: genreId
+        type: integer
+      - description: Filter by theme ID
+        in: query
+        name: themeId
+        type: integer
+      - description: Filter by author ID
+        in: query
+        name: authorId
+        type: integer
+      - description: Filter by publisher ID
+        in: query
+        name: publisherId
+        type: integer
+      - description: Filter by release year
+        in: query
+        name: year
+        type: integer
+      - description: Minimum rating
+        in: query
+        name: minRating
+        type: number
+      - description: Maximum rating
+        in: query
+        name: maxRating
+        type: number
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get manga list
+      tags:
+      - manga
+  /manga/{id}:
+    get:
+      parameters:
+      - description: Manga ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get manga by ID
+      tags:
+      - Manga
+  /manga/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: popular
+        description: popular|trending|rating
+        in: query
+        name: mode
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Manga'
+            type: array
+      summary: Get popular manga
+      tags:
+      - Manga
+  /manga/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search manga
+      tags:
+      - Manga
+  /movies:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated list of movies with filtering and sorting
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page (max 100)
+        in: query
+        name: pageSize
+        type: integer
+      - default: created_at
+        description: 'Sort field: created_at, title, rating, release_date, popularity'
+        in: query
+        name: sortBy
+        type: string
+      - default: DESC
+        description: 'Sort order: ASC, DESC'
+        in: query
+        name: order
+        type: string
+      - description: Search in title and description
+        in: query
+        name: search
+        type: string
+      - description: Filter by genre ID
+        in: query
+        name: genreId
+        type: integer
+      - description: Filter by theme ID
+        in: query
+        name: themeId
+        type: integer
+      - description: Filter by release year
+        in: query
+        name: year
+        type: integer
+      - description: Filter by release year from
+        in: query
+        name: yearFrom
+        type: integer
+      - description: Filter by release year to
+        in: query
+        name: yearTo
+        type: integer
+      - description: Minimum rating
+        in: query
+        name: minRating
+        type: number
+      - description: Maximum rating
+        in: query
+        name: maxRating
+        type: number
+      - description: Filter by age rating
+        in: query
+        name: ageRating
+        type: string
+      - description: Filter by country
+        in: query
+        name: country
+        type: string
+      - description: Filter by studio ID
+        in: query
+        name: studioId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get movies list
+      tags:
+      - movies
+  /movies/{id}:
+    get:
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get movie by ID
+      tags:
+      - Movies
+  /movies/{id}/cast:
+    get:
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Cast'
+            type: array
+      summary: Get movie cast
+      tags:
+      - Cast
+  /movies/{id}/staff:
+    get:
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.MovieStaff'
+            type: array
+      summary: Get movie staff
+      tags:
+      - Cast
+  /movies/filters:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get movie filter options
+      tags:
+      - Movies
+  /movies/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Number of items
+        in: query
+        name: limit
+        type: integer
+      - default: popular
+        description: 'Mode: popular, trending, rating'
+        in: query
+        name: mode
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Movie'
+            type: array
+      summary: Get popular movies
+      tags:
+      - movies
+  /movies/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: pageSize
+        type: integer
+      - default: created_at
+        description: Sort field
+        in: query
+        name: sortBy
+        type: string
+      - default: DESC
+        description: Sort order
+        in: query
+        name: order
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search movies
+      tags:
+      - movies
+  /persons:
+    get:
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Items per page
+        in: query
+        name: pageSize
+        type: integer
+      - default: created_at
+        description: 'Sort field: created_at, first_name, last_name, birth_date, popularity'
+        in: query
+        name: sortBy
+        type: string
+      - default: DESC
+        description: 'Sort order: ASC, DESC'
+        in: query
+        name: order
+        type: string
+      - description: Search in name
+        in: query
+        name: search
+        type: string
+      - description: 'Filter by profession: actor, actress, director, producer, writer,
+          etc.'
+        in: query
+        name: profession
+        type: string
+      - description: Filter by country
+        in: query
+        name: country
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get persons list
+      tags:
+      - persons
+  /platforms:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Platform'
+            type: array
+      summary: Get all platforms
+      tags:
+      - Catalog
+  /publishers:
+    get:
+      parameters:
+      - description: Search by name
+        in: query
+        name: search
+        type: string
+      - description: Comma-separated IDs
+        in: query
+        name: ids
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Publisher'
+            type: array
+      summary: Get publishers list
+      tags:
+      - Catalog
+  /publishers/{id}:
+    get:
+      parameters:
+      - description: Publisher ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get publisher by ID with projects
+      tags:
+      - Catalog
+  /review-reactions/{targetType}/{targetId}:
+    get:
+      parameters:
+      - description: e.g. movie_review
+        in: path
+        name: targetType
+        required: true
+        type: string
+      - description: Target ID
+        in: path
+        name: targetId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get review reactions for one target
+      tags:
+      - Review Reactions
+  /review-reactions/batch:
+    get:
+      parameters:
+      - description: Comma-separated targetType:id
+        in: query
+        name: items
+        required: true
+        type: string
+      responses:
+        "200":
+          description: reactions
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get review reactions for multiple targets
+      tags:
+      - Review Reactions
+  /search/semantic:
+    get:
+      description: Search media by semantic similarity to the query (description,
+        themes, mood). Requires recommendation service.
+      parameters:
+      - description: Search query (by meaning)
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: 'Filter: movie, anime, game, etc.'
+        in: query
+        name: mediaType
+        type: string
+      - description: Max results (default 20)
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_services.SemanticSearchResponse'
+      summary: Semantic search by description/meaning
+      tags:
+      - search
+  /similar/store/{entityType}/{id}:
+    get:
+      parameters:
+      - description: Entity type
+        in: path
+        name: entityType
+        required: true
+        type: string
+      - description: Entity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: content|users
+        in: query
+        name: source
+        type: string
+      - default: 20
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.PrecomputedSimilarResponse'
+      summary: Get precomputed similar entities
+      tags:
+      - Similar
+  /stats/{type}/{id}:
+    get:
+      parameters:
+      - description: Entity type
+        in: path
+        name: type
+        required: true
+        type: string
+      - description: Entity ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.PopularityStats'
+      summary: Get popularity stats for entity
+      tags:
+      - Trending
+  /stream/video:
+    get:
+      parameters:
+      - description: Path relative to UploadDir
+        in: query
+        name: path
+        required: true
+        type: string
+      - description: 1080|720|480|360 — transcoded version
+        in: query
+        name: quality
+        type: string
+      responses:
+        "200":
+          description: video stream
+        "400":
+          description: error
+        "404":
+          description: error
+      summary: Stream video file (trailers, etc.)
+      tags:
+      - Stream
+  /studios:
+    get:
+      parameters:
+      - description: Search by name
+        in: query
+        name: search
+        type: string
+      - description: Comma-separated IDs
+        in: query
+        name: ids
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Studio'
+            type: array
+      summary: Get studios list
+      tags:
+      - Catalog
+  /studios/{id}:
+    get:
+      parameters:
+      - description: Studio ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get studio by ID with projects
+      tags:
+      - Catalog
+  /themes:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.Theme'
+            type: array
+      summary: Get all themes
+      tags:
+      - Catalog
+  /trending:
+    get:
+      parameters:
+      - description: Entity type
+        in: query
+        name: type
+        type: string
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+      summary: Get trending entities
+      tags:
+      - Trending
+  /tv-series:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Get TV series list
+      tags:
+      - TV Series
+  /tv-series/{id}:
+    get:
+      parameters:
+      - description: TV Series ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get TV series by ID
+      tags:
+      - TV Series
+  /tv-series/popular:
+    get:
+      parameters:
+      - default: 10
+        description: Limit
+        in: query
+        name: limit
+        type: integer
+      - default: popular
+        description: popular|trending|rating
+        in: query
+        name: mode
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.TVSeries'
+            type: array
+      summary: Get popular TV series
+      tags:
+      - TV Series
+  /tv-series/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.ExtendedPaginatedResponse'
+      summary: Search TV series
+      tags:
+      - TV Series
+  /users:
+    get:
+      parameters:
+      - description: Sort
+        in: query
+        name: sort
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get users activity list
+      tags:
+      - Users
+  /users/{id}:
+    get:
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.PublicProfileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user profile by ID
+      tags:
+      - Users
+  /users/me:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: username?, name?, email?, socialLinks?
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.UpdateProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update current user profile
+      tags:
+      - Users
+  /users/me/avatar:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Image file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: path, user
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Upload current user avatar
+      tags:
+      - Users
+  /users/me/change-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: currentPassword, newPassword
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Change current user password
+      tags:
+      - Users
+  /users/me/ping:
+    post:
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update last seen (heartbeat)
+      tags:
+      - Users
+  /users/me/settings:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.UserSettings'
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get current user settings
+      tags:
+      - Users
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: profileVisibility, etc.
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handlers.UpdateMySettingsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_movie-matcher_backend_internal_models.UserSettings'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update current user settings
+      tags:
+      - Users
+  /users/search:
+    get:
+      parameters:
+      - description: Search query
+        in: query
+        name: q
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Search users by query
+      tags:
+      - Users
+  /users/username/{username}:
+    get:
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handlers.PublicProfileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user profile by username
+      tags:
+      - Users
+  /users/username/{username}/achievements:
+    get:
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: achievements
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user achievements by username
+      tags:
+      - Users
+  /users/username/{username}/followers:
+    get:
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user followers by username
+      tags:
+      - Users
+  /users/username/{username}/friends:
+    get:
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get user friends by username
+      tags:
+      - Users
+swagger: "2.0"

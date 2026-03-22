@@ -1,0 +1,152 @@
+openapi: 3.0.3
+info:
+  title: Movie Matcher Recommendation Service API
+  description: Vector-based recommendation engine for media content
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000
+    description: Development server
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: Service status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  embedding_model:
+                    type: string
+                  index_size:
+                    type: integer
+
+  /recommendations/{user_id}:
+    get:
+      summary: Get personalized recommendations
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: media_type
+          in: query
+          schema:
+            type: string
+            default: movie
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 50
+      responses:
+        '200':
+          description: Recommendations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommendations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RecommendedItem'
+                  user_id:
+                    type: integer
+                  media_type:
+                    type: string
+
+  /similar/{media_type}/{media_id}:
+    get:
+      summary: Get similar media items
+      parameters:
+        - name: media_type
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: media_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Similar items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  similar:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RecommendedItem'
+                  media_id:
+                    type: string
+                  media_type:
+                    type: string
+
+  /index/{media_type}:
+    post:
+      summary: Index media items
+      parameters:
+        - name: media_type
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: batch_size
+          in: query
+          schema:
+            type: integer
+            default: 100
+      responses:
+        '200':
+          description: Indexing started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+  /index:
+    delete:
+      summary: Clear vector index
+      responses:
+        '200':
+          description: Index cleared
+
+components:
+  schemas:
+    RecommendedItem:
+      type: object
+      properties:
+        media_id:
+          type: integer
+        title:
+          type: string
+        score:
+          type: number
+        poster:
+          type: string
+        description:
+          type: string
