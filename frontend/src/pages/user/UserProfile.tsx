@@ -349,13 +349,13 @@ export default function UserProfile() {
                         const { navKey } = LIST_TYPE_TO_PATH[entityType] || { path: entityType, navKey: entityType }
                         let typeLabel: string
                         if (entityType === 'movie') {
-                          typeLabel = 'Кино'
+                          typeLabel = t('profile.mediaTypeMovie')
                         } else if (entityType === 'anime') {
-                          typeLabel = 'Аниме'
+                          typeLabel = t('profile.mediaTypeAnime')
                         } else if (entityType === 'cartoonSeries') {
-                          typeLabel = 'Мульты'
+                          typeLabel = t('profile.mediaTypeCartoons')
                         } else if (entityType === 'books') {
-                          typeLabel = 'Книжное'
+                          typeLabel = t('profile.mediaTypeBooks')
                         } else {
                           typeLabel = t(`nav.${navKey}`)
                         }
@@ -384,13 +384,13 @@ export default function UserProfile() {
                       const { path, navKey } = LIST_TYPE_TO_PATH[entityType] || { path: entityType, navKey: entityType }
                       let typeLabel: string
                       if (entityType === 'movie') {
-                        typeLabel = 'Кино'
+                        typeLabel = t('profile.mediaTypeMovie')
                       } else if (entityType === 'anime') {
-                        typeLabel = 'Аниме'
+                        typeLabel = t('profile.mediaTypeAnime')
                       } else if (entityType === 'cartoonSeries') {
-                        typeLabel = 'Мульты'
+                        typeLabel = t('profile.mediaTypeCartoons')
                       } else if (entityType === 'books') {
-                        typeLabel = 'Книжное'
+                        typeLabel = t('profile.mediaTypeBooks')
                       } else {
                         typeLabel = t(`nav.${navKey}`)
                       }
