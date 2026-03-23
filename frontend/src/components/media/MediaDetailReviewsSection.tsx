@@ -96,7 +96,7 @@ export function MediaDetailReviewsSection({
                     <span className="text-sm font-medium text-[var(--theme-text)] truncate block">
                       {t('activity.you')}
                     </span>
-                    <span className="text-xs text-[var(--theme-text-muted)]">Ваша рецензия</span>
+                    <span className="text-xs text-[var(--theme-text-muted)]">{t('media.yourReview')}</span>
                   </div>
                 </div>
                 <button

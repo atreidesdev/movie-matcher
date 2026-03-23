@@ -553,7 +553,7 @@ export default function MediaListPage({ type }: MediaListPageProps) {
 
         {!loading && (total > 0 || totalPages > 1) && (
           <div className="mt-8 flex flex-col items-center gap-3">
-            <nav className="flex flex-wrap items-center justify-center gap-1 sm:gap-2" aria-label="Pagination">
+            <nav className="flex flex-wrap items-center justify-center gap-1 sm:gap-2" aria-label={t('common.pagination')}>
               <button
                 type="button"
                 disabled={(filters.page ?? 1) <= 1}

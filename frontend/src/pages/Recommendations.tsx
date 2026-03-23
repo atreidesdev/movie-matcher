@@ -76,14 +76,14 @@ export default function Recommendations() {
                   <img src={getMediaAssetUrl(item.poster)} alt={item.title} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full bg-theme-bg-alt flex items-center justify-center">
-                    <span className="text-theme-muted text-sm">No Image</span>
+                    <span className="text-theme-muted text-sm">{t('common.noImage')}</span>
                   </div>
                 )}
               </div>
               <div className="p-3">
                 <h3 className="font-medium truncate text-theme">{item.title}</h3>
                 <p className="rec-page-match text-xs mt-1 text-theme-muted">
-                  Match: {((item.score ?? 0) * 100).toFixed(0)}%
+                  {t('common.match')}: {((item.score ?? 0) * 100).toFixed(0)}%
                 </p>
               </div>
             </Link>

@@ -91,7 +91,7 @@ export default function Login() {
           </div>
 
           {isMockEnabled() && (
-            <p className="text-center text-xs text-[var(--theme-text-muted)]">Мок: user@test.com / password123</p>
+            <p className="text-center text-xs text-[var(--theme-text-muted)]">{t('auth.mockCredentials')}</p>
           )}
           <button type="submit" disabled={isLoading} className="btn-primary w-full disabled:opacity-50">
             {isLoading ? t('auth.signingIn') : t('auth.signIn')}

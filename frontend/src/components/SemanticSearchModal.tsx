@@ -110,7 +110,7 @@ export default function SemanticSearchModal({ isOpen, onClose }: SemanticSearchM
                       />
                     ) : (
                       <div className="w-full h-full bg-theme-bg-alt flex items-center justify-center">
-                        <span className="text-theme-muted text-xs">No image</span>
+                        <span className="text-theme-muted text-xs">{t('common.noImage')}</span>
                       </div>
                     )}
                     <div className="absolute top-1.5 right-1.5 bg-gray-900/80 backdrop-blur-sm rounded px-1.5 py-0.5 text-[10px] text-white">

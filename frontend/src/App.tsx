@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Layout from '@/components/Layout'
 import Home from '@/pages/Home'
 import MediaListPage from '@/pages/media/MediaListPage'
@@ -84,9 +85,10 @@ function RedirectToMyFavorites() {
 }
 
 function PageFallback() {
+  const { t } = useTranslation()
   return (
     <div className="flex items-center justify-center min-h-[200px]">
-      <div className="animate-pulse text-gray-400">Загрузка…</div>
+      <div className="animate-pulse text-gray-400">{t('common.loading')}</div>
     </div>
   )
 }

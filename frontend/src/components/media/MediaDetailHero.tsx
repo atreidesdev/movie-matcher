@@ -5,7 +5,7 @@ import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import { getMediaTitle } from '@/utils/localizedText'
 import { getMediaEpisodesCount } from '@/utils/typeGuards'
 import { getListStatusLabel } from '@/utils/listStatusLabels'
-import { isCollectionSupportedForType } from '@/components/AddToCollectionModal'
+import { isCollectionSupportedForType } from '@/utils/collections'
 import type { Media, ListItem, ListStatus } from '@/types'
 import type { MediaTypeForPath } from '@/utils/mediaPaths'
 
@@ -98,7 +98,7 @@ export function MediaDetailHero({
                   <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[color-mix(in_srgb,var(--theme-bg)_65%,transparent)]">
                     <IconPicture className="h-7 w-7" />
                   </span>
-                  <span className="text-sm font-medium">Постер отсутствует</span>
+                  <span className="text-sm font-medium">{t('media.posterMissing')}</span>
                 </div>
               )}
               <div className="media-detail-mobile-heading">

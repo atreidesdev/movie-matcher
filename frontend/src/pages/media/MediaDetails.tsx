@@ -522,7 +522,7 @@ export default function MediaDetails({ type }: MediaDetailsProps) {
   if (!media) {
     return (
       <div className="text-center py-12">
-        <p className="text-[var(--theme-text-muted)]">Media not found</p>
+        <p className="text-[var(--theme-text-muted)]">{t('common.notFound')}</p>
       </div>
     )
   }
@@ -856,8 +856,8 @@ export default function MediaDetails({ type }: MediaDetailsProps) {
     <div className="media-detail-page">
       {(media as Media & { isHidden?: boolean }).isHidden && (
         <div className="mb-6 rounded-xl bg-amber-100 border border-amber-300 text-amber-900 px-4 py-3 flex items-center gap-2">
-          <span className="font-medium">Тайтл заблокирован или скрыт.</span>
-          <span className="text-sm opacity-90">Контент недоступен для просмотра.</span>
+          <span className="font-medium">{t('media.hiddenBlockedTitle')}</span>
+          <span className="text-sm opacity-90">{t('media.hiddenBlockedBody')}</span>
         </div>
       )}
 

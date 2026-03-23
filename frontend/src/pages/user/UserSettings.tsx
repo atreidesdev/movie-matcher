@@ -214,7 +214,7 @@ export default function UserSettings() {
       <div className="profile-subpage bg-gray-50 rounded-xl p-6 sm:p-8">
         <nav
           className="profile-subpage-breadcrumb flex items-center gap-1 text-sm text-gray-600 mb-4"
-          aria-label="Breadcrumb"
+          aria-label={t('common.breadcrumb')}
         >
           <Link
             to={currentUser?.username ? `/user/${encodeURIComponent(currentUser.username)}` : '/'}

@@ -257,7 +257,7 @@ export default function AdminSitesList() {
                     className="input w-full"
                     placeholder={t('admin.name')}
                   />
-                  <label className="block text-sm font-medium text-gray-700">URL</label>
+                  <label className="block text-sm font-medium text-gray-700">{t('common.url')}</label>
                   <input
                     type="url"
                     value={editUrl}

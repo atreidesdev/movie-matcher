@@ -1645,7 +1645,7 @@ export default function MediaEditModal({ open, onClose, media, mediaType, locale
                           className="input w-full text-sm rounded-lg"
                         />
                         <button type="button" onClick={searchPersons} className="btn-secondary text-xs mt-1 rounded-lg">
-                          Искать
+                          {t('common.search')}
                         </button>
                         {personResults.length > 0 && (
                           <ul className="mt-1 border rounded-lg max-h-24 overflow-y-auto bg-[var(--theme-bg)]">
@@ -1689,7 +1689,7 @@ export default function MediaEditModal({ open, onClose, media, mediaType, locale
                           onClick={searchCharacters}
                           className="btn-secondary text-xs mt-1 rounded-lg"
                         >
-                          Искать
+                          {t('common.search')}
                         </button>
                         {characterResults.length > 0 && (
                           <ul className="mt-1 border rounded-lg max-h-24 overflow-y-auto bg-[var(--theme-bg)]">
@@ -1795,12 +1795,12 @@ export default function MediaEditModal({ open, onClose, media, mediaType, locale
                           onClick={searchStaffPersons}
                           className="btn-secondary text-xs mt-1 rounded-lg ml-1"
                         >
-                          Искать
+                          {t('common.search')}
                         </button>
                       </div>
                       <div>
                         <CustomSelect
-                          label="Чем занят"
+                          label={t('admin.roleOrProfession')}
                           value={addStaffProfession}
                           onChange={(v) => setAddStaffProfession(v as Profession)}
                           options={STAFF_PROFESSIONS.map((pr) => ({ value: pr, label: t('person.' + pr) }))}

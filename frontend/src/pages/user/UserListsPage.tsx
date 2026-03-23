@@ -73,12 +73,12 @@ const LIST_TYPE_NAV_KEY: Record<ListEntityType, string> = {
   'anime-movies': 'animeMovies',
 }
 
-const LIST_GROUPS: { key: ContentGroupKey; label: string; types: ListEntityType[] }[] = [
-  { key: 'cinema', label: 'Кино', types: ['movies', 'tv-series'] },
-  { key: 'anime', label: 'Аниме', types: ['anime', 'anime-movies'] },
-  { key: 'cartoons', label: 'Мульты', types: ['cartoon-series', 'cartoon-movies'] },
-  { key: 'books', label: 'Книжное', types: ['books', 'manga', 'light-novels'] },
-  { key: 'games', label: 'Игры', types: ['games'] },
+const LIST_GROUPS: { key: ContentGroupKey; labelKey: string; types: ListEntityType[] }[] = [
+  { key: 'cinema', labelKey: 'profile.mediaTypeMovie', types: ['movies', 'tv-series'] },
+  { key: 'anime', labelKey: 'profile.mediaTypeAnime', types: ['anime', 'anime-movies'] },
+  { key: 'cartoons', labelKey: 'profile.mediaTypeCartoons', types: ['cartoon-series', 'cartoon-movies'] },
+  { key: 'books', labelKey: 'profile.mediaTypeBooks', types: ['books', 'manga', 'light-novels'] },
+  { key: 'games', labelKey: 'nav.games', types: ['games'] },
 ]
 
 const LIST_TYPE_TO_GROUP: Record<ListEntityType, ContentGroupKey> = {
@@ -750,7 +750,7 @@ export default function UserListsPage() {
                   </p>
                   <div className="flex flex-col gap-3">
                     <div className="list-filter-group flex flex-col rounded-xl bg-slate-200 p-1 border border-slate-300 shadow gap-1">
-                      {LIST_GROUPS.map(({ key, label }) => (
+                      {LIST_GROUPS.map(({ key, labelKey }) => (
                         <button
                           key={key}
                           type="button"
@@ -761,7 +761,7 @@ export default function UserListsPage() {
                               : 'text-slate-600 hover:bg-slate-300 hover:text-slate-800'
                           }`}
                         >
-                          {label}
+                          {t(labelKey)}
                         </button>
                       ))}
                     </div>
@@ -862,7 +862,7 @@ export default function UserListsPage() {
             </p>
             <div className="flex flex-col gap-3">
               <div className="list-filter-group flex flex-col rounded-xl bg-slate-200 p-1 border border-slate-300 shadow gap-1">
-                {LIST_GROUPS.map(({ key, label }) => (
+                {LIST_GROUPS.map(({ key, labelKey }) => (
                   <button
                     key={key}
                     type="button"
@@ -873,7 +873,7 @@ export default function UserListsPage() {
                         : 'text-slate-600 hover:bg-slate-300 hover:text-slate-800'
                     }`}
                   >
-                    {label}
+                    {t(labelKey)}
                   </button>
                 ))}
               </div>

@@ -514,7 +514,7 @@ function EditFranchiseLinkModal({ link, onClose, onSaved, onUpdateLink }: EditFr
               </option>
             ))}
           </select>
-          <label className="block text-sm font-medium text-gray-700">Order</label>
+          <label className="block text-sm font-medium text-gray-700">{t('common.order')}</label>
           <input
             type="number"
             value={orderNumber}
@@ -522,7 +522,7 @@ function EditFranchiseLinkModal({ link, onClose, onSaved, onUpdateLink }: EditFr
             className="input w-full"
             placeholder="—"
           />
-          <label className="block text-sm font-medium text-gray-700">Note</label>
+          <label className="block text-sm font-medium text-gray-700">{t('common.note')}</label>
           <input
             type="text"
             value={note}
@@ -611,7 +611,7 @@ function AddFranchiseLinkModal({ franchiseId, onClose, onAdded }: AddFranchiseLi
         <p className="text-sm text-gray-500 mb-4">{t('admin.bidirectionalLinkHint')}</p>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">From (media)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('admin.fromMedia')}</label>
             <div className="flex gap-2 mb-2">
               <select value={fromType} onChange={(e) => setFromType(e.target.value)} className="input flex-1">
                 {MEDIA_TYPE_KEYS.map((k) => (
@@ -654,7 +654,7 @@ function AddFranchiseLinkModal({ franchiseId, onClose, onAdded }: AddFranchiseLi
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">To (media)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">{t('admin.toMedia')}</label>
             <div className="flex gap-2 mb-2">
               <select value={toType} onChange={(e) => setToType(e.target.value)} className="input flex-1">
                 {MEDIA_TYPE_KEYS.map((k) => (

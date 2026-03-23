@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { Media, ListStatus } from '@/types'
 import MediaCard from '@/components/MediaCard'
 import { MediaTypeForPath } from '@/utils/mediaPaths'
@@ -27,6 +28,7 @@ export default function MediaGrid({
   onQuickStatus,
   rankOffset,
 }: MediaGridProps) {
+  const { t } = useTranslation()
   if (loading) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 min-[1920px]:grid-cols-6 gap-4">
@@ -46,7 +48,7 @@ export default function MediaGrid({
   if (items.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-400">No items found</p>
+        <p className="text-gray-400">{t('common.noItemsFound')}</p>
       </div>
     )
   }

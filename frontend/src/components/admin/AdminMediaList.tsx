@@ -1113,7 +1113,7 @@ export default function AdminMediaList() {
                     {mediaType === 'anime' && (
                       <>
                         <label className="block text-sm font-medium text-gray-700">
-                          {t('admin.animeTitleRomaji', { defaultValue: 'Транслит (ромадзи)' })}
+                          {t('admin.animeTitleRomaji')}
                         </label>
                         <input
                           type="text"
@@ -1123,7 +1123,7 @@ export default function AdminMediaList() {
                           placeholder="Hagane no Renkinjutsushi"
                         />
                         <label className="block text-sm font-medium text-gray-700">
-                          {t('admin.animeTitleKatakana', { defaultValue: 'Оригинальное название (катакана)' })}
+                          {t('admin.animeTitleKatakana')}
                         </label>
                         <input
                           type="text"
@@ -1196,7 +1196,7 @@ export default function AdminMediaList() {
                     )}
 
                     <label className="block text-sm font-medium text-gray-700 mt-3">
-                      {t('admin.backdrop', { defaultValue: 'Задник' })}
+                      {t('admin.backdrop')}
                     </label>
                     <div className="flex flex-wrap items-center gap-2">
                       <input
@@ -1430,10 +1430,10 @@ export default function AdminMediaList() {
                           onChange={(e) => setForm((f) => ({ ...f, isHidden: e.target.checked }))}
                           className="rounded border-gray-300"
                         />
-                        <span className="text-sm font-medium text-gray-700">Скрыт (заблокирован)</span>
+                        <span className="text-sm font-medium text-gray-700">{t('admin.hiddenBlocked')}</span>
                       </label>
                       <div className="flex items-center gap-2">
-                        <label className="text-sm font-medium text-gray-700">Статус</label>
+                        <label className="text-sm font-medium text-gray-700">{t('media.status')}</label>
                         <select
                           value={form.status}
                           onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))}
@@ -1686,10 +1686,10 @@ export default function AdminMediaList() {
 
                         {schema.hasSeriesFields && (
                           <div className="border-t border-gray-200 pt-3 mt-3 space-y-3">
-                            <h4 className="text-sm font-semibold text-gray-800">{t('media.season')} / серии</h4>
+                            <h4 className="text-sm font-semibold text-gray-800">{t('admin.seasonAndEpisodes')}</h4>
                             <div className="grid grid-cols-2 gap-3">
                               <div>
-                                <label className="block text-xs text-gray-600">Сезон</label>
+                                <label className="block text-xs text-gray-600">{t('media.season')}</label>
                                 <input
                                   type="text"
                                   value={form.seasonNumber}
@@ -1719,7 +1719,7 @@ export default function AdminMediaList() {
                                 />
                               </div>
                               <div>
-                                <label className="block text-xs text-gray-600">Текущая серия</label>
+                                <label className="block text-xs text-gray-600">{t('media.currentEpisode')}</label>
                                 <input
                                   type="text"
                                   value={form.currentEpisode}
@@ -1812,7 +1812,7 @@ export default function AdminMediaList() {
                                   }}
                                   className="btn-secondary text-xs rounded-lg flex items-center gap-1"
                                 >
-                                  <IconPlus className="w-3 h-3" /> Добавить строку
+                                  <IconPlus className="w-3 h-3" /> {t('common.add')}
                                 </button>
                                 <button
                                   type="button"
@@ -1993,11 +1993,11 @@ export default function AdminMediaList() {
 
                         {(schema.hasMangaFields || schema.hasBookFields || schema.hasLightNovelFields) && (
                           <div className="border-t border-gray-200 pt-3 mt-3 space-y-3">
-                            <h4 className="text-sm font-semibold text-gray-800">Тома / страницы / издатели</h4>
+                            <h4 className="text-sm font-semibold text-gray-800">{t('admin.volumesPagesPublishers')}</h4>
                             {(schema.hasMangaFields || schema.hasLightNovelFields) && (
                               <div className="grid grid-cols-3 gap-2">
                                 <div>
-                                  <label className="block text-xs text-gray-600">Томов</label>
+                                  <label className="block text-xs text-gray-600">{t('admin.volumes')}</label>
                                   <input
                                     type="text"
                                     value={form.volumes}
@@ -2007,7 +2007,7 @@ export default function AdminMediaList() {
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-xs text-gray-600">Текущий том</label>
+                                  <label className="block text-xs text-gray-600">{t('admin.currentVolume')}</label>
                                   <input
                                     type="text"
                                     value={form.currentVolume}
@@ -2017,7 +2017,7 @@ export default function AdminMediaList() {
                                 </div>
                                 {schema.hasMangaFields && (
                                   <div>
-                                    <label className="block text-xs text-gray-600">Текущая глава</label>
+                                    <label className="block text-xs text-gray-600">{t('admin.currentChapter')}</label>
                                     <input
                                       type="text"
                                       value={form.currentChapter}
@@ -2031,7 +2031,7 @@ export default function AdminMediaList() {
                             {(schema.hasBookFields || schema.hasLightNovelFields) && (
                               <div className="flex flex-wrap gap-3 items-end">
                                 <div>
-                                  <label className="block text-xs text-gray-600">Страниц</label>
+                                  <label className="block text-xs text-gray-600">{t('admin.pages')}</label>
                                   <input
                                     type="text"
                                     value={form.pages}
@@ -2109,7 +2109,7 @@ export default function AdminMediaList() {
                               </div>
                             </div>
                             <div>
-                              <label className="block text-xs text-gray-600 mb-1">Авторы</label>
+                              <label className="block text-xs text-gray-600 mb-1">{t('admin.authors')}</label>
                               {addedAuthorPersons.length > 0 && (
                                 <div className="flex flex-wrap gap-1.5 mb-2">
                                   {addedAuthorPersons.map((p) => (
@@ -2157,7 +2157,7 @@ export default function AdminMediaList() {
                                   }
                                   className="btn-secondary text-xs mt-1 rounded-lg"
                                 >
-                                  Искать
+                                  {t('common.search')}
                                 </button>
                                 {authorResults.length > 0 && (
                                   <ul className="absolute z-[70] mt-1 w-full border rounded-lg bg-white shadow-lg max-h-40 overflow-y-auto py-1">
@@ -2242,7 +2242,7 @@ export default function AdminMediaList() {
                                   }
                                   className="btn-secondary text-xs mt-1 rounded-lg"
                                 >
-                                  Искать
+                                  {t('common.search')}
                                 </button>
                                 {illustratorResults.length > 0 && (
                                   <ul className="absolute z-[70] mt-1 w-full border rounded-lg bg-white shadow-lg max-h-40 overflow-y-auto py-1">
@@ -2347,7 +2347,7 @@ export default function AdminMediaList() {
                                 <p className="text-xs font-medium text-amber-800">{t('admin.addDubbing')}</p>
                                 <div className="flex flex-col sm:flex-row flex-wrap gap-3 items-stretch sm:items-end">
                                   <div className="min-w-0 w-full sm:w-auto sm:min-w-[180px]">
-                                    <label className="block text-xs text-gray-600 mb-0.5">Запись каста</label>
+                                    <label className="block text-xs text-gray-600 mb-0.5">{t('admin.castEntry')}</label>
                                     <select
                                       value={dubbingCastId === 'new' ? 'new' : (dubbingCastId ?? '')}
                                       onChange={(e) => {
@@ -2375,7 +2375,7 @@ export default function AdminMediaList() {
                                     </select>
                                   </div>
                                   <div className="relative min-w-0 w-full sm:w-auto flex-1 sm:flex-initial">
-                                    <label className="block text-xs text-gray-600 mb-0.5">Актёр озвучки (поиск)</label>
+                                    <label className="block text-xs text-gray-600 mb-0.5">{t('admin.voiceActorSearch')}</label>
                                     <div className="flex flex-wrap sm:flex-nowrap items-center gap-1">
                                       <input
                                         type="text"
@@ -2400,7 +2400,7 @@ export default function AdminMediaList() {
                                         }
                                         className="btn-secondary text-xs rounded-lg shrink-0"
                                       >
-                                        Искать
+                                        {t('common.search')}
                                       </button>
                                     </div>
                                     {dubbingPersonResults.length > 0 && (
@@ -2489,7 +2489,7 @@ export default function AdminMediaList() {
                                     onClick={searchPersons}
                                     className="btn-secondary text-xs mt-1 rounded-lg"
                                   >
-                                    Искать
+                                    {t('common.search')}
                                   </button>
                                   {personResults.length > 0 && (
                                     <ul className="mt-1 border rounded-lg max-h-24 overflow-y-auto bg-white">
@@ -2533,7 +2533,7 @@ export default function AdminMediaList() {
                                     onClick={searchCharacters}
                                     className="btn-secondary text-xs mt-1 rounded-lg"
                                   >
-                                    Искать
+                                    {t('common.search')}
                                   </button>
                                   {characterResults.length > 0 && (
                                     <ul className="mt-1 border rounded-lg max-h-24 overflow-y-auto bg-white">
@@ -2668,11 +2668,11 @@ export default function AdminMediaList() {
                                     }}
                                     className="btn-secondary text-xs mt-1 rounded-lg ml-1"
                                   >
-                                    Искать
+                                    {t('common.search')}
                                   </button>
                                 </div>
                                 <div>
-                                  <label className="block text-xs text-gray-500 mb-1">Чем занят</label>
+                                  <label className="block text-xs text-gray-500 mb-1">{t('admin.roleOrProfession')}</label>
                                   <select
                                     value={addStaffProfession}
                                     onChange={(e) => setAddStaffProfession(e.target.value as Profession)}

@@ -106,7 +106,7 @@ export default function CharacterDetail() {
           />
         ) : (
           <div className="w-32 h-48 bg-gray-200 rounded-xl flex items-center justify-center flex-shrink-0 text-gray-400 text-sm">
-            No image
+            {t('common.noImage')}
           </div>
         )}
         <div className="flex-1 min-w-0">

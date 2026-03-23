@@ -168,7 +168,7 @@ export default function CommunityDetailPage() {
       {postsToShow.length === 0 ? (
         <p className="text-[var(--theme-text-muted)] py-8 text-center">
           <IconNewspaper className="w-10 h-10 mx-auto mb-2 opacity-50" />
-          <span className="block">Нет постов</span>
+          <span className="block">{t('communities.noPosts')}</span>
         </p>
       ) : (
         <ul className="space-y-4">

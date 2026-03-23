@@ -257,7 +257,7 @@ export default function MediaCard({
             <img src={posterUrl ?? undefined} alt={title} className="w-full h-full object-cover media-card-poster" />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <span className="text-[var(--theme-text-muted)] text-sm">No Image</span>
+              <span className="text-[var(--theme-text-muted)] text-sm">{t('common.noImage')}</span>
             </div>
           )}
           {showFavoriteButton && onRemoveFromFavorites && (

@@ -241,7 +241,7 @@ export default function PublicCollectionDetail() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-10 mt-6 space-y-6">
-      <nav className="flex items-center gap-1 text-sm text-theme-muted mb-4" aria-label="Breadcrumb">
+      <nav className="flex items-center gap-1 text-sm text-theme-muted mb-4" aria-label={t('common.breadcrumb')}>
         <Link to="/public-collections" className="link-underline-animate inline-flex items-center gap-1">
           <ChevronLeft className="w-4 h-4 shrink-0" />
           {t('nav.publicCollections')}
