@@ -44,7 +44,6 @@ function FilterSelectFullList({
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [filter, setFilter] = useState('')
-  const [hoveredId, setHoveredId] = useState<number | null>(null)
   const ref = useRef<HTMLDivElement>(null)
   const hasExclude = onExcludeToggle != null
 
@@ -118,7 +117,7 @@ function FilterSelectFullList({
             {excludedOptions.map((opt) => (
               <span
                 key={opt.id}
-                className="filter-excluded-chip inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-red-500/20 text-red-600 dark:text-red-400 border border-red-300 dark:border-red-600/50"
+                className="filter-excluded-chip inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-red-500/20 text-red-600 dark:text-red-400"
               >
                 <span className="truncate max-w-[120px] line-through">{getOptionName(opt)}</span>
                 <button
@@ -127,7 +126,7 @@ function FilterSelectFullList({
                     e.stopPropagation()
                     onExcludeToggle?.(opt.id)
                   }}
-                  className="shrink-0 p-0.5 rounded hover:bg-red-500/20 focus:outline-none"
+                  className="shrink-0 p-0.5 rounded hover:bg-white/20 focus:outline-none"
                   aria-label={t('common.remove')}
                 >
                   <IconCross className="w-3 h-3" />
@@ -149,7 +148,7 @@ function FilterSelectFullList({
               onChange={(e) => setFilter(e.target.value)}
               className="mx-2 mb-1 px-2 py-1.5 text-sm border border-[var(--theme-border)] rounded-md bg-[var(--theme-bg)] text-[var(--theme-text)] focus:outline-none focus:ring-1 focus:ring-[var(--theme-primary)] focus:border-[var(--theme-primary)]"
             />
-            <div className="overflow-y-auto px-1" role="listbox">
+            <div className="overflow-y-auto px-1.5 py-1" role="listbox">
               {filteredOptions.length === 0 ? (
                 <p className="text-xs text-[var(--theme-text-muted)] py-2 px-2">{t('common.noResults')}</p>
               ) : (
@@ -157,15 +156,12 @@ function FilterSelectFullList({
                   const name = getOptionName(opt)
                   const checked = selectedIds.includes(opt.id)
                   const excluded = excludedIds.includes(opt.id)
-                  const showExcludeBtn = hasExclude && (hoveredId === opt.id || excluded)
                   return (
                     <div
                       key={opt.id}
                       role="option"
                       aria-selected={checked || excluded}
-                      onMouseEnter={() => setHoveredId(opt.id)}
-                      onMouseLeave={() => setHoveredId(null)}
-                      className={`group flex items-center gap-2 px-2 py-1.5 text-sm rounded-md text-[var(--theme-text)] ${checked ? 'bg-[var(--theme-primary)]/30' : excluded ? 'bg-red-500/10' : 'hover:bg-[var(--theme-surface)]'}`}
+                      className={`group flex items-center gap-2 px-2 py-1.5 my-0.5 text-sm rounded-md text-[var(--theme-text)] ${checked ? 'bg-[var(--theme-primary)]/30' : excluded ? 'bg-red-500/10' : 'hover:bg-[var(--theme-surface)]'}`}
                     >
                       <button
                         type="button"
@@ -180,13 +176,18 @@ function FilterSelectFullList({
                             <Check className="w-3.5 h-3.5 text-white" />
                           </span>
                         )}
-                        {showExcludeBtn && (
+                        {hasExclude && (
                           <button
                             type="button"
                             onClick={(e) => handleExclude(e, opt.id)}
-                            className="p-1 rounded hover:bg-red-500/20 text-red-500 focus:outline-none"
+                            className={`p-1 rounded focus:outline-none transition-opacity ${
+                              excluded
+                                ? 'text-red-500 hover:bg-red-500/20 opacity-100'
+                                : 'text-[var(--theme-text-muted)] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto hover:bg-[var(--theme-surface)]'
+                            }`}
                             title={excluded ? t('common.remove') : t('media.exclude')}
                             aria-label={excluded ? t('common.remove') : t('media.exclude')}
+                            tabIndex={excluded ? 0 : -1}
                           >
                             <IconCross className="w-3.5 h-3.5" />
                           </button>

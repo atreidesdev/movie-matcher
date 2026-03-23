@@ -71,6 +71,7 @@ function FilterDropdown<T extends number | string>({
 }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!open) return
@@ -109,7 +110,7 @@ function FilterDropdown<T extends number | string>({
                       onToggle(opt)
                     }}
                     className="shrink-0 p-0.5 rounded hover:bg-white/20 text-white focus:outline-none"
-                    aria-label="Remove"
+                    aria-label={t('common.remove')}
                   >
                     <IconCross className="w-3 h-3" />
                   </button>
@@ -119,9 +120,9 @@ function FilterDropdown<T extends number | string>({
               {(excluded ?? []).map((opt) => (
                 <span
                   key={`exc-${String(opt)}`}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-[#ffe9f0] text-gray-800 border border-[#fecaca]"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs bg-red-500/20 text-red-600 dark:text-red-400"
                 >
-                  <span className="truncate max-w-[90px]">{getOptionLabel(opt)}</span>
+                  <span className="truncate max-w-[90px] line-through">{getOptionLabel(opt)}</span>
                   <button
                     type="button"
                     onClick={(e) => {
@@ -129,8 +130,8 @@ function FilterDropdown<T extends number | string>({
                       e.stopPropagation()
                       onExcludeToggle?.(opt)
                     }}
-                    className="shrink-0 p-0.5 rounded hover:bg-[#fecaca]/40 focus:outline-none"
-                    aria-label="Remove exclude"
+                    className="shrink-0 p-0.5 rounded hover:bg-white/20 focus:outline-none"
+                    aria-label={t('lists.removeExclude')}
                     disabled={!onExcludeToggle}
                   >
                     <IconCross className="w-3 h-3" />
@@ -145,7 +146,7 @@ function FilterDropdown<T extends number | string>({
         />
       </button>
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-1 z-20 py-1 rounded-lg border border-[var(--theme-border)] bg-[var(--theme-bg)] shadow-lg max-h-52 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-1 z-20 py-1.5 px-1 rounded-lg border border-[var(--theme-border)] bg-[var(--theme-bg)] shadow-lg max-h-52 overflow-y-auto">
           {options.length === 0 ? (
             <p className="px-2.5 py-2 text-xs text-[var(--theme-text-muted)]">{emptyMessage}</p>
           ) : (
@@ -179,8 +180,8 @@ function FilterDropdown<T extends number | string>({
                   key={String(opt)}
                   type="button"
                   onClick={handleRowClick}
-                  className={`group w-full flex items-center gap-1.5 px-2.5 py-2 text-sm text-left hover:bg-[var(--theme-surface)] ${
-                    checked ? 'bg-[var(--theme-primary)]/20' : isExcluded ? 'bg-red-500/10' : ''
+                  className={`group w-full flex items-center gap-1.5 px-2.5 py-2 my-0.5 text-sm text-left rounded-md hover:bg-[var(--theme-surface)] ${
+                    checked ? 'bg-[var(--theme-primary)]/30' : isExcluded ? 'bg-red-500/10' : ''
                   }`}
                 >
                   <span className={`flex-1 truncate ${isExcluded ? 'line-through' : ''}`}>
@@ -192,19 +193,20 @@ function FilterDropdown<T extends number | string>({
                     </span>
                   )}
                   {onExcludeToggle && (
-                    <span
-                      role="button"
-                      tabIndex={0}
-                      aria-label="Exclude"
+                    <button
+                      type="button"
                       onClick={handleExcludeClick}
-                      className={`shrink-0 ml-1 text-xs transition-opacity ${
+                      className={`shrink-0 ml-1 p-1 rounded focus:outline-none transition-opacity ${
                         isExcluded
-                          ? 'bg-[var(--theme-primary)] text-white rounded px-1 py-[2px]'
-                          : 'opacity-0 group-hover:opacity-100 text-[var(--theme-text-muted)]'
+                          ? 'text-red-500 hover:bg-red-500/20 opacity-100'
+                          : 'text-[var(--theme-text-muted)] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto hover:bg-[var(--theme-surface)]'
                       }`}
+                      aria-label={isExcluded ? t('lists.removeExclude') : t('media.exclude')}
+                      title={isExcluded ? t('lists.removeExclude') : t('media.exclude')}
+                      tabIndex={isExcluded ? 0 : -1}
                     >
-                      ×
-                    </span>
+                      <IconCross className="w-3.5 h-3.5" />
+                    </button>
                   )}
                 </button>
               )
