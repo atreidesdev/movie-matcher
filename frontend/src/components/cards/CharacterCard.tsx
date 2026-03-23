@@ -15,9 +15,9 @@ function CharacterCard({ characterId: _characterId, name, avatar, to, className 
   const displayName = name || t('favorites.character')
   return (
     <Link to={to} className={`card block ${className ?? ''}`}>
-      <div className="aspect-[2/3] overflow-hidden bg-gray-200">
+      <div className="aspect-[2/3] overflow-hidden rounded-t-xl bg-gray-200">
         {avatar ? (
-          <img src={getMediaAssetUrl(avatar)} alt={displayName} className="w-full h-full object-cover" />
+          <img src={getMediaAssetUrl(avatar)} alt={displayName} className="w-full h-full object-cover rounded-t-xl" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs">
             {displayName || '—'}

@@ -38,12 +38,12 @@ export default function PersonCard({
   const badgeClasses = listStatus ? getListStatusBadgeClasses(listStatus, statusMediaType) : null
   return (
     <Link to={to} className={clsx('card block group', className)}>
-      <div className="aspect-[2/3] overflow-hidden bg-gray-200 relative">
+      <div className="aspect-[2/3] overflow-hidden rounded-t-xl bg-gray-200 relative">
         {avatar ? (
           <img
             src={getMediaAssetUrl(avatar)}
             alt={fullName}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover rounded-t-xl group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs">{fullName || '—'}</div>
