@@ -76,7 +76,7 @@ export const discussionsApi = {
   getReplies: async (
     discussionId: number,
     commentId: number,
-    options?: { limit?: number; offset?: number }
+    options?: { limit?: number; offset?: number },
   ): Promise<GetRepliesResponse> => {
     const params = new URLSearchParams()
     if (options?.limit != null) params.set('limit', String(options.limit))

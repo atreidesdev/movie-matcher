@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import { useParams, Link, useOutletContext } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import type { UserProfileLayoutContext } from '@/pages/user/UserProfileLayout'
-import { ArrowLeft } from 'lucide-react'
+import { reviewsApi } from '@/api/reviews'
 import ReviewStars from '@/components/ReviewStars'
 import ReviewStatusDisplay from '@/components/ReviewStatusDisplay'
-import { reviewsApi } from '@/api/reviews'
+import { RichTextContent } from '@/components/richText/RichTextContent'
+import type { UserProfileLayoutContext } from '@/pages/user/UserProfileLayout'
 import { useAuthStore } from '@/store/authStore'
+import type { Review, UserReviewsResponse } from '@/types'
 import { getMediaPath } from '@/utils/mediaPaths'
 import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import type { Review, UserReviewsResponse } from '@/types'
-import { RichTextContent } from '@/components/richText/RichTextContent'
+import { ArrowLeft } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useOutletContext, useParams } from 'react-router-dom'
 
 type FlattenedReview = Review & {
   mediaType: MediaTypeForPath
@@ -139,53 +139,51 @@ export default function UserReviewsPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-10 mt-6">
-        {list.length === 0 ? (
-          <p className="text-gray-500">{t('media.noReviews')}</p>
-        ) : (
-          <ul className="space-y-4">
-            {list.map((rev) => (
-              <li
-                key={`${rev.mediaType}-${rev.mediaId}-${rev.id}`}
-                className="profile-review-card relative rounded-xl border border-gray-300 bg-white shadow-sm p-4"
-              >
-                <div className="absolute top-3 right-3 shrink-0">
-                  <div className="rating-badge inline-flex items-center gap-1 rounded-lg bg-space_indigo-600 backdrop-blur-sm px-2 py-1">
-                    {rev.reviewStatus && (
-                      <ReviewStatusDisplay
-                        reviewStatus={rev.reviewStatus}
-                        size={24}
-                        title={t(`media.reviewStatus.${rev.reviewStatus}`)}
-                        className="text-base leading-none text-lavender-500"
-                      />
-                    )}
-                    <span className="rating-badge-value text-sm font-medium text-lavender-500">
-                      {rev.overallRating}
-                    </span>
-                  </div>
+      {list.length === 0 ? (
+        <p className="text-gray-500">{t('media.noReviews')}</p>
+      ) : (
+        <ul className="space-y-4">
+          {list.map((rev) => (
+            <li
+              key={`${rev.mediaType}-${rev.mediaId}-${rev.id}`}
+              className="profile-review-card relative rounded-xl border border-gray-300 bg-white shadow-sm p-4"
+            >
+              <div className="absolute top-3 right-3 shrink-0">
+                <div className="rating-badge inline-flex items-center gap-1 rounded-lg bg-space_indigo-600 backdrop-blur-sm px-2 py-1">
+                  {rev.reviewStatus && (
+                    <ReviewStatusDisplay
+                      reviewStatus={rev.reviewStatus}
+                      size={24}
+                      title={t(`media.reviewStatus.${rev.reviewStatus}`)}
+                      className="text-base leading-none text-lavender-500"
+                    />
+                  )}
+                  <span className="rating-badge-value text-sm font-medium text-lavender-500">{rev.overallRating}</span>
                 </div>
-                <div className="flex items-center gap-2 mb-2 flex-wrap pr-24">
-                  <Link
-                    to={getMediaPath(rev.mediaType, rev.mediaId, rev.mediaTitle)}
-                    className="font-medium link-underline-animate profile-review-card-link"
-                  >
-                    {rev.mediaTitle || `${rev.mediaType} #${rev.mediaId}`}
-                  </Link>
-                  <span className="profile-review-stars">
-                    <ReviewStars rating={rev.overallRating} variant="darker" />
-                  </span>
+              </div>
+              <div className="flex items-center gap-2 mb-2 flex-wrap pr-24">
+                <Link
+                  to={getMediaPath(rev.mediaType, rev.mediaId, rev.mediaTitle)}
+                  className="font-medium link-underline-animate profile-review-card-link"
+                >
+                  {rev.mediaTitle || `${rev.mediaType} #${rev.mediaId}`}
+                </Link>
+                <span className="profile-review-stars">
+                  <ReviewStars rating={rev.overallRating} variant="darker" />
+                </span>
+              </div>
+              {rev.review && (
+                <div className="profile-review-card-text text-gray-700 text-sm pr-20">
+                  <RichTextContent html={rev.review} />
                 </div>
-                {rev.review && (
-                  <div className="profile-review-card-text text-gray-700 text-sm pr-20">
-                    <RichTextContent html={rev.review} />
-                  </div>
-                )}
-                <p className="profile-review-card-muted text-right text-sm text-gray-400 mt-2">
-                  {rev.createdAt ? new Date(rev.createdAt).toLocaleDateString() : ''}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+              )}
+              <p className="profile-review-card-muted text-right text-sm text-gray-400 mt-2">
+                {rev.createdAt ? new Date(rev.createdAt).toLocaleDateString() : ''}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   )
 }

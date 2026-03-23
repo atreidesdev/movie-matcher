@@ -1,16 +1,16 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { IconSearch, IconCross } from '@/components/icons'
-import CustomSelect from '@/components/CustomSelect'
+import { charactersApi } from '@/api/characters'
 import { mediaApi } from '@/api/media'
 import { personsApi } from '@/api/persons'
-import { charactersApi } from '@/api/characters'
-import { Genre, Media, Person, Character } from '@/types'
-import { MediaTypeForPath, getMediaPath, getMediaAssetUrl } from '@/utils/mediaPaths'
-import { getMediaTitle, getCharacterName } from '@/utils/localizedText'
-import { getPersonDisplayName } from '@/utils/personUtils'
+import CustomSelect from '@/components/CustomSelect'
+import { IconCross, IconSearch } from '@/components/icons'
 import { useDebounce } from '@/hooks/useDebounce'
+import type { Character, Genre, Media, Person } from '@/types'
+import { getCharacterName, getMediaTitle } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { getPersonDisplayName } from '@/utils/personUtils'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 type SearchCategory = 'media' | 'persons' | 'characters'
 
@@ -42,7 +42,7 @@ function filterByGenreAndYear(items: Media[], genreId?: string, year?: string): 
   if (year?.trim()) {
     const y = year.trim()
     out = out.filter(
-      (m) => m.releaseDate?.startsWith(y) || m.releaseDate?.includes(`-${y}-`) || m.releaseDate?.endsWith(y)
+      (m) => m.releaseDate?.startsWith(y) || m.releaseDate?.includes(`-${y}-`) || m.releaseDate?.endsWith(y),
     )
   }
   return out

@@ -1,16 +1,16 @@
-import { useState, useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Pencil, Upload } from 'lucide-react'
-import { IconSearch, IconCross, IconPlus } from '@/components/icons'
-import { personsApi } from '@/api/persons'
 import { adminApi } from '@/api/admin'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { buildUploadBaseName } from '@/utils/uploadNames'
-import type { Person, LocalizedString } from '@/types'
-import { getPersonDisplayName } from '@/utils/personUtils'
-import type { TFunction } from 'i18next'
-import TranslationsEditor from '@/components/admin/TranslationsEditor'
+import { personsApi } from '@/api/persons'
 import AdminPagination, { ADMIN_PAGE_SIZE } from '@/components/admin/AdminPagination'
+import TranslationsEditor from '@/components/admin/TranslationsEditor'
+import { IconCross, IconPlus, IconSearch } from '@/components/icons'
+import type { LocalizedString, Person } from '@/types'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { getPersonDisplayName } from '@/utils/personUtils'
+import { buildUploadBaseName } from '@/utils/uploadNames'
+import type { TFunction } from 'i18next'
+import { Pencil, Upload } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function personLabel(p: Person, t: TFunction, locale: string): string {
   const name = getPersonDisplayName(p, locale)
@@ -99,7 +99,7 @@ export default function AdminPersonsList() {
                 caption:
                   typeof (x as { caption?: unknown }).caption === 'string' ? (x as { caption: string }).caption : '',
               }
-            : { url: String(x), caption: '' }
+            : { url: String(x), caption: '' },
         )
       : []
     setFirstNameI18n(item.firstNameI18n ?? {})
@@ -355,7 +355,7 @@ export default function AdminPersonsList() {
                                   `${form.firstName} ${form.lastName}`.trim(),
                                   'person',
                                   editingItem?.id,
-                                  'avatar'
+                                  'avatar',
                                 ),
                               })
                               setForm((f) => ({ ...f, avatar: path }))
@@ -395,7 +395,7 @@ export default function AdminPersonsList() {
                                 setForm((f) => ({
                                   ...f,
                                   images: f.images.map((img, i) =>
-                                    i === idx ? { ...img, caption: e.target.value } : img
+                                    i === idx ? { ...img, caption: e.target.value } : img,
                                   ),
                                 }))
                               }
@@ -423,7 +423,7 @@ export default function AdminPersonsList() {
                                   'person',
                                   editingItem?.id,
                                   'image',
-                                  form.images.length + 1
+                                  form.images.length + 1,
                                 ),
                               })
                               setForm((f) => ({ ...f, images: [...f.images, { url: path, caption: '' }] }))

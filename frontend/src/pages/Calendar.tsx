@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { IconCross } from '@/components/icons'
 import { getCalendarReleases } from '@/api/calendar'
+import { IconCross } from '@/components/icons'
+import { getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
 import type { CalendarRelease } from '@/types'
 import type { ListStatus } from '@/types'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import { getMediaPath, getMediaAssetUrl } from '@/utils/mediaPaths'
 import { getListStatusLabel } from '@/utils/listStatusLabels'
 import { getMediaTitle } from '@/utils/localizedText'
-import { getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 const CALENDAR_MEDIA_TYPES: { value: MediaTypeForPath; labelKey: string }[] = [
   { value: 'movie', labelKey: 'nav.movies' },
@@ -196,7 +196,7 @@ export default function Calendar() {
 
   const filteredReleases = useMemo(
     () => (onlyFromList ? releases.filter((r) => r.listStatus != null) : releases),
-    [releases, onlyFromList]
+    [releases, onlyFromList],
   )
   const byDate = useMemo(() => groupReleasesByDate(filteredReleases), [filteredReleases])
   const grid = useMemo(() => buildCalendarGrid(year, month), [year, month])

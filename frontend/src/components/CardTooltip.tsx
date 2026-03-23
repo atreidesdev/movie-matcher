@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 interface CardTooltipProps {
@@ -59,7 +59,7 @@ export default function CardTooltip({ content, children, className = '' }: CardT
           content
         )}
       </div>,
-      document.body
+      document.body,
     )
 
   return (

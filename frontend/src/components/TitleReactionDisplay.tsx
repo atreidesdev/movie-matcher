@@ -1,6 +1,6 @@
+import { getTitleReactionIcon } from '@/components/icons'
 import type { TitleReaction } from '@/types'
 import { TITLE_REACTIONS } from '@/types'
-import { getTitleReactionIcon } from '@/components/icons'
 
 interface TitleReactionDisplayProps {
   reaction: TitleReaction

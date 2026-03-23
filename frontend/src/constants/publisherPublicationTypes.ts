@@ -9,7 +9,7 @@ export const PUBLISHER_PUBLICATION_TYPE_OPTIONS: Array<{ value: PublisherPublica
 
 export function publisherSupportsType(
   publicationTypes: PublisherPublicationType[] | undefined,
-  type: PublisherPublicationType
+  type: PublisherPublicationType,
 ): boolean {
   if (!publicationTypes || publicationTypes.length === 0) return true
   return publicationTypes.includes(type)

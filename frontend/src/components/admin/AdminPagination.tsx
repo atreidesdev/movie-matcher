@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const DEFAULT_PAGE_SIZE = 20
 

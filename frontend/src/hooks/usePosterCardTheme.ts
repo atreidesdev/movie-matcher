@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
-import { FastAverageColor } from 'fast-average-color'
+import { type ThemeId, useThemeStore } from '@/store/themeStore'
 import { TinyColor, mostReadable, readability } from '@ctrl/tinycolor'
-import { useThemeStore, type ThemeId } from '@/store/themeStore'
+import { FastAverageColor } from 'fast-average-color'
+import { type CSSProperties, useEffect, useMemo, useState } from 'react'
 
 type CardThemeStyle = CSSProperties & Record<`--${string}`, string>
 

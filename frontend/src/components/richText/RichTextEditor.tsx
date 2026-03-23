@@ -15,7 +15,7 @@ import {
   TextQuote,
   Underline as UnderlineIcon,
 } from 'lucide-react'
-import { forwardRef, useEffect, useImperativeHandle, type ReactNode } from 'react'
+import { type ReactNode, forwardRef, useEffect, useImperativeHandle } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SpoilerMark } from './spoilerExtension'
 import './rich-text.css'
@@ -276,9 +276,7 @@ export const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>
         </div>
         <div className="rich-text-editor-comment-footer">
           <div className="rich-text-editor-comment-footer__toolbar">{toolbar}</div>
-          {commentFooter ? (
-            <div className="rich-text-editor-comment-footer__actions">{commentFooter}</div>
-          ) : null}
+          {commentFooter ? <div className="rich-text-editor-comment-footer__actions">{commentFooter}</div> : null}
         </div>
       </div>
     )

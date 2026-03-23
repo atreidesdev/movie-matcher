@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Outlet, useParams, Link } from 'react-router-dom'
-import { useAuthStore } from '@/store/authStore'
-import { usersApi } from '@/api/users'
-import { socialApi } from '@/api/social'
 import { friendsApi } from '@/api/friends'
-import type { PublicProfile } from '@/types'
+import { socialApi } from '@/api/social'
+import { usersApi } from '@/api/users'
 import { UserProfileHeader } from '@/components/user/UserProfileHeader'
+import { useAuthStore } from '@/store/authStore'
+import type { PublicProfile } from '@/types'
+import { useEffect, useState } from 'react'
+import { Link, Outlet, useParams } from 'react-router-dom'
 
 export interface UserProfileLayoutContext {
   profile: PublicProfile | null
@@ -30,9 +30,7 @@ export default function UserProfileLayout() {
   const [acceptRequestLoading, setAcceptRequestLoading] = useState(false)
 
   const isOwnProfile = Boolean(
-    username &&
-      currentUser?.username &&
-      username.toLowerCase() === currentUser.username.toLowerCase()
+    username && currentUser?.username && username.toLowerCase() === currentUser.username.toLowerCase(),
   )
 
   useEffect(() => {
@@ -52,11 +50,7 @@ export default function UserProfileLayout() {
 
   useEffect(() => {
     if (!currentUser || !profile || isOwnProfile) return
-    Promise.all([
-      socialApi.getFollowing(),
-      friendsApi.getFriends(),
-      friendsApi.getRequests(),
-    ])
+    Promise.all([socialApi.getFollowing(), friendsApi.getFriends(), friendsApi.getRequests()])
       .then(([following, friends, requests]) => {
         setIsFollowing(following.some((u) => u.id === profile.id))
         setIsFriend(friends.some((u) => u.id === profile.id))

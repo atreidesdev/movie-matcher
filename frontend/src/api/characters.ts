@@ -33,7 +33,7 @@ export const charactersApi = {
     page = 1,
     pageSize = 200,
     search?: string,
-    listParams?: CharactersListParams
+    listParams?: CharactersListParams,
   ): Promise<PaginatedResponse<Character>> => {
     const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) })
     const searchTerm = listParams?.search ?? search

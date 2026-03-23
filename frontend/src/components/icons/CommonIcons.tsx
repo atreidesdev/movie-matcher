@@ -1,9 +1,9 @@
+import type { IconProps } from '@/components/icons/types'
+import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
 /**
  * Общие UI-иконки из assets: like, dislike, plus, minus, reply, send, comment и др.
  */
 import { useId } from 'react'
-import type { IconProps } from '@/components/icons/types'
-import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
 
 const iconProps = (p: IconProps) => {
   const size = p.size ?? DEFAULT_ICON_SIZE

@@ -1,17 +1,17 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Pencil, Trash2, FileJson, Upload } from 'lucide-react'
-import { IconPlus, IconCross, IconSearch, IconAchievement } from '@/components/icons'
-import { adminApi } from '@/api/admin'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import { achievementsApi } from '@/api/achievements'
-import { franchiseApi, type Franchise } from '@/api/franchise'
-import TranslationsEditor from '@/components/admin/TranslationsEditor'
+import { adminApi } from '@/api/admin'
+import { type Franchise, franchiseApi } from '@/api/franchise'
 import AdminPagination, { ADMIN_PAGE_SIZE } from '@/components/admin/AdminPagination'
+import TranslationsEditor from '@/components/admin/TranslationsEditor'
+import { IconAchievement, IconCross, IconPlus, IconSearch } from '@/components/icons'
 import { useDebounce } from '@/hooks/useDebounce'
 import type { Achievement, LocalizedString } from '@/types'
 import { getLocalizedString } from '@/utils/localizedText'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import { buildUploadBaseName } from '@/utils/uploadNames'
+import { FileJson, Pencil, Trash2, Upload } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Genre = { id: number; name: string }
 
@@ -174,7 +174,7 @@ export default function AdminAchievements() {
     setFranchiseSearchQuery('')
     setFranchiseResults([])
     setSelectedFranchiseName(
-      editing.franchise ? getLocalizedString(editing.franchise.nameI18n, editing.franchise.name, locale) : ''
+      editing.franchise ? getLocalizedString(editing.franchise.nameI18n, editing.franchise.name, locale) : '',
     )
     setOrderNum(editing.orderNum ?? 0)
     setLevels(
@@ -190,7 +190,7 @@ export default function AdminAchievements() {
           title: l.title,
           titleI18n: l.titleI18n ?? {},
           imageUrl: l.imageUrl,
-        }))
+        })),
     )
     const byType: Record<string, number[]> = {}
     for (const t of editing.targets ?? []) {
@@ -561,7 +561,7 @@ export default function AdminAchievements() {
                         {genres
                           .filter(
                             (g) =>
-                              !genreSearchQuery.trim() || g.name.toLowerCase().includes(genreSearchQuery.toLowerCase())
+                              !genreSearchQuery.trim() || g.name.toLowerCase().includes(genreSearchQuery.toLowerCase()),
                           )
                           .slice(0, 50)
                           .map((g) => (
@@ -582,7 +582,7 @@ export default function AdminAchievements() {
                           ))}
                         {genres.filter(
                           (g) =>
-                            !genreSearchQuery.trim() || g.name.toLowerCase().includes(genreSearchQuery.toLowerCase())
+                            !genreSearchQuery.trim() || g.name.toLowerCase().includes(genreSearchQuery.toLowerCase()),
                         ).length === 0 && <li className="px-3 py-2 text-gray-500 text-sm">{t('common.noResults')}</li>}
                       </ul>
                     )}
@@ -690,7 +690,7 @@ export default function AdminAchievements() {
                               onChange={(e) => {
                                 const v = e.target.value
                                   .split(/[\s,]+/)
-                                  .map((s) => parseInt(s, 10))
+                                  .map((s) => Number.parseInt(s, 10))
                                   .filter((n) => !Number.isNaN(n))
                                 setMediaIdsForType(mt, v)
                               }}
@@ -708,7 +708,7 @@ export default function AdminAchievements() {
                   <input
                     type="number"
                     value={orderNum}
-                    onChange={(e) => setOrderNum(parseInt(e.target.value, 10) || 0)}
+                    onChange={(e) => setOrderNum(Number.parseInt(e.target.value, 10) || 0)}
                     className="input w-full"
                   />
                 </div>
@@ -739,7 +739,7 @@ export default function AdminAchievements() {
                             id={`level-order-${idx}`}
                             type="number"
                             value={lv.levelOrder}
-                            onChange={(e) => updateLevel(idx, { levelOrder: parseInt(e.target.value, 10) || 0 })}
+                            onChange={(e) => updateLevel(idx, { levelOrder: Number.parseInt(e.target.value, 10) || 0 })}
                             placeholder="1"
                             className="input w-14 shrink-0"
                             title={t('admin.achievementLevelOrder')}
@@ -748,7 +748,9 @@ export default function AdminAchievements() {
                           <input
                             type="number"
                             value={lv.thresholdPercent}
-                            onChange={(e) => updateLevel(idx, { thresholdPercent: parseInt(e.target.value, 10) || 0 })}
+                            onChange={(e) =>
+                              updateLevel(idx, { thresholdPercent: Number.parseInt(e.target.value, 10) || 0 })
+                            }
                             placeholder="25"
                             className="input w-14 shrink-0"
                             min={0}
@@ -796,7 +798,7 @@ export default function AdminAchievements() {
                                       'achievement',
                                       editing?.id,
                                       'level-image',
-                                      idx + 1
+                                      idx + 1,
                                     ),
                                   })
                                   updateLevel(idx, { imageUrl: path })

@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
+import { IconArrowDown, IconCross } from '@/components/icons'
 import { Check } from 'lucide-react'
-import { IconCross, IconArrowDown } from '@/components/icons'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /** Выпадающий мультиселект тегов с поиском: в блоке — чипы выбранных, по клику — поле поиска и список тегов (как на странице списка). */
 export default function NewsTagFilter({

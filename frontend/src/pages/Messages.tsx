@@ -1,16 +1,16 @@
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { friendsApi } from '@/api/friends'
+import { type ConversationItem, type MessageItem, messagesApi } from '@/api/messages'
+import { usersApi } from '@/api/users'
+import { IconComment, IconPerson, IconSend } from '@/components/icons'
+import { useAuthStore } from '@/store/authStore'
+import type { User as UserType } from '@/types'
+import type { PublicProfile } from '@/types'
+import { formatLastSeenLabel } from '@/utils/formatLastSeen'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { Check, CheckCheck, ChevronLeft } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
-import { ChevronLeft, Check, CheckCheck } from 'lucide-react'
-import { IconComment, IconSend, IconPerson } from '@/components/icons'
-import { useAuthStore } from '@/store/authStore'
-import { messagesApi, type ConversationItem, type MessageItem } from '@/api/messages'
-import { friendsApi } from '@/api/friends'
-import { usersApi } from '@/api/users'
-import { User as UserType } from '@/types'
-import type { PublicProfile } from '@/types'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { formatLastSeenLabel } from '@/utils/formatLastSeen'
 
 function displayName(u: UserType | null | undefined): string {
   if (!u) return ''
@@ -52,7 +52,7 @@ export default function Messages() {
   const listRef = useRef<HTMLDivElement>(null)
 
   const selectedConv = conversations.find((c) => c.id === selectedConvId)
-  const fid = openFriendId ? parseInt(openFriendId, 10) : NaN
+  const fid = openFriendId ? Number.parseInt(openFriendId, 10) : Number.NaN
   const displayUser = selectedConv?.otherUser ?? (Number.isNaN(fid) ? undefined : friends.find((f) => f.id === fid))
   const showChatPanel = Boolean(selectedConvId || openFriendId)
 
@@ -86,7 +86,7 @@ export default function Messages() {
       if (latest) {
         const preview = latest.body && latest.body.length > 80 ? latest.body.slice(0, 80) + '…' : latest.body || ''
         setConversations((prev) =>
-          prev.map((c) => (c.id === convId ? { ...c, lastBody: preview, lastAt: latest.createdAt } : c))
+          prev.map((c) => (c.id === convId ? { ...c, lastBody: preview, lastAt: latest.createdAt } : c)),
         )
       }
     } catch {
@@ -111,7 +111,7 @@ export default function Messages() {
   // Open conversation with friend from query ?with=friendId
   useEffect(() => {
     if (!openFriendId || !me?.id) return
-    const fid = parseInt(openFriendId, 10)
+    const fid = Number.parseInt(openFriendId, 10)
     if (Number.isNaN(fid)) return
     setShowFriendPicker(false)
     setOpenConversationError(null)

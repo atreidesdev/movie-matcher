@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
-import { IconCross, IconArrowDown } from '@/components/icons'
 import CustomSelect from '@/components/CustomSelect'
-import { useTranslation } from 'react-i18next'
-import {
-  ListItem,
-  ListStatus,
-  ReviewStatus,
-  REVIEW_STATUS_EMOJIS,
-  TITLE_REACTION_TO_REVIEW_STATUS,
-  REVIEW_STATUS_TO_TITLE_REACTION,
-  Media,
-} from '@/types'
 import ReviewStatusDisplay from '@/components/ReviewStatusDisplay'
-import { MediaTypeForPath } from '@/utils/mediaPaths'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
-import { getMediaEpisodesCount, getMediaPages, getMediaVolumesList } from '@/utils/typeGuards'
+import { IconArrowDown, IconCross } from '@/components/icons'
+import {
+  type ListItem,
+  type ListStatus,
+  type Media,
+  REVIEW_STATUS_EMOJIS,
+  REVIEW_STATUS_TO_TITLE_REACTION,
+  type ReviewStatus,
+  TITLE_REACTION_TO_REVIEW_STATUS,
+} from '@/types'
 import { formatListDate } from '@/utils/formatListDate'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { getMediaEpisodesCount, getMediaPages, getMediaVolumesList } from '@/utils/typeGuards'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const LIST_STATUS_OPTIONS: { value: ListStatus; labelKey: string }[] = [
   { value: 'planned', labelKey: 'media.listStatus.planned' },
@@ -57,7 +57,7 @@ export default function EditInListModal({
   const [editTitleReaction, setEditTitleReaction] = useState<ReviewStatus | ''>(
     (listItem.titleReaction &&
       TITLE_REACTION_TO_REVIEW_STATUS[listItem.titleReaction as keyof typeof TITLE_REACTION_TO_REVIEW_STATUS]) ??
-      ''
+      '',
   )
   const [editCurrentEpisode, setEditCurrentEpisode] = useState(listItem.currentEpisode ?? 0)
   const [editCurrentPage, setEditCurrentPage] = useState(listItem.currentPage ?? 0)
@@ -66,7 +66,7 @@ export default function EditInListModal({
   const [editCurrentVolumeNumber, setEditCurrentVolumeNumber] = useState(listItem.currentVolumeNumber ?? 0)
   const [editCurrentChapterNumber, setEditCurrentChapterNumber] = useState(listItem.currentChapterNumber ?? 0)
   const [editHoursPlayed, setEditHoursPlayed] = useState<number>(
-    listItem.totalTime != null ? Math.round((listItem.totalTime / 60) * 10) / 10 : 0
+    listItem.totalTime != null ? Math.round((listItem.totalTime / 60) * 10) / 10 : 0,
   )
   const [showEpisodePicker, setShowEpisodePicker] = useState(false)
   const episodePickerListRef = useRef<HTMLDivElement>(null)
@@ -82,7 +82,7 @@ export default function EditInListModal({
     setEditTitleReaction(
       (listItem.titleReaction &&
         TITLE_REACTION_TO_REVIEW_STATUS[listItem.titleReaction as keyof typeof TITLE_REACTION_TO_REVIEW_STATUS]) ??
-        ''
+        '',
     )
     setEditCurrentEpisode(listItem.currentEpisode ?? 0)
     setEditCurrentPage(listItem.currentPage ?? 0)
@@ -171,8 +171,16 @@ export default function EditInListModal({
   const isGameType = type === 'game'
   const isBookType = type === 'book' || type === 'manga' || type === 'light-novel'
   const watchedAt = listItem.completedAt ?? listItem.startedAt
-  const sessionsTitleKey = isGameType ? 'lists.playthroughs' : isBookType ? 'lists.rereadSessions' : 'lists.rewatchSessions'
-  const sessionItemKey = isGameType ? 'lists.playthroughSession' : isBookType ? 'lists.rereadSession' : 'lists.rewatchSession'
+  const sessionsTitleKey = isGameType
+    ? 'lists.playthroughs'
+    : isBookType
+      ? 'lists.rereadSessions'
+      : 'lists.rewatchSessions'
+  const sessionItemKey = isGameType
+    ? 'lists.playthroughSession'
+    : isBookType
+      ? 'lists.rereadSession'
+      : 'lists.rewatchSession'
   const hideCompletedForGameOrBook = isGameType || isBookType
 
   return (
@@ -247,7 +255,9 @@ export default function EditInListModal({
                   max={100}
                   value={editRating ?? ''}
                   onChange={(e) =>
-                    setEditRating(e.target.value ? Math.min(100, Math.max(1, parseInt(e.target.value, 10))) : undefined)
+                    setEditRating(
+                      e.target.value ? Math.min(100, Math.max(1, Number.parseInt(e.target.value, 10))) : undefined,
+                    )
                   }
                   placeholder="1–100"
                   className="input w-full py-1.5 text-sm"
@@ -407,7 +417,7 @@ export default function EditInListModal({
                       min={0}
                       max={episodesCount ?? 9999}
                       value={editCurrentEpisode}
-                      onChange={(e) => setEditCurrentEpisode(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                      onChange={(e) => setEditCurrentEpisode(Math.max(0, Number.parseInt(e.target.value, 10) || 0))}
                       className="input w-14 py-1 text-center text-sm"
                     />
                   )}
@@ -457,7 +467,7 @@ export default function EditInListModal({
                   step={0.5}
                   value={editHoursPlayed || ''}
                   onChange={(e) =>
-                    setEditHoursPlayed(e.target.value === '' ? 0 : Math.max(0, parseFloat(e.target.value) || 0))
+                    setEditHoursPlayed(e.target.value === '' ? 0 : Math.max(0, Number.parseFloat(e.target.value) || 0))
                   }
                   placeholder="0"
                   className="input w-full py-1.5 text-sm"
@@ -479,7 +489,7 @@ export default function EditInListModal({
                     min={0}
                     max={bookMaxPages ?? 99999}
                     value={editCurrentPage}
-                    onChange={(e) => setEditCurrentPage(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                    onChange={(e) => setEditCurrentPage(Math.max(0, Number.parseInt(e.target.value, 10) || 0))}
                     className="input w-full py-1.5 text-sm"
                   />
                 </div>
@@ -494,7 +504,7 @@ export default function EditInListModal({
                     label={t('media.volume')}
                     value={String(editCurrentVolumeNumber)}
                     onChange={(v) => {
-                      const num = parseInt(v, 10) || 0
+                      const num = Number.parseInt(v, 10) || 0
                       setEditCurrentVolumeNumber(num)
                       setEditCurrentChapterNumber(0)
                     }}
@@ -510,7 +520,9 @@ export default function EditInListModal({
                       type="number"
                       min={0}
                       value={editCurrentVolumeNumber}
-                      onChange={(e) => setEditCurrentVolumeNumber(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                      onChange={(e) =>
+                        setEditCurrentVolumeNumber(Math.max(0, Number.parseInt(e.target.value, 10) || 0))
+                      }
                       className="input w-full py-1.5 text-sm"
                     />
                   </div>
@@ -519,7 +531,7 @@ export default function EditInListModal({
                   <CustomSelect
                     label={t('media.chapter')}
                     value={String(editCurrentChapterNumber)}
-                    onChange={(v) => setEditCurrentChapterNumber(parseInt(v, 10) || 0)}
+                    onChange={(v) => setEditCurrentChapterNumber(Number.parseInt(v, 10) || 0)}
                     options={Array.from({ length: volumesList[editCurrentVolumeNumber]?.chapters ?? 1 }, (_, i) => ({
                       value: String(i),
                       label: t('media.chapterNum', { num: i + 1 }),
@@ -532,7 +544,9 @@ export default function EditInListModal({
                       type="number"
                       min={0}
                       value={editCurrentChapterNumber}
-                      onChange={(e) => setEditCurrentChapterNumber(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                      onChange={(e) =>
+                        setEditCurrentChapterNumber(Math.max(0, Number.parseInt(e.target.value, 10) || 0))
+                      }
                       className="input w-full py-1.5 text-sm"
                     />
                   </div>
@@ -551,7 +565,7 @@ export default function EditInListModal({
                     type="number"
                     min={0}
                     value={editCurrentVolume}
-                    onChange={(e) => setEditCurrentVolume(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                    onChange={(e) => setEditCurrentVolume(Math.max(0, Number.parseInt(e.target.value, 10) || 0))}
                     className="input w-full py-1.5 text-sm"
                   />
                 </div>
@@ -563,7 +577,7 @@ export default function EditInListModal({
                     type="number"
                     min={0}
                     value={editCurrentChapter}
-                    onChange={(e) => setEditCurrentChapter(Math.max(0, parseInt(e.target.value, 10) || 0))}
+                    onChange={(e) => setEditCurrentChapter(Math.max(0, Number.parseInt(e.target.value, 10) || 0))}
                     className="input w-full py-1.5 text-sm"
                   />
                 </div>

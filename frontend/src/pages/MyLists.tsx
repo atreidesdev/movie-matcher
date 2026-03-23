@@ -1,19 +1,19 @@
-import { useEffect, useState, useMemo } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { useListStore } from '@/store/listStore'
-import { ListStatus, ListItem } from '@/types'
-import TitleReactionDisplay from '@/components/TitleReactionDisplay'
-import { ListEntityType } from '@/api/lists'
-import { Trash2, Pencil, SlidersHorizontal } from 'lucide-react'
-import { IconCross, getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
-import { getMediaAssetUrl, getMediaPath, MediaTypeForPath } from '@/utils/mediaPaths'
-import { getMediaTitle } from '@/utils/localizedText'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
-import { formatListDate } from '@/utils/formatListDate'
+import type { ListEntityType } from '@/api/lists'
 import { mediaApi } from '@/api/media'
 import EditInListModal from '@/components/EditInListModal'
-import { Media } from '@/types'
+import TitleReactionDisplay from '@/components/TitleReactionDisplay'
+import { IconCross, getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import { useListStore } from '@/store/listStore'
+import type { ListItem, ListStatus } from '@/types'
+import type { Media } from '@/types'
+import { formatListDate } from '@/utils/formatListDate'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getMediaTitle } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { Pencil, SlidersHorizontal, Trash2 } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useSearchParams } from 'react-router-dom'
 
 const LIST_TABS: { key: ListEntityType; labelKey: string; mediaType: MediaTypeForPath }[] = [
   { key: 'movies', labelKey: 'nav.movies', mediaType: 'movie' },
@@ -55,7 +55,7 @@ const VALID_STATUSES = new Set<ListStatus | 'all'>([
 /** Берём медиа из элемента списка по типу списка, чтобы во вкладке «Игры» не показывать фильмы и т.д. */
 function getMediaFromItem(
   item: ListItem,
-  listType: ListEntityType
+  listType: ListEntityType,
 ): { id: number; title: string; poster?: string } | null {
   const keyMap: Record<ListEntityType, keyof ListItem> = {
     movies: 'movie',
@@ -192,7 +192,8 @@ export default function MyLists() {
                 const status = item.status as ListStatus
                 const StatusIcon = status ? getListStatusIcon(status, tabConfig.mediaType) : null
                 const badgeClasses = status ? getListStatusBadgeClasses(status, tabConfig.mediaType) : null
-                const isFilmType = activeTab === 'movies' || activeTab === 'cartoon-movies' || activeTab === 'anime-movies'
+                const isFilmType =
+                  activeTab === 'movies' || activeTab === 'cartoon-movies' || activeTab === 'anime-movies'
                 const watchedAt = item.completedAt ?? item.startedAt
 
                 return (

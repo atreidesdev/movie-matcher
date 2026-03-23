@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation, Trans } from 'react-i18next'
-import { notificationsApi, type NotificationItem } from '@/api/notifications'
-import { getMediaPathFromApiType } from '@/utils/mediaPaths'
-import { subscribeToPush, isPushSupported, getNotificationPermission } from '@/utils/pushSubscription'
+import { type NotificationItem, notificationsApi } from '@/api/notifications'
 import { useAuthStore } from '@/store/authStore'
+import { getMediaPathFromApiType } from '@/utils/mediaPaths'
+import { getNotificationPermission, isPushSupported, subscribeToPush } from '@/utils/pushSubscription'
+import { useEffect, useState } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 function getNotificationLink(n: NotificationItem): string | null {
   const extra = n.extra ?? {}

@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
-import { IconCross } from '@/components/icons'
-import VideoThumbnail from '@/components/VideoThumbnail'
 import VideoPlayer from '@/components/VideoPlayer'
+import VideoThumbnail from '@/components/VideoThumbnail'
+import { IconCross } from '@/components/icons'
 import PhotoGallery from '@/components/ui/PhotoGallery'
-import { getMediaAssetUrl, getMediaGalleryPath, getMediaTrailersPath } from '@/utils/mediaPaths'
-import { getMediaTitle } from '@/utils/localizedText'
-import { getYouTubeEmbedUrl, getVideoStreamUrl, getVideoStreamQualitySources } from '@/utils/videoUtils'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
 import type { Media } from '@/types'
+import { getMediaTitle } from '@/utils/localizedText'
+import { getMediaAssetUrl, getMediaGalleryPath, getMediaTrailersPath } from '@/utils/mediaPaths'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { getVideoStreamQualitySources, getVideoStreamUrl, getYouTubeEmbedUrl } from '@/utils/videoUtils'
+import { ArrowLeft } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 interface MediaDetailGallerySectionProps {
   type: MediaTypeForPath

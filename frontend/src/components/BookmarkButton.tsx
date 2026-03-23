@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Bookmark } from 'lucide-react'
-import { bookmarksApi, type BookmarkTargetType } from '@/api/bookmarks'
+import { type BookmarkTargetType, bookmarksApi } from '@/api/bookmarks'
 import { useAuthStore } from '@/store/authStore'
 import { useToastStore } from '@/store/toastStore'
+import { Bookmark } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface BookmarkButtonProps {
   targetType: BookmarkTargetType

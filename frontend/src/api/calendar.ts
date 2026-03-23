@@ -14,7 +14,7 @@ export interface CalendarReleasesResponse {
 export async function getCalendarReleases(
   from: string,
   to: string,
-  mediaType: string
+  mediaType: string,
 ): Promise<CalendarReleasesResponse> {
   const { data } = await apiClient.get<CalendarReleasesResponse>('/calendar/releases', {
     params: { from, to, mediaType },

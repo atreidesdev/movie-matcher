@@ -1,21 +1,21 @@
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { useState, useEffect } from 'react'
-import { Pencil } from 'lucide-react'
-import { useAuthStore } from '@/store/authStore'
-import { mockStudios, getStudioProjects } from '@/mock/mockData'
 import { entitiesApi } from '@/api/entities'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import type { Studio } from '@/types'
 import StudioEditModal from '@/components/StudioEditModal'
 import ProjectEntryCard from '@/components/cards/ProjectEntryCard'
 import { isMockEnabled } from '@/mock/mockAdapter'
+import { getStudioProjects, mockStudios } from '@/mock/mockData'
+import { useAuthStore } from '@/store/authStore'
+import type { Studio } from '@/types'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { Pencil } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
 
 export default function StudioDetail() {
   const { id } = useParams<{ id: string }>()
   const { t } = useTranslation()
   const { user } = useAuthStore()
-  const numId = id ? parseInt(id, 10) : 0
+  const numId = id ? Number.parseInt(id, 10) : 0
   const [studio, setStudio] = useState<Studio | null>(null)
   const [sections, setSections] = useState<
     { type: string; labelKey: string; entries: { type: string; id: number; title: string; poster?: string }[] }[]

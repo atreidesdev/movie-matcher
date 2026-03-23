@@ -16,7 +16,7 @@ export interface SemanticSearchResponse {
 export const searchApi = {
   semantic: async (
     query: string,
-    options?: { mediaType?: string; limit?: number }
+    options?: { mediaType?: string; limit?: number },
   ): Promise<SemanticSearchResponse> => {
     const params = new URLSearchParams({ q: query })
     if (options?.mediaType) params.append('mediaType', options.mediaType)

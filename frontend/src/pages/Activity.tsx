@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useSearchParams, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { ListPlus, Pencil } from 'lucide-react'
-import { IconTypeMovie, IconTypeBook, IconTypeCartoon, IconFavorite, IconCollection } from '@/components/icons'
-import { activityApi, type ActivityItem } from '@/api/activity'
-import { getMediaPathFromApiType, getMediaAssetUrl } from '@/utils/mediaPaths'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { type ActivityItem, activityApi } from '@/api/activity'
+import { IconCollection, IconFavorite, IconTypeBook, IconTypeCartoon, IconTypeMovie } from '@/components/icons'
 import type { IconProps } from '@/components/icons'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getMediaAssetUrl, getMediaPathFromApiType } from '@/utils/mediaPaths'
+import { ListPlus, Pencil } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useSearchParams } from 'react-router-dom'
 
 const MEDIA_TYPE_TO_LIST_TYPE: Record<string, string> = {
   movies: 'movie',

@@ -1,10 +1,10 @@
-import { useEffect, useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { IconPlus, IconPeopleCommunity, IconSearch } from '@/components/icons'
-import { communitiesApi, type CommunityListItem } from '@/api/communities'
+import { type CommunityListItem, communitiesApi } from '@/api/communities'
+import { IconPeopleCommunity, IconPlus, IconSearch } from '@/components/icons'
 import { useAuthStore } from '@/store/authStore'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 function CommunityCard({ comm }: { comm: CommunityListItem }) {
   const { t } = useTranslation()
@@ -15,11 +15,7 @@ function CommunityCard({ comm }: { comm: CommunityListItem }) {
     >
       <div className="aspect-[2/1] bg-[var(--theme-bg)] relative">
         {comm.cover ? (
-          <img
-            src={getMediaAssetUrl(comm.cover)}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <img src={getMediaAssetUrl(comm.cover)} alt="" className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <IconPeopleCommunity className="w-12 h-12 text-[var(--theme-text-muted)]" />
@@ -37,7 +33,9 @@ function CommunityCard({ comm }: { comm: CommunityListItem }) {
           <p className="text-sm text-[var(--theme-text-muted)] line-clamp-2 mt-1">{comm.description}</p>
         )}
         <div className="mt-2 flex items-center gap-2 text-xs text-[var(--theme-text-muted)]">
-          <span>{comm.subscribers} {t('communities.subscribers')}</span>
+          <span>
+            {comm.subscribers} {t('communities.subscribers')}
+          </span>
           {comm.creatorName && <span>• {comm.creatorName}</span>}
         </div>
       </div>
@@ -70,9 +68,7 @@ export default function CommunitiesPage() {
     const q = searchQuery.trim().toLowerCase()
     if (!q) return list
     return list.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        (c.description && c.description.toLowerCase().includes(q))
+      (c) => c.name.toLowerCase().includes(q) || (c.description && c.description.toLowerCase().includes(q)),
     )
   }, [list, searchQuery])
 

@@ -234,7 +234,7 @@ export default function Search() {
                       />
                     ) : (
                       <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-400 text-sm">No Image</span>
+                        <span className="text-gray-400 text-sm">{t('common.noImage')}</span>
                       </div>
                     )}
                     <div className="absolute top-2 right-2 bg-black-500/70 backdrop-blur-sm rounded-lg px-2 py-1 text-xs text-thistle-200">

@@ -1,43 +1,43 @@
+import { adminApi } from '@/api/admin'
+import AdminAchievements from '@/components/admin/AdminAchievements'
+import AdminBlockedUsersList from '@/components/admin/AdminBlockedUsersList'
+import AdminCastList from '@/components/admin/AdminCastList'
+import AdminCharactersList from '@/components/admin/AdminCharactersList'
+import AdminDevBlog from '@/components/admin/AdminDevBlog'
+import AdminEntityList from '@/components/admin/AdminEntityList'
+import AdminFranchises from '@/components/admin/AdminFranchises'
+import AdminMediaList from '@/components/admin/AdminMediaList'
+import AdminPersonsList from '@/components/admin/AdminPersonsList'
+import AdminReportsList from '@/components/admin/AdminReportsList'
+import AdminSitesList from '@/components/admin/AdminSitesList'
+import AdminStaffList from '@/components/admin/AdminStaffList'
+import {
+  IconAchievement,
+  IconAdminCast,
+  IconAdminDevelopers,
+  IconAdminFranchise,
+  IconAdminStaff,
+  IconBans,
+  IconCharacter,
+  IconDevblog,
+  IconDeveloper,
+  IconGenre,
+  IconPersonOutline,
+  IconPlatform,
+  IconPublisher,
+  IconReport,
+  IconSecurity,
+  IconStudio,
+  IconTheme,
+  IconTypeMovie,
+} from '@/components/icons'
+import { useAuthStore } from '@/store/authStore'
+import { getEntityDescription, getEntityName } from '@/utils/localizedText'
+import { Globe, RefreshCw, TrendingDown, Wrench } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
-import { RefreshCw, TrendingDown, Wrench, Globe } from 'lucide-react'
-import {
-  IconSecurity,
-  IconTypeMovie,
-  IconAchievement,
-  IconDevblog,
-  IconReport,
-  IconBans,
-  IconGenre,
-  IconTheme,
-  IconStudio,
-  IconPlatform,
-  IconDeveloper,
-  IconPublisher,
-  IconCharacter,
-  IconPersonOutline,
-  IconAdminDevelopers,
-  IconAdminFranchise,
-  IconAdminCast,
-  IconAdminStaff,
-} from '@/components/icons'
-import { useAuthStore } from '@/store/authStore'
-import { adminApi } from '@/api/admin'
 import { useNavigate } from 'react-router-dom'
-import AdminEntityList from '@/components/admin/AdminEntityList'
-import AdminMediaList from '@/components/admin/AdminMediaList'
-import AdminPersonsList from '@/components/admin/AdminPersonsList'
-import AdminFranchises from '@/components/admin/AdminFranchises'
-import AdminCharactersList from '@/components/admin/AdminCharactersList'
-import AdminCastList from '@/components/admin/AdminCastList'
-import AdminStaffList from '@/components/admin/AdminStaffList'
-import AdminSitesList from '@/components/admin/AdminSitesList'
-import AdminReportsList from '@/components/admin/AdminReportsList'
-import AdminBlockedUsersList from '@/components/admin/AdminBlockedUsersList'
-import AdminAchievements from '@/components/admin/AdminAchievements'
-import AdminDevBlog from '@/components/admin/AdminDevBlog'
-import { getEntityName, getEntityDescription } from '@/utils/localizedText'
 
 type Tab =
   | 'tools'

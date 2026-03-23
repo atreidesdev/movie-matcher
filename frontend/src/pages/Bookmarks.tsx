@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Bookmark } from 'lucide-react'
-import { bookmarksApi, type BookmarkItem } from '@/api/bookmarks'
+import { type BookmarkItem, bookmarksApi } from '@/api/bookmarks'
+import BookmarkButton from '@/components/BookmarkButton'
 import { useAuthStore } from '@/store/authStore'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import BookmarkButton from '@/components/BookmarkButton'
+import { Bookmark } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 export default function Bookmarks() {
   const { t } = useTranslation()

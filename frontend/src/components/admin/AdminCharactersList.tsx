@@ -1,16 +1,16 @@
-import { useState, useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Pencil, Trash2, Upload } from 'lucide-react'
-import { IconSearch, IconCross, IconPlus } from '@/components/icons'
-import { charactersApi } from '@/api/characters'
 import { adminApi } from '@/api/admin'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { buildUploadBaseName } from '@/utils/uploadNames'
+import { charactersApi } from '@/api/characters'
+import AdminPagination, { ADMIN_PAGE_SIZE } from '@/components/admin/AdminPagination'
+import TranslationsEditor from '@/components/admin/TranslationsEditor'
+import { IconCross, IconPlus, IconSearch } from '@/components/icons'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
 import type { Character, LocalizedString } from '@/types'
 import { getEntityName } from '@/utils/localizedText'
-import TranslationsEditor from '@/components/admin/TranslationsEditor'
-import AdminPagination, { ADMIN_PAGE_SIZE } from '@/components/admin/AdminPagination'
-import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { buildUploadBaseName } from '@/utils/uploadNames'
+import { Pencil, Trash2, Upload } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function AdminCharactersList() {
   const { t, i18n } = useTranslation()
@@ -83,7 +83,7 @@ export default function AdminCharactersList() {
                     ? String((x as { caption?: unknown }).caption)
                     : '',
               }
-            : { url: String(x), caption: '' }
+            : { url: String(x), caption: '' },
         )
       : []
     setNameI18n(item.nameI18n ?? {})
@@ -396,7 +396,7 @@ export default function AdminCharactersList() {
                                 setForm((f) => ({
                                   ...f,
                                   images: f.images.map((img, i) =>
-                                    i === idx ? { ...img, caption: e.target.value } : img
+                                    i === idx ? { ...img, caption: e.target.value } : img,
                                   ),
                                 }))
                               }
@@ -424,7 +424,7 @@ export default function AdminCharactersList() {
                                   'character',
                                   editingItem?.id,
                                   'image',
-                                  form.images.length + 1
+                                  form.images.length + 1,
                                 ),
                               })
                               setForm((f) => ({ ...f, images: [...f.images, { url: path, caption: '' }] }))

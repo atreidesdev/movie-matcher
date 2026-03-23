@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Trash2, Pencil } from 'lucide-react'
-import type { ListItem, ListStatus } from '@/types'
 import type { ListEntityType } from '@/api/lists'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
 import TitleReactionDisplay from '@/components/TitleReactionDisplay'
-import { getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
-import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
-import { getMediaTitle } from '@/utils/localizedText'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
-import { getMediaFromItem } from '@/utils/listItemMedia'
+import { getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import type { ListItem, ListStatus } from '@/types'
 import { formatListDate } from '@/utils/formatListDate'
+import { getMediaFromItem } from '@/utils/listItemMedia'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getMediaTitle } from '@/utils/localizedText'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { Pencil, Trash2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 interface ListItemDetailedProps {
   item: ListItem
@@ -39,7 +39,11 @@ export default function ListItemDetailed({
   const badgeClasses = status ? getListStatusBadgeClasses(status, mediaType) : null
   const isGameType = listType === 'games'
   const isBookType = listType === 'books' || listType === 'manga' || listType === 'light-novels'
-  const rewatchLabel = isGameType ? t('lists.playthroughs') : isBookType ? t('lists.rereadSessions') : t('lists.rewatchSessions')
+  const rewatchLabel = isGameType
+    ? t('lists.playthroughs')
+    : isBookType
+      ? t('lists.rereadSessions')
+      : t('lists.rewatchSessions')
   const isFilmType = listType === 'movies' || listType === 'cartoon-movies' || listType === 'anime-movies'
   const watchedAt = item.completedAt ?? item.startedAt
 
@@ -47,11 +51,7 @@ export default function ListItemDetailed({
     <div className="profile-list-item p-4 rounded-xl bg-lavender-800 border border-lavender-400/50 shadow-md hover:shadow-lg transition-shadow flex gap-4 items-center">
       <Link to={linkPath} className="flex-shrink-0 relative">
         {media.poster ? (
-          <img
-            src={getMediaAssetUrl(media.poster)}
-            alt={media.title}
-            className="w-16 h-24 object-cover rounded"
-          />
+          <img src={getMediaAssetUrl(media.poster)} alt={media.title} className="w-16 h-24 object-cover rounded" />
         ) : (
           <div className="w-16 h-24 bg-[var(--theme-bg-alt)] rounded flex items-center justify-center">
             <span className="text-[var(--theme-text-muted)] text-xs">—</span>
@@ -151,9 +151,7 @@ export default function ListItemDetailed({
             </span>
           ) : null}
         </div>
-        {item.comment && (
-          <p className="text-sm text-[var(--theme-text-muted)] mt-2 truncate">{item.comment}</p>
-        )}
+        {item.comment && <p className="text-sm text-[var(--theme-text-muted)] mt-2 truncate">{item.comment}</p>}
       </div>
 
       {isOwnProfile && (

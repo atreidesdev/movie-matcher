@@ -15,7 +15,7 @@ export default function CardGridSkeleton({ count = 8, aspectRatio = '2/3', class
           key={i}
           className={clsx(
             'rounded-xl overflow-hidden relative card-grid-skeleton-shimmer',
-            aspectRatio === '2/3' ? 'aspect-[2/3]' : 'aspect-square'
+            aspectRatio === '2/3' ? 'aspect-[2/3]' : 'aspect-square',
           )}
         >
           <div className="absolute inset-0 card-grid-skeleton-shimmer__base card-grid-skeleton-shimmer__wave" />

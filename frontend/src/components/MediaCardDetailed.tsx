@@ -1,23 +1,23 @@
-import { useLayoutEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
-import { Media, ListStatus } from '@/types'
+import RatingEmoji from '@/components/RatingEmoji'
 import {
-  getListStatusIcon,
-  getListStatusBadgeClasses,
   IconStatusAdd,
+  IconStatusCompleted,
   IconStatusEdit,
   IconStatusPlanned,
-  IconStatusCompleted,
+  getListStatusBadgeClasses,
+  getListStatusIcon,
 } from '@/components/icons'
-import RatingEmoji from '@/components/RatingEmoji'
-import { getMediaPath, getMediaAssetUrl, MediaTypeForPath } from '@/utils/mediaPaths'
-import { getMediaTitle, getMediaDescription, getLocalizedString, getMediaYearSeason } from '@/utils/localizedText'
-import { balanceByLength } from '@/utils/balanceByLength'
 import { useCanHover } from '@/hooks/useCanHover'
 import { usePosterCardTheme } from '@/hooks/usePosterCardTheme'
+import type { ListStatus, Media } from '@/types'
+import { balanceByLength } from '@/utils/balanceByLength'
+import { getLocalizedString, getMediaDescription, getMediaTitle, getMediaYearSeason } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
 import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import { useLayoutEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 interface MediaCardDetailedProps {
   media: Media
@@ -31,13 +31,13 @@ interface MediaCardDetailedProps {
 
 function getOptionalEntityName(
   entity: { name?: string; nameI18n?: unknown } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!entity) return ''
   return getLocalizedString(
     entity.nameI18n && typeof entity.nameI18n === 'object' ? (entity.nameI18n as Record<string, string>) : undefined,
     entity.name,
-    locale
+    locale,
   )
 }
 
@@ -50,13 +50,13 @@ function DetailedGenreRow({
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const rowRef = useRef<HTMLDivElement>(null)
-  const maxFitsRef = useRef<number>(Infinity)
+  const maxFitsRef = useRef<number>(Number.POSITIVE_INFINITY)
   const [visibleCount, setVisibleCount] = useState(items.length)
   const [containerWidth, setContainerWidth] = useState(0)
 
   useLayoutEffect(() => {
     setVisibleCount(items.length)
-    maxFitsRef.current = Infinity
+    maxFitsRef.current = Number.POSITIVE_INFINITY
   }, [items])
 
   useLayoutEffect(() => {
@@ -65,7 +65,7 @@ function DetailedGenreRow({
 
     const ro = new ResizeObserver(() => {
       setContainerWidth(el.clientWidth)
-      maxFitsRef.current = Infinity
+      maxFitsRef.current = Number.POSITIVE_INFINITY
     })
 
     ro.observe(el)
@@ -170,7 +170,7 @@ export default function MediaCardDetailed({
               className={clsx(
                 'media-card-inline-status absolute top-1.5 right-1.5 z-10',
                 badgeClasses.bg,
-                badgeClasses.text
+                badgeClasses.text,
               )}
             >
               <StatusIcon size={14} className="shrink-0" />
@@ -225,7 +225,7 @@ export default function MediaCardDetailed({
           <div
             className={clsx(
               'media-card-footer',
-              (onOpenListEditor || onQuickStatus) && 'media-card-footer--with-actions'
+              (onOpenListEditor || onQuickStatus) && 'media-card-footer--with-actions',
             )}
           >
             <DetailedGenreRow items={balancedGenres} locale={locale} />

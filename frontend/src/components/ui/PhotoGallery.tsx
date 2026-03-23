@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { MasonryPhotoAlbum } from 'react-photo-album'
 import 'react-photo-album/masonry.css'
 
@@ -66,8 +66,8 @@ export default function PhotoGallery({
             })
             .catch(() => {
               if (mounted) newDimensions.set(index, { width: FALLBACK_WIDTH, height: FALLBACK_HEIGHT })
-            })
-        )
+            }),
+        ),
       )
       if (mounted) setDimensions(new Map(newDimensions))
     }

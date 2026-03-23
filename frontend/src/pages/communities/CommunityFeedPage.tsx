@@ -1,16 +1,22 @@
-import { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { IconPeopleCommunity, IconNewspaper } from '@/components/icons'
-import { communitiesApi, type CommunityPostItem } from '@/api/communities'
+import { type CommunityPostItem, communitiesApi } from '@/api/communities'
+import { IconNewspaper, IconPeopleCommunity } from '@/components/icons'
 import { useAuthStore } from '@/store/authStore'
-import { stripHtmlToPlain } from '@/utils/richText'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { stripHtmlToPlain } from '@/utils/richText'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, Navigate } from 'react-router-dom'
 
 function formatDate(iso: string): string {
   try {
     const d = new Date(iso)
-    return d.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+    return d.toLocaleDateString(undefined, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
   } catch {
     return iso
   }
@@ -67,11 +73,7 @@ export default function CommunityFeedPage() {
                 <Link to={`/communities/${post.communitySlug || post.communityId}/posts/${post.id}`}>
                   {post.previewImage && (
                     <div className="aspect-video">
-                      <img
-                        src={getMediaAssetUrl(post.previewImage)}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
+                      <img src={getMediaAssetUrl(post.previewImage)} alt="" className="w-full h-full object-cover" />
                     </div>
                   )}
                   <div className="p-4">
@@ -83,7 +85,9 @@ export default function CommunityFeedPage() {
                       <time dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
                     </div>
                     <h2 className="font-semibold text-[var(--theme-text)] hover:underline">{post.title}</h2>
-                    <p className="text-sm text-[var(--theme-text-muted)] mt-1 line-clamp-2">{stripHtmlToPlain(post.body, 150)}</p>
+                    <p className="text-sm text-[var(--theme-text-muted)] mt-1 line-clamp-2">
+                      {stripHtmlToPlain(post.body, 150)}
+                    </p>
                   </div>
                 </Link>
               </article>

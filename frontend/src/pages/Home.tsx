@@ -86,13 +86,15 @@ export default function Home() {
                     <img src={getMediaAssetUrl(item.poster)} alt={item.title} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                      <span className="text-gray-400 text-sm">No Image</span>
+                      <span className="text-gray-400 text-sm">{t('common.noImage')}</span>
                     </div>
                   )}
                 </div>
                 <div className="p-3">
                   <h3 className="font-medium truncate">{item.title}</h3>
-                  <p className="text-xs text-thistle-500 mt-1">Match: {(item.score * 100).toFixed(0)}%</p>
+                  <p className="text-xs text-thistle-500 mt-1">
+                    {t('common.match')}: {(item.score * 100).toFixed(0)}%
+                  </p>
                 </div>
               </Link>
             ))}

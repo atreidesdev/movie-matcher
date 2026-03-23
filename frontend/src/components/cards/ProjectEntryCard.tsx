@@ -1,5 +1,5 @@
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
 import { Link } from 'react-router-dom'
-import { getMediaAssetUrl, getMediaPath, type MediaTypeForPath } from '@/utils/mediaPaths'
 
 export interface ProjectEntryCardProps {
   type: MediaTypeForPath

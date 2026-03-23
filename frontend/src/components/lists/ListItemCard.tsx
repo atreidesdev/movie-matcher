@@ -1,19 +1,19 @@
-import { Link } from 'react-router-dom'
+import type { ListEntityType } from '@/api/lists'
+import TitleReactionDisplay from '@/components/TitleReactionDisplay'
+import { getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import { useIsMobile } from '@/hooks/useIsMobile'
+import type { ListItem, ListStatus } from '@/types'
+import { formatListDate } from '@/utils/formatListDate'
+import { getMediaFromItem } from '@/utils/listItemMedia'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getMediaTitle } from '@/utils/localizedText'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { Pencil, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Trash2, Pencil } from 'lucide-react'
-import type { ListItem, ListStatus } from '@/types'
-import type { ListEntityType } from '@/api/lists'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import TitleReactionDisplay from '@/components/TitleReactionDisplay'
-import { getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
-import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
-import { getMediaTitle } from '@/utils/localizedText'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
-import { getMediaFromItem } from '@/utils/listItemMedia'
+import { Link } from 'react-router-dom'
 import { getListItemProgressText } from './listItemProgress'
-import { useIsMobile } from '@/hooks/useIsMobile'
-import { formatListDate } from '@/utils/formatListDate'
 
 interface ListItemCardProps {
   item: ListItem
@@ -24,14 +24,7 @@ interface ListItemCardProps {
   onRemove: (entityId: number) => void
 }
 
-export default function ListItemCard({
-  item,
-  listType,
-  mediaType,
-  isOwnProfile,
-  onEdit,
-  onRemove,
-}: ListItemCardProps) {
+export default function ListItemCard({ item, listType, mediaType, isOwnProfile, onEdit, onRemove }: ListItemCardProps) {
   const { t } = useTranslation()
   const isMobile = useIsMobile()
   const media = getMediaFromItem(item, listType)
@@ -46,7 +39,11 @@ export default function ListItemCard({
   const isFilmType = listType === 'movies' || listType === 'cartoon-movies' || listType === 'anime-movies'
   const isGameType = listType === 'games'
   const isBookType = listType === 'books' || listType === 'manga' || listType === 'light-novels'
-  const rewatchLabel = isGameType ? t('lists.playthroughs') : isBookType ? t('lists.rereadSessions') : t('lists.rewatchSessions')
+  const rewatchLabel = isGameType
+    ? t('lists.playthroughs')
+    : isBookType
+      ? t('lists.rereadSessions')
+      : t('lists.rewatchSessions')
   const watchedAt = item.completedAt ?? item.startedAt
   const ratingDisplay =
     item.rating != null && item.rating > 0
@@ -80,16 +77,9 @@ export default function ListItemCard({
         if (!tapped) setTapped(true)
       }}
     >
-      <Link
-        to={linkPath}
-        className={`block absolute inset-0 ${isMobile && !tapped ? 'pointer-events-none' : ''}`}
-      >
+      <Link to={linkPath} className={`block absolute inset-0 ${isMobile && !tapped ? 'pointer-events-none' : ''}`}>
         {media.poster ? (
-          <img
-            src={getMediaAssetUrl(media.poster)}
-            alt={media.title}
-            className="w-full h-full object-cover"
-          />
+          <img src={getMediaAssetUrl(media.poster)} alt={media.title} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full bg-[var(--theme-bg-alt)] flex items-center justify-center">
             <span className="text-[var(--theme-text-muted)] text-2xl">—</span>
@@ -102,9 +92,7 @@ export default function ListItemCard({
           </h3>
           {(progressText || ratingDisplay || item.titleReaction) && (
             <div className="flex flex-wrap items-center gap-2 mt-1.5">
-              {progressText && (
-                <span className="text-xs text-white/90 drop-shadow-sm">{progressText}</span>
-              )}
+              {progressText && <span className="text-xs text-white/90 drop-shadow-sm">{progressText}</span>}
               {ratingDisplay != null && (
                 <span className="text-xs font-medium text-white/95 drop-shadow-sm">{ratingDisplay}</span>
               )}
@@ -113,9 +101,7 @@ export default function ListItemCard({
                   <TitleReactionDisplay reaction={item.titleReaction} size={14} />
                 </span>
               )}
-              {timelineText && (
-                <span className="text-[11px] text-white/90 drop-shadow-sm">{timelineText}</span>
-              )}
+              {timelineText && <span className="text-[11px] text-white/90 drop-shadow-sm">{timelineText}</span>}
             </div>
           )}
           {StatusIcon && badgeClasses && (

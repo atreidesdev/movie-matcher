@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { IconSearch } from '@/components/icons'
 import { charactersApi } from '@/api/characters'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { getLocalizedString } from '@/utils/localizedText'
-import type { Character } from '@/types'
+import { IconSearch } from '@/components/icons'
 import SimplePagination from '@/components/ui/SimplePagination'
+import type { Character } from '@/types'
+import { getLocalizedString } from '@/utils/localizedText'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const MEDIA_TYPE_OPTIONS = [
   { value: 'movie', labelKey: 'nav.movies' },
@@ -99,7 +99,7 @@ function SearchCharacters() {
                   else next.delete('mediaType')
                   return next
                 },
-                { replace: true }
+                { replace: true },
               )
             }}
             className="rounded-lg border border-gray-300 focus:ring-2 focus:ring-thistle-400 px-3 py-2"

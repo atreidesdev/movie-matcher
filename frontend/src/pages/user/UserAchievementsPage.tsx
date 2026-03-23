@@ -1,17 +1,17 @@
-import { useEffect, useState, Fragment } from 'react'
-import { useParams, useOutletContext } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { usersApi } from '@/api/users'
+import { IconAchievement } from '@/components/icons'
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber'
+import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
 import type { UserProfileLayoutContext } from '@/pages/user/UserProfileLayout'
+import { useAuthStore } from '@/store/authStore'
+import type { AchievementWithProgress } from '@/types'
+import { getLocalizedString } from '@/utils/localizedText'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import { motion } from 'framer-motion'
 import { Award } from 'lucide-react'
-import { IconAchievement } from '@/components/icons'
-import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
-import { AnimatedNumber } from '@/components/ui/AnimatedNumber'
-import { usersApi } from '@/api/users'
-import { getLocalizedString } from '@/utils/localizedText'
-import type { AchievementWithProgress } from '@/types'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { useAuthStore } from '@/store/authStore'
+import { Fragment, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useOutletContext, useParams } from 'react-router-dom'
 
 export default function UserAchievementsPage() {
   const { username } = useParams<{ username: string }>()
@@ -20,7 +20,7 @@ export default function UserAchievementsPage() {
   const { user: currentUser } = useAuthStore()
   const { profile } = useOutletContext<UserProfileLayoutContext>()
   const isOwnProfile = Boolean(
-    username && currentUser?.username && username.toLowerCase() === currentUser.username.toLowerCase()
+    username && currentUser?.username && username.toLowerCase() === currentUser.username.toLowerCase(),
   )
   const [list, setList] = useState<AchievementWithProgress[]>([])
   const [loading, setLoading] = useState(true)
@@ -210,50 +210,50 @@ export default function UserAchievementsPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-10 mt-6">
-        {forbidden ? (
-          <p className="text-theme-muted">{t('achievements.profileHidden')}</p>
-        ) : list.length === 0 ? (
-          <p className="text-theme-muted">{t('achievements.empty')}</p>
-        ) : (
-          <div className="space-y-10">
-            {completedSorted.length > 0 && (
-              <section>
-                <h2 className="text-lg font-semibold text-theme mb-3 flex items-center gap-2">
-                  <IconAchievement className="w-5 h-5 text-[var(--theme-primary)]" />
-                  {t('achievements.sectionCompleted')}
-                </h2>
-                <motion.ul
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-                  variants={staggerContainerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  {completedSorted.map((a) => (
-                    <Fragment key={a.id}>{renderCard(a)}</Fragment>
-                  ))}
-                </motion.ul>
-              </section>
-            )}
-            {inProgressSorted.length > 0 && (
-              <section>
-                <h2 className="text-lg font-semibold text-theme mb-3 flex items-center gap-2">
-                  <Award className="w-5 h-5 text-[var(--theme-primary)]" />
-                  {t('achievements.sectionInProgress')}
-                </h2>
-                <motion.ul
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-                  variants={staggerContainerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  {inProgressSorted.map((a) => (
-                    <Fragment key={a.id}>{renderCard(a)}</Fragment>
-                  ))}
-                </motion.ul>
-              </section>
-            )}
-          </div>
-        )}
-      </div>
+      {forbidden ? (
+        <p className="text-theme-muted">{t('achievements.profileHidden')}</p>
+      ) : list.length === 0 ? (
+        <p className="text-theme-muted">{t('achievements.empty')}</p>
+      ) : (
+        <div className="space-y-10">
+          {completedSorted.length > 0 && (
+            <section>
+              <h2 className="text-lg font-semibold text-theme mb-3 flex items-center gap-2">
+                <IconAchievement className="w-5 h-5 text-[var(--theme-primary)]" />
+                {t('achievements.sectionCompleted')}
+              </h2>
+              <motion.ul
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                variants={staggerContainerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {completedSorted.map((a) => (
+                  <Fragment key={a.id}>{renderCard(a)}</Fragment>
+                ))}
+              </motion.ul>
+            </section>
+          )}
+          {inProgressSorted.length > 0 && (
+            <section>
+              <h2 className="text-lg font-semibold text-theme mb-3 flex items-center gap-2">
+                <Award className="w-5 h-5 text-[var(--theme-primary)]" />
+                {t('achievements.sectionInProgress')}
+              </h2>
+              <motion.ul
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                variants={staggerContainerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {inProgressSorted.map((a) => (
+                  <Fragment key={a.id}>{renderCard(a)}</Fragment>
+                ))}
+              </motion.ul>
+            </section>
+          )}
+        </div>
+      )}
+    </div>
   )
 }

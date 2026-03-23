@@ -1,16 +1,22 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Pencil } from 'lucide-react'
+import { type CommunityPostItem, communitiesApi } from '@/api/communities'
 import { RichTextContent } from '@/components/richText/RichTextContent'
-import { communitiesApi, type CommunityPostItem } from '@/api/communities'
 import { useAuthStore } from '@/store/authStore'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { Pencil } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 function formatDate(iso: string): string {
   try {
     const d = new Date(iso)
-    return d.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+    return d.toLocaleDateString(undefined, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
   } catch {
     return iso
   }
@@ -100,11 +106,7 @@ export default function CommunityPostDetailPage() {
         </div>
         {post.previewImage && (
           <div className="mb-4 rounded-lg overflow-hidden">
-            <img
-              src={getMediaAssetUrl(post.previewImage)}
-              alt=""
-              className="w-full max-h-80 object-cover"
-            />
+            <img src={getMediaAssetUrl(post.previewImage)} alt="" className="w-full max-h-80 object-cover" />
           </div>
         )}
         <div className="flex items-center gap-2 text-sm text-[var(--theme-text-muted)] mt-2 mb-4">
@@ -141,13 +143,8 @@ export default function CommunityPostDetailPage() {
                     className="rounded-lg w-full object-cover max-h-80"
                   />
                 ) : (
-                  <video
-                    key={i}
-                    src={getMediaAssetUrl(att.path)}
-                    controls
-                    className="rounded-lg w-full max-h-80"
-                  />
-                )
+                  <video key={i} src={getMediaAssetUrl(att.path)} controls className="rounded-lg w-full max-h-80" />
+                ),
               )}
             </div>
           </section>

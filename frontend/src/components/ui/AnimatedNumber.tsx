@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react'
 import { animate, useMotionValue, useMotionValueEvent } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 
 export interface AnimatedNumberProps {
   /** Текущее значение (при смене — плавный переход) */

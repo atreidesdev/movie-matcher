@@ -1,21 +1,18 @@
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
-import { Media, ListStatus } from '@/types'
-import type { ReleaseSchedule } from '@/types'
-import { getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
 import RatingEmoji from '@/components/RatingEmoji'
+import { getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import { useCanHover } from '@/hooks/useCanHover'
+import { usePosterCardTheme } from '@/hooks/usePosterCardTheme'
+import type { ListStatus, Media } from '@/types'
+import type { ReleaseSchedule } from '@/types'
+import { getLocalizedString, getMediaTitle } from '@/utils/localizedText'
 import {
-  getMediaPath,
-  getMediaAssetUrl,
+  type MediaTypeForPath,
   getCatalogGenreLink,
   getCatalogThemeLink,
-  MediaTypeForPath,
+  getMediaAssetUrl,
+  getMediaPath,
 } from '@/utils/mediaPaths'
-import { getMediaTitle, getLocalizedString } from '@/utils/localizedText'
 import { normalizeRatingToPercent } from '@/utils/rating'
-import { usePosterCardTheme } from '@/hooks/usePosterCardTheme'
-import { useCanHover } from '@/hooks/useCanHover'
 import {
   getMediaChaptersFromVolumes,
   getMediaCurrentEpisode,
@@ -25,6 +22,9 @@ import {
   getMediaVolumes,
 } from '@/utils/typeGuards'
 import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 const SERIES_TYPES: MediaTypeForPath[] = ['anime', 'tv-series', 'cartoon-series']
 const FILM_TYPES: MediaTypeForPath[] = ['movie', 'anime-movies', 'cartoon-movies']
@@ -61,13 +61,13 @@ const PRINT_TYPES: MediaTypeForPath[] = ['manga', 'book', 'light-novel']
 
 function getOptionalEntityName(
   entity: { name?: string; nameI18n?: unknown } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!entity) return ''
   return getLocalizedString(
     entity.nameI18n && typeof entity.nameI18n === 'object' ? (entity.nameI18n as Record<string, string>) : undefined,
     entity.name,
-    locale
+    locale,
   )
 }
 
@@ -76,7 +76,7 @@ function getListDateContent(
   media: Media & { releaseSchedule?: ReleaseSchedule },
   type: MediaTypeForPath,
   t: (key: string, opts?: Record<string, number | string>) => string,
-  locale: string
+  locale: string,
 ): { meta: string; dateMain: string; dateSub: string; dateSubDate?: string } {
   const isSeries = SERIES_TYPES.includes(type)
   const isFilm = FILM_TYPES.includes(type)
@@ -261,7 +261,7 @@ export default function MediaCardHorizontal({
             <div
               className={clsx(
                 'media-card-list__row media-card-list__row--meta',
-                dateContent.meta === '—' && 'media-card-list__row--meta-no-value'
+                dateContent.meta === '—' && 'media-card-list__row--meta-no-value',
               )}
             >
               <span className="media-card-list__meta-label">{t(TYPE_LABEL[type])}</span>

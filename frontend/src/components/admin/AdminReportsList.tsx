@@ -1,19 +1,19 @@
-import { useEffect, useState, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Flag, Gavel } from 'lucide-react'
-import { IconCross, IconFriendDelete } from '@/components/icons'
-import { useModalA11y } from '@/hooks/useModalA11y'
-import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import { type CommentBanHistoryEntry as AdminBanHistoryEntry, adminApi } from '@/api/admin'
 import {
-  reportsApi,
-  reportTemplatesApi,
-  type Report,
-  type ReportStatus,
-  type ReportResponseTemplate,
   type CommentBanHistoryEntry,
+  type Report,
+  type ReportResponseTemplate,
+  type ReportStatus,
+  reportTemplatesApi,
+  reportsApi,
 } from '@/api/reports'
-import { adminApi, type CommentBanHistoryEntry as AdminBanHistoryEntry } from '@/api/admin'
+import { IconCross, IconFriendDelete } from '@/components/icons'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import { useModalA11y } from '@/hooks/useModalA11y'
 import { useToastStore } from '@/store/toastStore'
+import { Flag, Gavel } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const REASON_KEYS: Record<string, string> = {
   spam: 'media.reportReasonSpam',

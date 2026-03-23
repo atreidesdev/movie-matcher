@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import { ListItem, ListStatus } from '@/types'
+import type { ListItem, ListStatus } from '@/types'
 
 export type ListEntityType =
   | 'movies'
@@ -23,7 +23,7 @@ export const listsApi = {
   getListByUsername: async (username: string, type: ListEntityType, status?: ListStatus): Promise<ListItem[]> => {
     const params = status ? `?status=${status}` : ''
     const response = await apiClient.get<ListItem[]>(
-      `/users/username/${encodeURIComponent(username)}/lists/${type}${params}`
+      `/users/username/${encodeURIComponent(username)}/lists/${type}${params}`,
     )
     return response.data
   },
@@ -45,7 +45,7 @@ export const listsApi = {
       currentChapterNumber?: number
       titleReaction?: string
       hoursPlayed?: number
-    }
+    },
   ): Promise<ListItem> => {
     const response = await apiClient.post<ListItem>(`/lists/${type}/${entityId}`, payload)
     return response.data
@@ -80,7 +80,7 @@ export const listsApi = {
     animeId: number,
     status: ListStatus,
     comment?: string,
-    currentEpisode?: number
+    currentEpisode?: number,
   ): Promise<ListItem> => {
     return listsApi.addToList('anime', animeId, { status, comment, currentEpisode })
   },

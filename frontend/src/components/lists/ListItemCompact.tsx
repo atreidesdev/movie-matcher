@@ -1,18 +1,18 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Trash2, Pencil } from 'lucide-react'
-import type { ListItem, ListStatus } from '@/types'
 import type { ListEntityType } from '@/api/lists'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
 import TitleReactionDisplay from '@/components/TitleReactionDisplay'
-import { getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
-import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
-import { getMediaTitle } from '@/utils/localizedText'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
-import { getMediaFromItem } from '@/utils/listItemMedia'
-import { getListItemProgressText } from './listItemProgress'
+import { getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import type { ListItem, ListStatus } from '@/types'
 import { formatListDate } from '@/utils/formatListDate'
+import { getMediaFromItem } from '@/utils/listItemMedia'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getMediaTitle } from '@/utils/localizedText'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { Pencil, Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { getListItemProgressText } from './listItemProgress'
 
 interface ListItemCompactProps {
   item: ListItem
@@ -45,7 +45,11 @@ export default function ListItemCompact({
   const isFilmType = listType === 'movies' || listType === 'cartoon-movies' || listType === 'anime-movies'
   const isGameType = listType === 'games'
   const isBookType = listType === 'books' || listType === 'manga' || listType === 'light-novels'
-  const rewatchLabel = isGameType ? t('lists.playthroughs') : isBookType ? t('lists.rereadSessions') : t('lists.rewatchSessions')
+  const rewatchLabel = isGameType
+    ? t('lists.playthroughs')
+    : isBookType
+      ? t('lists.rereadSessions')
+      : t('lists.rewatchSessions')
   const watchedAt = item.completedAt ?? item.startedAt
   const progressText = getListItemProgressText(item, listType, t)
   const ratingDisplay =
@@ -86,13 +90,8 @@ export default function ListItemCompact({
         </div>
       )}
       <div className="relative z-10 flex-1 min-w-0 py-3 px-4 flex items-center gap-3">
-        <Link
-          to={linkPath}
-          className={`flex-1 min-w-0 ${isMobile && !tapped ? 'pointer-events-none' : ''}`}
-        >
-          <span className="title-hover-theme font-medium block truncate">
-            {getMediaTitle(media) || media.title}
-          </span>
+        <Link to={linkPath} className={`flex-1 min-w-0 ${isMobile && !tapped ? 'pointer-events-none' : ''}`}>
+          <span className="title-hover-theme font-medium block truncate">{getMediaTitle(media) || media.title}</span>
           <div className="flex flex-wrap items-center gap-2 mt-1 w-full">
             {status && StatusIcon && badgeClasses && (
               <span
@@ -106,15 +105,8 @@ export default function ListItemCompact({
             {ratingDisplay != null && (
               <div className="rating-badge media-card-inline-rating bg-space_indigo-600 backdrop-blur-sm inline-flex items-center gap-1.5">
                 {item.titleReaction && (
-                  <span
-                    className="inline-flex items-center"
-                    title={t(`media.reaction.${item.titleReaction}`)}
-                  >
-                    <TitleReactionDisplay
-                      reaction={item.titleReaction}
-                      size={14}
-                      className="text-lavender-500"
-                    />
+                  <span className="inline-flex items-center" title={t(`media.reaction.${item.titleReaction}`)}>
+                    <TitleReactionDisplay reaction={item.titleReaction} size={14} className="text-lavender-500" />
                   </span>
                 )}
                 <span className="rating-badge-value text-lavender-500">{ratingDisplay}</span>
@@ -126,9 +118,7 @@ export default function ListItemCompact({
                 <TitleReactionDisplay reaction={item.titleReaction} size={14} />
               </span>
             )}
-            {progressText && (
-              <span className="text-xs text-[var(--theme-text-muted)] truncate">{progressText}</span>
-            )}
+            {progressText && <span className="text-xs text-[var(--theme-text-muted)] truncate">{progressText}</span>}
 
             {isFilmType ? (
               watchedAt ? (

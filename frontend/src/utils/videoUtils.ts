@@ -24,7 +24,7 @@ function getApiBase(): string {
  */
 export function getVideoStreamUrl(
   pathFromApi: string | undefined | null,
-  quality?: '1080' | '720' | '480' | '360'
+  quality?: '1080' | '720' | '480' | '360',
 ): string {
   if (!pathFromApi) return ''
   if (pathFromApi.startsWith('http://') || pathFromApi.startsWith('https://')) return pathFromApi
@@ -53,7 +53,7 @@ const STREAM_QUALITIES: { q: '1080' | '720' | '480' | '360'; labelKey: string }[
  */
 export function getVideoStreamQualitySources(
   pathFromApi: string | undefined | null,
-  t: (key: string) => string
+  t: (key: string) => string,
 ): VideoQualitySource[] {
   if (!pathFromApi || pathFromApi.startsWith('http')) return []
   const baseUrl = getVideoStreamUrl(pathFromApi)

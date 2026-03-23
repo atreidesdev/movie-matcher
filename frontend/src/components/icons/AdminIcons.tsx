@@ -1,9 +1,9 @@
+import type { IconProps } from '@/components/icons/types'
+import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
 /**
  * Иконки для админки и каталога.
  */
 import { useId } from 'react'
-import type { IconProps } from '@/components/icons/types'
-import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
 
 const iconProps = (p: IconProps) => {
   const size = p.size ?? DEFAULT_ICON_SIZE

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
 import { IconArrowDown } from '@/components/icons'
+import { useEffect, useRef, useState } from 'react'
 
 export interface CustomSelectOption {
   value: string

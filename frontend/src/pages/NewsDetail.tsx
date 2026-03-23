@@ -99,7 +99,7 @@ export default function NewsDetailPage() {
           className="inline-flex items-center gap-1 text-[var(--theme-primary)] hover:underline title-hover-theme"
         >
           <ArrowLeft className="w-4 h-4" />
-          {t('news.backToList')}
+          {t('common.backToList')}
         </Link>
         <p className="text-[var(--theme-text-muted)]">{t('news.notFound')}</p>
       </div>
@@ -114,7 +114,7 @@ export default function NewsDetailPage() {
           className="inline-flex items-center gap-1 text-[var(--theme-primary)] hover:underline text-sm title-hover-theme"
         >
           <ArrowLeft className="w-4 h-4" />
-          {t('news.backToList')}
+          {t('common.backToList')}
         </Link>
         {canEditNews(user?.role) && (
           <Link to={`/news/${news.id}/edit`} className="btn-edit btn-secondary flex items-center gap-1 text-sm">

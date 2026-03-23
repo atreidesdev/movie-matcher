@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { ArrowLeft } from 'lucide-react'
-import { getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
-import RatingEmoji from '@/components/RatingEmoji'
 import { mediaApi } from '@/api/media'
-import { getMediaAssetUrl, getMediaPath, type MediaTypeForPath } from '@/utils/mediaPaths'
-import { getMediaTitle, getEntityName } from '@/utils/localizedText'
+import RatingEmoji from '@/components/RatingEmoji'
+import { getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import type { ListStatus, Media } from '@/types'
 import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getEntityName, getMediaTitle } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
 import { normalizeRatingToPercent } from '@/utils/rating'
-import type { Media, ListStatus } from '@/types'
 import clsx from 'clsx'
+import { ArrowLeft } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 interface MediaSimilarPageProps {
   type: MediaTypeForPath
@@ -23,7 +23,7 @@ export default function MediaSimilarPage({ type }: MediaSimilarPageProps) {
   const [media, setMedia] = useState<Media | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const numId = id ? parseInt(id, 10) : 0
+  const numId = id ? Number.parseInt(id, 10) : 0
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -108,7 +108,7 @@ export default function MediaSimilarPage({ type }: MediaSimilarPageProps) {
                       className={clsx(
                         'absolute top-1.5 left-1.5 z-10 w-8 h-8 rounded-lg backdrop-blur-sm flex items-center justify-center shadow-lg',
                         badgeClasses.bg,
-                        badgeClasses.text
+                        badgeClasses.text,
                       )}
                       title={status ? getListStatusLabel(t, type, status) : ''}
                     >

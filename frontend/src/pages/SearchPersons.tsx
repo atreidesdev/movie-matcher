@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { IconSearch, getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
 import { personsApi } from '@/api/persons'
+import { IconSearch, getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import SimplePagination from '@/components/ui/SimplePagination'
+import type { Person } from '@/types'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import { getPersonDisplayName } from '@/utils/personUtils'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
-import type { Person } from '@/types'
-import SimplePagination from '@/components/ui/SimplePagination'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 /** Media types that have cast (backend filter support) */
 const MEDIA_TYPE_OPTIONS = [
@@ -116,7 +116,7 @@ export default function SearchPersons() {
                       next.delete('companyType')
                       return next
                     },
-                    { replace: true }
+                    { replace: true },
                   )
                 }}
                 className="text-thistle-600 focus:ring-thistle-500"
@@ -137,7 +137,7 @@ export default function SearchPersons() {
                       next.delete('mediaType')
                       return next
                     },
-                    { replace: true }
+                    { replace: true },
                   )
                 }}
                 className="text-thistle-600 focus:ring-thistle-500"
@@ -161,7 +161,7 @@ export default function SearchPersons() {
                     else next.delete('mediaType')
                     return next
                   },
-                  { replace: true }
+                  { replace: true },
                 )
               }}
               className="rounded-lg border border-gray-300 focus:ring-2 focus:ring-thistle-400 px-3 py-2"
@@ -190,7 +190,7 @@ export default function SearchPersons() {
                     else next.delete('companyType')
                     return next
                   },
-                  { replace: true }
+                  { replace: true },
                 )
               }}
               className="rounded-lg border border-gray-300 focus:ring-2 focus:ring-thistle-400 px-3 py-2"

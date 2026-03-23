@@ -1,5 +1,5 @@
-import { createPortal } from 'react-dom'
 import { IconCross } from '@/components/icons'
+import { createPortal } from 'react-dom'
 
 export interface ReleaseScheduleData {
   day?: string
@@ -111,6 +111,6 @@ export function MediaDetailScheduleSection({
         {scheduleContent}
       </div>
     </div>,
-    document.body
+    document.body,
   )
 }

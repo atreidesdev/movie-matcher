@@ -1,25 +1,21 @@
-import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react'
+import { adminApi } from '@/api/admin'
+import { type CommentEntityType, commentsApi } from '@/api/comments'
+import { discussionsApi } from '@/api/discussions'
+import { type CommentEmojiType, reactionsApi } from '@/api/reactions'
+import { reportsApi } from '@/api/reports'
+import { IconCross, IconDislike, IconLike, IconReply, IconSend } from '@/components/icons'
+import { RichTextContent } from '@/components/richText/RichTextContent'
+import { RichTextEditor, type RichTextEditorRef, richEditorIsSubmittable } from '@/components/richText/RichTextEditor'
+import { useCommentsWs } from '@/hooks/useCommentsWs'
+import { useAuthStore } from '@/store/authStore'
+import { useToastStore } from '@/store/toastStore'
+import type { Comment } from '@/types'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { RICH_TEXT_MAX_COMMENT_HTML, isRichTextEmpty, sanitizeRichHtml } from '@/utils/richText'
+import { Ban, ChevronUp, Flag, Pencil, Trash2 } from 'lucide-react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Ban, Flag, Pencil, Trash2, ChevronUp } from 'lucide-react'
-import { useAuthStore } from '@/store/authStore'
-import { commentsApi, CommentEntityType } from '@/api/comments'
-import { discussionsApi } from '@/api/discussions'
-import { reactionsApi, type CommentEmojiType } from '@/api/reactions'
-import { adminApi } from '@/api/admin'
-import { reportsApi } from '@/api/reports'
-import { Comment } from '@/types'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { useToastStore } from '@/store/toastStore'
-import { IconReply, IconSend, IconCross, IconLike, IconDislike } from '@/components/icons'
-import { useCommentsWs } from '@/hooks/useCommentsWs'
-import { RichTextEditor, type RichTextEditorRef, richEditorIsSubmittable } from '@/components/richText/RichTextEditor'
-import { RichTextContent } from '@/components/richText/RichTextContent'
-import {
-  isRichTextEmpty,
-  sanitizeRichHtml,
-  RICH_TEXT_MAX_COMMENT_HTML,
-} from '@/utils/richText'
 
 const entityTypeToApi: Record<string, CommentEntityType> = {
   movie: 'movies',
@@ -85,14 +81,14 @@ function setRepliesInTree(list: Comment[], parentId: number, replies: Comment[],
       ? { ...c, replies, ...(total != null ? { repliesCount: total } : {}) }
       : c.replies
         ? { ...c, replies: setRepliesInTree(c.replies, parentId, replies, total) }
-        : c
+        : c,
   )
 }
 
 /** Строит лог-дерево из дерева комментариев для вывода в консоль */
 function buildCommentTreeLog(
   list: Comment[],
-  depth = 0
+  depth = 0,
 ): Array<{
   id: number
   depth: number
@@ -131,7 +127,7 @@ function updateCommentInTree(list: Comment[], commentId: number, upd: Partial<Co
       ? { ...c, ...upd }
       : c.replies
         ? { ...c, replies: updateCommentInTree(c.replies, commentId, upd) }
-        : c
+        : c,
   )
 }
 
@@ -145,11 +141,11 @@ function addCommentToTree(list: Comment[], comment: Comment): Comment[] {
       ? {
           ...c,
           replies: [...(c.replies ?? []), { ...comment, depth: (c.depth ?? 0) + 1 }],
-          repliesCount: (c.repliesCount ?? (c.replies?.length ?? 0)) + 1,
+          repliesCount: (c.repliesCount ?? c.replies?.length ?? 0) + 1,
         }
       : c.replies
         ? { ...c, replies: addCommentToTree(c.replies, comment) }
-        : c
+        : c,
   )
 }
 
@@ -236,7 +232,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         })
         setEmojiReactions((prev) => ({ ...prev, ...next }))
       },
-      () => {}
+      () => {},
     )
     return () => {
       cancelled = true
@@ -274,7 +270,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         },
         () => {
           if (!cancelled) setComments([])
-        }
+        },
       )
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -297,7 +293,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
     isDiscussionMode ? '' : apiType,
     isDiscussionMode ? undefined : entityId,
     handleWsNewComment,
-    handleWsDeletedComment
+    handleWsDeletedComment,
   )
 
   // Вывод дерева комментариев в консоль при изменении
@@ -344,14 +340,14 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
               ? { ...c, replies: newReplies, repliesCount: totalReplies }
               : c.replies
                 ? { ...c, replies: setRepliesInTree(c.replies, parentId, newReplies, totalReplies) }
-                : c
-          )
+                : c,
+          ),
         )
       } finally {
         setLoadingReplies((prev) => ({ ...prev, [parentId]: false }))
       }
     },
-    [apiType, entityId, saveScrollBeforeAction, isDiscussionMode, discussionId]
+    [apiType, entityId, saveScrollBeforeAction, isDiscussionMode, discussionId],
   )
 
   const toggleBranch = useCallback(
@@ -364,7 +360,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         return next
       })
     },
-    [saveScrollBeforeAction]
+    [saveScrollBeforeAction],
   )
 
   const handleReaction = useCallback(
@@ -380,7 +376,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         setReactioning((prev) => ({ ...prev, [commentId]: false }))
       }
     },
-    [apiType, entityId, user, t]
+    [apiType, entityId, user, t],
   )
 
   const handleEmojiReaction = useCallback(
@@ -401,23 +397,23 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         setEmojiReactioning((prev) => ({ ...prev, [commentId]: false }))
       }
     },
-    [user, reactionEntityType, emojiReactions]
+    [user, reactionEntityType, emojiReactions],
   )
 
   const canDelete = useCallback(
     (c: Comment) =>
       Boolean(
-        user && (user.id === c.userId || user.role === 'admin' || user.role === 'moderator' || user.role === 'owner')
+        user && (user.id === c.userId || user.role === 'admin' || user.role === 'moderator' || user.role === 'owner'),
       ),
-    [user]
+    [user],
   )
   const canEdit = useCallback((c: Comment) => Boolean(user && user.id === c.userId), [user])
   const canBlock = useCallback(
     (c: Comment) =>
       Boolean(
-        user && user.id !== c.userId && (user.role === 'admin' || user.role === 'moderator' || user.role === 'owner')
+        user && user.id !== c.userId && (user.role === 'admin' || user.role === 'moderator' || user.role === 'owner'),
       ),
-    [user]
+    [user],
   )
 
   const handleEditStart = useCallback((c: Comment) => {
@@ -462,7 +458,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         setTotal((prev) => Math.max(0, prev - 1))
       } catch {}
     },
-    [apiType, entityId, isDiscussionMode, discussionId]
+    [apiType, entityId, isDiscussionMode, discussionId],
   )
 
   const handleReportSubmit = useCallback(async () => {
@@ -494,12 +490,10 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
       try {
         const until = new Date(Date.now() + durationHours * 60 * 60 * 1000).toISOString()
         await adminApi.setCommentBan(userId, until)
-        useToastStore
-          .getState()
-          .show({
-            title:
-              t('admin.blockUser') + ' — ' + (durationHours >= 24 ? durationHours / 24 + ' d' : durationHours + ' h'),
-          })
+        useToastStore.getState().show({
+          title:
+            t('admin.blockUser') + ' — ' + (durationHours >= 24 ? durationHours / 24 + ' d' : durationHours + ' h'),
+        })
         setBlockModal(null)
       } catch {
         useToastStore.getState().show({ title: t('common.error') })
@@ -507,7 +501,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         setBlocking(false)
       }
     },
-    [blockModal, blocking, t]
+    [blockModal, blocking, t],
   )
 
   useLayoutEffect(() => {
@@ -521,7 +515,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
         ? { ...c, replies: [...(c.replies ?? []), reply] }
         : c.replies
           ? { ...c, replies: injectReply(c.replies, parentId, reply) }
-          : c
+          : c,
     )
   }
 
@@ -546,8 +540,8 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
               ? { ...c, replies: [...(c.replies ?? []), { ...created, plusCount: 0, minusCount: 0 }] }
               : c.replies
                 ? { ...c, replies: injectReply(c.replies, replyToId, { ...created, plusCount: 0, minusCount: 0 }) }
-                : c
-          )
+                : c,
+          ),
         )
       } else {
         setComments((prev) => [{ ...created, plusCount: 0, minusCount: 0 }, ...prev])
@@ -952,7 +946,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
                     canBlock,
                     onReport,
                     onBlock,
-                  })
+                  }),
                 )}
               </ul>
             )}
@@ -1088,7 +1082,7 @@ export default function CommentSectionV2({ entityType = 'movie', entityId = 0, d
               canBlock: isDiscussionMode ? undefined : canBlock,
               onReport: isDiscussionMode ? undefined : (id) => setReportModal({ commentId: id }),
               onBlock: isDiscussionMode ? undefined : (userId, userName) => setBlockModal({ userId, userName }),
-            })
+            }),
           )}
         </div>
       )}

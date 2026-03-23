@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
-import { getMediaAssetUrl, getStudioPath, getPublisherPath, getDeveloperPath } from '@/utils/mediaPaths'
-import { getEntityName } from '@/utils/localizedText'
 import type { Media } from '@/types'
+import { getEntityName } from '@/utils/localizedText'
+import { getDeveloperPath, getMediaAssetUrl, getPublisherPath, getStudioPath } from '@/utils/mediaPaths'
 import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { Link } from 'react-router-dom'
 
 interface MediaDetailCompaniesSectionProps {
   media: Media

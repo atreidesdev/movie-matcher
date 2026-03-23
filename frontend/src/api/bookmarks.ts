@@ -28,7 +28,7 @@ export const bookmarksApi = {
 
   add: async (
     targetType: BookmarkTargetType,
-    targetId: number
+    targetId: number,
   ): Promise<{ bookmark: { id: number; userId: number; targetType: string; targetId: number }; message?: string }> => {
     const response = await apiClient.post<{
       bookmark: { id: number; userId: number; targetType: string; targetId: number }

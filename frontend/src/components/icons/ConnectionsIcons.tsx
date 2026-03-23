@@ -1,10 +1,10 @@
+import type { IconProps } from '@/components/icons/types'
+import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
 /**
  * Иконки связей: стриминги, соцсети, сервисы (connections-*, mdi_*, arcticons_*, cbi_*, simple-icons_*, shikimori, MAL, DISCORD и т.д.).
  * Добавляйте компоненты по мере необходимости из assets.
  */
 import { useId } from 'react'
-import type { IconProps } from '@/components/icons/types'
-import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
 
 const iconProps = (p: IconProps) => {
   const size = p.size ?? DEFAULT_ICON_SIZE

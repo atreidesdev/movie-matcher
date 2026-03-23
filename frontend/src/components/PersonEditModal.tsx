@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Upload } from 'lucide-react'
 import { adminApi } from '@/api/admin'
-import type { Person, LocalizedString } from '@/types'
 import TranslationsEditor from '@/components/admin/TranslationsEditor'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { buildUploadBaseName } from '@/utils/uploadNames'
 import BaseModal from '@/components/ui/BaseModal'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import type { LocalizedString, Person } from '@/types'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { buildUploadBaseName } from '@/utils/uploadNames'
+import { Upload } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface PersonEditModalProps {
   open: boolean
@@ -192,7 +192,7 @@ export default function PersonEditModal({ open, onClose, person, onSaved }: Pers
                       `${form.firstName} ${form.lastName}`.trim(),
                       'person',
                       person?.id,
-                      'avatar'
+                      'avatar',
                     ),
                   })
                   setForm((f) => ({ ...f, avatar: path }))
@@ -245,11 +245,11 @@ export default function PersonEditModal({ open, onClose, person, onSaved }: Pers
                     placeholder="Ш"
                     value={item.width ?? ''}
                     onChange={(e) => {
-                      const v = e.target.value ? parseInt(e.target.value, 10) : undefined
+                      const v = e.target.value ? Number.parseInt(e.target.value, 10) : undefined
                       setForm((f) => ({
                         ...f,
                         images: f.images.map((img, i) =>
-                          i === idx ? { ...img, width: Number.isNaN(v as number) ? undefined : v } : img
+                          i === idx ? { ...img, width: Number.isNaN(v as number) ? undefined : v } : img,
                         ),
                       }))
                     }}
@@ -262,11 +262,11 @@ export default function PersonEditModal({ open, onClose, person, onSaved }: Pers
                     placeholder="В"
                     value={item.height ?? ''}
                     onChange={(e) => {
-                      const v = e.target.value ? parseInt(e.target.value, 10) : undefined
+                      const v = e.target.value ? Number.parseInt(e.target.value, 10) : undefined
                       setForm((f) => ({
                         ...f,
                         images: f.images.map((img, i) =>
-                          i === idx ? { ...img, height: Number.isNaN(v as number) ? undefined : v } : img
+                          i === idx ? { ...img, height: Number.isNaN(v as number) ? undefined : v } : img,
                         ),
                       }))
                     }}
@@ -294,7 +294,7 @@ export default function PersonEditModal({ open, onClose, person, onSaved }: Pers
                       'person',
                       person?.id,
                       'image',
-                      form.images.length + 1
+                      form.images.length + 1,
                     ),
                   })
                   setForm((f) => ({

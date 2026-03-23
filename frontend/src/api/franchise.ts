@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import type { PaginatedResponse, LocalizedString } from '@/types'
+import type { LocalizedString, PaginatedResponse } from '@/types'
 
 export interface FranchiseLinkItem {
   id: number
@@ -60,7 +60,7 @@ export const franchiseApi = {
   }) => apiClient.post<Franchise>('/admin/franchises', data).then((r) => r.data),
   update: (
     id: number,
-    data: { name?: string; nameI18n?: LocalizedString; description?: string; poster?: string; aliases?: string[] }
+    data: { name?: string; nameI18n?: LocalizedString; description?: string; poster?: string; aliases?: string[] },
   ) => apiClient.put<Franchise>(`/admin/franchises/${id}`, data).then((r) => r.data),
   delete: (id: number) => apiClient.delete(`/admin/franchises/${id}`),
   addLink: (
@@ -73,7 +73,7 @@ export const franchiseApi = {
       relationType: string
       orderNumber?: number
       note?: string
-    }
+    },
   ) => apiClient.post<FranchiseMediaLink>(`/admin/franchises/${franchiseId}/links`, data).then((r) => r.data),
   updateLink: (linkId: number, data: { relationType?: string; orderNumber?: number; note?: string }) =>
     apiClient.put<FranchiseMediaLink>(`/admin/franchises/links/${linkId}`, data).then((r) => r.data),

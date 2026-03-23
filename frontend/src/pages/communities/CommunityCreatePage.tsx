@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { communitiesApi } from '@/api/communities'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function CommunityCreatePage() {
   const { t } = useTranslation()
@@ -34,7 +34,10 @@ export default function CommunityCreatePage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-6">
-      <Link to="/communities" className="text-sm text-[var(--theme-text-muted)] hover:text-[var(--theme-primary)] mb-4 inline-block">
+      <Link
+        to="/communities"
+        className="text-sm text-[var(--theme-text-muted)] hover:text-[var(--theme-primary)] mb-4 inline-block"
+      >
         ← {t('communities.title')}
       </Link>
       <h1 className="text-xl font-bold text-[var(--theme-text)] mb-6">{t('communities.createTitle')}</h1>

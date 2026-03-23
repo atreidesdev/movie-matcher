@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { adminApi, type StaffWithMediaId } from '@/api/admin'
+import { type StaffWithMediaId, adminApi } from '@/api/admin'
+import { isMockEnabled } from '@/mock/mockAdapter'
 import { getMediaPath } from '@/utils/mediaPaths'
 import { getPersonDisplayName } from '@/utils/personUtils'
-import { isMockEnabled } from '@/mock/mockAdapter'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 export default function AdminStaffList() {
   const { t, i18n } = useTranslation()

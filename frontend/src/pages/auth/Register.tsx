@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { IconAlert, IconEyeClose, IconEyeOpen, IconLetter, IconPerson } from '@/components/icons'
 import { useAuthStore } from '@/store/authStore'
 import { getDeviceName } from '@/utils/device'
-import { Lock, AtSign } from 'lucide-react'
-import { IconLetter, IconPerson, IconAlert, IconEyeOpen, IconEyeClose } from '@/components/icons'
+import { AtSign, Lock } from 'lucide-react'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from 'react-router-dom'
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]{3,32}$/
 

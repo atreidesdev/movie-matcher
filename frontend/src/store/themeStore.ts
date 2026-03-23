@@ -29,6 +29,6 @@ export const useThemeStore = create<ThemeState>()(
       onRehydrateStorage: () => (state) => {
         if (state?.themeId) applyTheme(state.themeId)
       },
-    }
-  )
+    },
+  ),
 )

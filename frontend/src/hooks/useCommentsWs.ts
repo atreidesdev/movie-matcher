@@ -1,5 +1,5 @@
-import { useEffect, useRef, useCallback } from 'react'
-import { Comment } from '@/types'
+import type { Comment } from '@/types'
+import { useCallback, useEffect, useRef } from 'react'
 
 const getWsBaseUrl = () => {
   const api = import.meta.env.VITE_API_URL || ''
@@ -22,7 +22,7 @@ export function useCommentsWs(
   entityType: string,
   entityId: number | undefined,
   onNewComment: (comment: Comment) => void,
-  onDeletedComment: (commentId: number) => void
+  onDeletedComment: (commentId: number) => void,
 ) {
   const wsRef = useRef<WebSocket | null>(null)
   const onNewRef = useRef(onNewComment)

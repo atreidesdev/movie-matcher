@@ -1,7 +1,7 @@
-import axios from 'axios'
 import apiClient from '@/api/client'
-import { AuthResponse, Session, User } from '@/types'
 import { createMockAdapter, isMockEnabled } from '@/mock/mockAdapter'
+import type { AuthResponse, Session, User } from '@/types'
+import axios from 'axios'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1'
 
@@ -35,7 +35,7 @@ export const authApi = {
     password: string,
     username: string,
     name?: string,
-    deviceName?: string
+    deviceName?: string,
   ): Promise<AuthResponse> => {
     const response = await noAuthClient.post<AuthResponse>('/auth/register', {
       email,

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 
@@ -11,13 +11,13 @@ const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabi
 export function useModalA11y(
   isOpen: boolean,
   onClose: () => void,
-  options?: { contentRef?: React.RefObject<HTMLElement | null> }
+  options?: { contentRef?: React.RefObject<HTMLElement | null> },
 ) {
   const previousActiveRef = useRef<HTMLElement | null>(null)
 
   const getFocusables = useCallback((root: HTMLElement): HTMLElement[] => {
     return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-      (el) => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true'
+      (el) => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true',
     )
   }, [])
 

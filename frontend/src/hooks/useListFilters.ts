@@ -1,11 +1,8 @@
-import { useMemo } from 'react'
-import type { ListItem } from '@/types'
 import type { ListEntityType } from '@/api/lists'
-import {
-  getMediaFullFromItem,
-  getYearFromReleaseDate,
-} from '@/utils/listItemMedia'
+import type { ListItem } from '@/types'
+import { getMediaFullFromItem, getYearFromReleaseDate } from '@/utils/listItemMedia'
 import { getMediaTitle } from '@/utils/localizedText'
+import { useMemo } from 'react'
 import { useDebounce } from './useDebounce'
 
 const ANIME_LIST_TYPES: ListEntityType[] = ['anime', 'anime-movies']
@@ -22,11 +19,7 @@ export interface ListFiltersState {
   matchAllSelected: boolean
 }
 
-export function useListFilters(
-  items: ListItem[],
-  listType: ListEntityType,
-  filters: ListFiltersState
-) {
+export function useListFilters(items: ListItem[], listType: ListEntityType, filters: ListFiltersState) {
   const debouncedSearch = useDebounce(filters.searchQuery.trim().toLowerCase(), 300)
 
   const { filteredItems, availableGenres, availableThemes, availableYears, availableSeasons } = useMemo(() => {
@@ -41,8 +34,7 @@ export function useListFilters(
       if (!media) continue
 
       const title = getMediaTitle(media) || media.title || ''
-      const searchMatch =
-        !debouncedSearch || title.toLowerCase().includes(debouncedSearch)
+      const searchMatch = !debouncedSearch || title.toLowerCase().includes(debouncedSearch)
       const year = getYearFromReleaseDate(media.releaseDate)
       const genreMatch =
         filters.genreIds.length === 0
@@ -57,11 +49,8 @@ export function useListFilters(
           : filters.matchAllSelected
             ? filters.themeIds.every((id) => (media.themes ?? []).some((th) => th.id === id))
             : (media.themes ?? []).some((th) => filters.themeIds.includes(th.id))
-      const yearMatch =
-        filters.years.length === 0 || (year != null && filters.years.includes(year))
-      const seasonMatch =
-        filters.seasons.length === 0 ||
-        (media.season && filters.seasons.includes(media.season))
+      const yearMatch = filters.years.length === 0 || (year != null && filters.years.includes(year))
+      const seasonMatch = filters.seasons.length === 0 || (media.season && filters.seasons.includes(media.season))
 
       if (!searchMatch || !yearMatch || !seasonMatch) continue
 
@@ -102,12 +91,8 @@ export function useListFilters(
       validItems.push(item)
     }
 
-    const genres = Array.from(genreMap.values()).sort((a, b) =>
-      (a.name || '').localeCompare(b.name || '')
-    )
-    const themes = Array.from(themeMap.values()).sort((a, b) =>
-      (a.name || '').localeCompare(b.name || '')
-    )
+    const genres = Array.from(genreMap.values()).sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+    const themes = Array.from(themeMap.values()).sort((a, b) => (a.name || '').localeCompare(b.name || ''))
     const years = Array.from(yearSet).sort((a, b) => b - a)
     const seasons = Array.from(seasonSet).sort()
 

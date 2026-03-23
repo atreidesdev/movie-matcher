@@ -1,5 +1,5 @@
-import type { ReviewStatus } from '@/types'
 import { getReviewStatusIcon } from '@/components/icons'
+import type { ReviewStatus } from '@/types'
 
 interface ReviewStatusDisplayProps {
   reviewStatus: ReviewStatus | string

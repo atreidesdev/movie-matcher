@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import ForceGraph2D from 'react-force-graph-2d'
-import { forceCollide } from 'd3-force-3d'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import type { FranchiseMediaLink } from '@/api/franchise'
+import { useThemeStore } from '@/store/themeStore'
+import type { ListStatus } from '@/types'
+import { getFranchiseRelationKey } from '@/utils/franchiseRelation'
 import { getListStatusLabel } from '@/utils/listStatusLabels'
 import { getLocalizedString } from '@/utils/localizedText'
-import { useThemeStore } from '@/store/themeStore'
-import { getFranchiseRelationKey } from '@/utils/franchiseRelation'
-import type { FranchiseMediaLink } from '@/api/franchise'
-import type { ListStatus } from '@/types'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { forceCollide } from 'd3-force-3d'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import ForceGraph2D from 'react-force-graph-2d'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 const PATH_TYPE_TO_I18N: Record<MediaTypeForPath, string> = {
   movie: 'media.typeMovie',
@@ -157,7 +157,7 @@ function lineRectHit(
   from: { x: number; y: number },
   toCenter: { x: number; y: number },
   halfW: number,
-  halfH: number
+  halfH: number,
 ): { x: number; y: number } {
   const dx = toCenter.x - from.x
   const dy = toCenter.y - from.y
@@ -490,7 +490,7 @@ export default function FranchiseGraph({
         setSelectedKey(node.graphId)
       }
     },
-    [selectedKey, onNodeClick]
+    [selectedKey, onNodeClick],
   )
 
   // Границы: в react-force-graph-2d (0,0) — центр канваса, поэтому границы в тех же координатах
@@ -505,7 +505,7 @@ export default function FranchiseGraph({
         maxY: halfSize - halfH - EDGE_PAD,
       }
     },
-    []
+    [],
   )
 
   const clampPosition = useCallback(
@@ -516,7 +516,7 @@ export default function FranchiseGraph({
         y: Math.max(b.minY, Math.min(b.maxY, y)),
       }
     },
-    [getBounds]
+    [getBounds],
   )
 
   const handleNodeDrag = useCallback(
@@ -531,7 +531,7 @@ export default function FranchiseGraph({
       translate.x = 0
       translate.y = 0
     },
-    [clampPosition]
+    [clampPosition],
   )
 
   const getNodeRadius = useCallback(
@@ -541,7 +541,7 @@ export default function FranchiseGraph({
       const h = DEFAULT_HEIGHT * scale
       return Math.sqrt(w * w + h * h) / 2 + GAP
     },
-    [selectedKey]
+    [selectedKey],
   )
 
   // После отпускания постер остаётся на месте; при наложении на другие — слегка сдвигаем
@@ -582,7 +582,7 @@ export default function FranchiseGraph({
       // Не фиксируем перетащенный узел — фиксирован только выбранный (selectedKey)
       fixSelectedNodeAndReheat()
     },
-    [clampPosition, getNodeRadius, fixSelectedNodeAndReheat]
+    [clampPosition, getNodeRadius, fixSelectedNodeAndReheat],
   )
 
   const nodeVal = useCallback(
@@ -590,7 +590,7 @@ export default function FranchiseGraph({
       const base = Math.max(DEFAULT_WIDTH, DEFAULT_HEIGHT) / 2
       return base * (selectedKey === node.graphId ? SELECT_SCALE : 1)
     },
-    [selectedKey]
+    [selectedKey],
   )
 
   const nodeCanvasObject = useCallback(
@@ -658,7 +658,7 @@ export default function FranchiseGraph({
 
       ctx.restore()
     },
-    [selectedKey, clampPosition]
+    [selectedKey, clampPosition],
   )
 
   // Цвет линий — через встроенный linkColor (accessor для линии)
@@ -674,7 +674,7 @@ export default function FranchiseGraph({
         lineWidth?: number
         lineOpacity?: number
       },
-      ctx: CanvasRenderingContext2D
+      ctx: CanvasRenderingContext2D,
     ) => {
       const src = link.source
       const tgt = link.target
@@ -711,7 +711,7 @@ export default function FranchiseGraph({
       ctx.stroke()
       ctx.setLineDash([])
     },
-    [selectedKey]
+    [selectedKey],
   )
 
   const graphDataRef = useRef<{
@@ -803,7 +803,7 @@ export default function FranchiseGraph({
             nodeLabel={(node) => (node as GraphNode).title}
             linkLabel={(link) =>
               t(
-                `media.franchiseRelation.${getFranchiseRelationKey((link as { relationType?: string }).relationType ?? '')}`
+                `media.franchiseRelation.${getFranchiseRelationKey((link as { relationType?: string }).relationType ?? '')}`,
               )
             }
             warmupTicks={40}

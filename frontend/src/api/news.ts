@@ -1,5 +1,5 @@
 import { apiClient } from '@/api/client'
-import type { NewsDetail, NewsListItem, NewsComment, NewsAttachment } from '@/types'
+import type { NewsAttachment, NewsComment, NewsDetail, NewsListItem } from '@/types'
 
 export interface NewsListResponse {
   news: NewsListItem[]

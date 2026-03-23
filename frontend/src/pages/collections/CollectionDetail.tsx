@@ -1,20 +1,20 @@
-import { useEffect, useState, useCallback, useMemo } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
-import { Pencil, Save } from 'lucide-react'
-import { IconPerson, IconSearch, IconCross } from '@/components/icons'
-import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
 import { collectionsApi } from '@/api/collections'
-import { Collection } from '@/types'
-import type { ListStatus } from '@/types'
-import type { Media } from '@/types'
-import { getMediaAssetUrl, type MediaTypeForPath } from '@/utils/mediaPaths'
+import BookmarkButton from '@/components/BookmarkButton'
+import CollectionSearchModal from '@/components/CollectionSearchModal'
+import MediaCard from '@/components/MediaCard'
+import { IconCross, IconPerson, IconSearch } from '@/components/icons'
+import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
 import { useAuthStore } from '@/store/authStore'
 import { useToastStore } from '@/store/toastStore'
-import CollectionSearchModal from '@/components/CollectionSearchModal'
-import BookmarkButton from '@/components/BookmarkButton'
-import MediaCard from '@/components/MediaCard'
+import type { Collection } from '@/types'
+import type { ListStatus } from '@/types'
+import type { Media } from '@/types'
+import { type MediaTypeForPath, getMediaAssetUrl } from '@/utils/mediaPaths'
+import { motion } from 'framer-motion'
+import { Pencil, Save } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 type MediaEntry = {
   type: MediaTypeForPath
@@ -44,7 +44,7 @@ type Section = { type: MediaTypeForPath; labelKey: string; entries: MediaEntry[]
 
 function toEntry<T extends { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }>(
   type: MediaTypeForPath,
-  item: T
+  item: T,
 ): MediaEntry {
   const r = item.rating != null ? Number(item.rating) : undefined
   const ratingDisplay =
@@ -70,8 +70,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'movie',
-          e.movie as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.movie as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'movie', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY.movie}`, entries })
   }
@@ -81,8 +81,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'tv-series',
-          e.tvSeries as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.tvSeries as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'tv-series', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY['tv-series']}`, entries })
   }
@@ -92,8 +92,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'anime',
-          e.animeSeries as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.animeSeries as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'anime', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY.anime}`, entries })
   }
@@ -103,8 +103,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'game',
-          e.game as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.game as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'game', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY.game}`, entries })
   }
@@ -114,8 +114,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'manga',
-          e.manga as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.manga as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'manga', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY.manga}`, entries })
   }
@@ -125,8 +125,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'book',
-          e.book as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.book as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'book', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY.book}`, entries })
   }
@@ -136,8 +136,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'light-novel',
-          e.lightNovel as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.lightNovel as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'light-novel', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY['light-novel']}`, entries })
   }
@@ -147,8 +147,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'cartoon-series',
-          e.cartoonSeries as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.cartoonSeries as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'cartoon-series', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY['cartoon-series']}`, entries })
   }
@@ -158,8 +158,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'cartoon-movies',
-          e.cartoonMovie as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.cartoonMovie as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'cartoon-movies', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY['cartoon-movies']}`, entries })
   }
@@ -169,8 +169,8 @@ function collectSections(c: Collection): Section[] {
       .map((e) =>
         toEntry(
           'anime-movies',
-          e.animeMovie as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus }
-        )
+          e.animeMovie as { id: number; title: string; poster?: string; rating?: number; listStatus?: ListStatus },
+        ),
       )
     sections.push({ type: 'anime-movies', labelKey: `nav.${MEDIA_TYPE_TO_NAV_KEY['anime-movies']}`, entries })
   }
@@ -200,7 +200,7 @@ function entryToMedia(entry: MediaEntry): Media {
 function getEffectiveSections(
   sections: Section[],
   pendingRemoved: PendingRemoved[],
-  pendingAdded: PendingAdded[]
+  pendingAdded: PendingAdded[],
 ): Section[] {
   const removedSet = new Set(pendingRemoved.map((r) => `${r.type}-${r.id}`))
   const filtered = sections.map((sec) => ({
@@ -294,7 +294,7 @@ export default function CollectionDetail() {
   const loadCollection = useCallback(() => {
     if (!id) return
     collectionsApi
-      .getOne(parseInt(id, 10))
+      .getOne(Number.parseInt(id, 10))
       .then(setCollection)
       .catch(() => setCollection(null))
   }, [id])
@@ -303,7 +303,7 @@ export default function CollectionDetail() {
     if (!id) return
     setLoading(true)
     collectionsApi
-      .getOne(parseInt(id, 10))
+      .getOne(Number.parseInt(id, 10))
       .then(setCollection)
       .catch(() => setCollection(null))
       .finally(() => setLoading(false))
@@ -314,9 +314,9 @@ export default function CollectionDetail() {
   const baseSections = collection ? collectSections(collection) : []
   const sections = useMemo(
     () => (editMode ? getEffectiveSections(baseSections, pendingRemoved, pendingAdded) : baseSections),
-    [editMode, baseSections, pendingRemoved, pendingAdded]
+    [editMode, baseSections, pendingRemoved, pendingAdded],
   )
-  const collectionId = id ? parseInt(id, 10) : 0
+  const collectionId = id ? Number.parseInt(id, 10) : 0
   const hasPendingChanges = pendingRemoved.length > 0 || pendingAdded.length > 0
 
   const handleRemove = (type: MediaTypeForPath, mediaId: number) => {

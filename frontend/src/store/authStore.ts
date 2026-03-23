@@ -1,7 +1,7 @@
+import { authApi } from '@/api/auth'
+import type { User } from '@/types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { User } from '@/types'
-import { authApi } from '@/api/auth'
 
 interface AuthState {
   user: User | null
@@ -99,6 +99,6 @@ export const useAuthStore = create<AuthState>()(
         sessionId: state.sessionId,
         user: state.user,
       }),
-    }
-  )
+    },
+  ),
 )

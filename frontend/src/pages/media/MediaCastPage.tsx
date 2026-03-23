@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
-import { ArrowLeft } from 'lucide-react'
-import { IconFavorite } from '@/components/icons'
-import { useTranslation } from 'react-i18next'
-import { mediaApi } from '@/api/media'
 import { favoritesApi } from '@/api/favorites'
+import { mediaApi } from '@/api/media'
+import { IconFavorite } from '@/components/icons'
+import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
+import { ROLE_TYPES } from '@/constants/enums'
 import { useAuthStore } from '@/store/authStore'
 import { useToastStore } from '@/store/toastStore'
-import { getMediaAssetUrl, getMediaPath, type MediaTypeForPath } from '@/utils/mediaPaths'
+import type { Cast, Media } from '@/types'
 import { getMediaTitle } from '@/utils/localizedText'
-import type { Media, Cast } from '@/types'
-import { ROLE_TYPES } from '@/constants/enums'
-import { getPersonDisplayName } from '@/utils/personUtils'
 import { getCharacterName } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { getPersonDisplayName } from '@/utils/personUtils'
+import { motion } from 'framer-motion'
+import { ArrowLeft } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 const LANGUAGE_LABELS: Record<string, string> = {
   ru: 'Русский',
@@ -55,7 +55,7 @@ export default function MediaCastPage({ type }: MediaCastPageProps) {
     setMedia(null)
     setLoading(true)
     mediaApi
-      .getMediaByType(type, parseInt(id, 10))
+      .getMediaByType(type, Number.parseInt(id, 10))
       .then(setMedia)
       .catch(() => setMedia(null))
       .finally(() => setLoading(false))
@@ -101,7 +101,7 @@ export default function MediaCastPage({ type }: MediaCastPageProps) {
   }
 
   const fullCastList = ('cast' in media && Array.isArray(media.cast) ? (media.cast as Cast[]) : []).filter(
-    (c) => c != null
+    (c) => c != null,
   )
   const castList = fullCastList.filter((c) => c.characterId && (c.person || c.character))
   const byRole = ROLE_TYPES.reduce<Record<string, Cast[]>>((acc, rt) => {
@@ -161,14 +161,12 @@ export default function MediaCastPage({ type }: MediaCastPageProps) {
                                   s.delete(entry.id)
                                   return s
                                 })
-                                useToastStore
-                                  .getState()
-                                  .show({
-                                    title: t('toast.removedFromFavorites'),
-                                    description: t('toast.removedFromFavoritesEntity', {
-                                      name: name || String(entry.id),
-                                    }),
-                                  })
+                                useToastStore.getState().show({
+                                  title: t('toast.removedFromFavorites'),
+                                  description: t('toast.removedFromFavoritesEntity', {
+                                    name: name || String(entry.id),
+                                  }),
+                                })
                               })
                               .catch(() => {})
                           } else {
@@ -176,12 +174,10 @@ export default function MediaCastPage({ type }: MediaCastPageProps) {
                               .add('cast', entry.id)
                               .then(() => {
                                 setFavoriteCastIds((prev) => new Set([...prev, entry.id]))
-                                useToastStore
-                                  .getState()
-                                  .show({
-                                    title: t('toast.addedToFavorites'),
-                                    description: t('toast.addedToFavoritesEntity', { name: name || String(entry.id) }),
-                                  })
+                                useToastStore.getState().show({
+                                  title: t('toast.addedToFavorites'),
+                                  description: t('toast.addedToFavoritesEntity', { name: name || String(entry.id) }),
+                                })
                               })
                               .catch(() => {})
                           }

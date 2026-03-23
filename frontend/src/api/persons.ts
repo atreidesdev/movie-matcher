@@ -20,7 +20,7 @@ export const personsApi = {
     page = 1,
     pageSize = 50,
     search?: string,
-    listParams?: PersonsListParams
+    listParams?: PersonsListParams,
   ): Promise<PaginatedResponse<Person>> => {
     const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) })
     const searchTerm = listParams?.search ?? search

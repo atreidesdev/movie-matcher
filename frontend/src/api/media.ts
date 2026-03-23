@@ -1,18 +1,18 @@
 import apiClient from '@/api/client'
-import {
-  Movie,
-  AnimeSeries,
-  Game,
-  TVSeries,
-  Manga,
-  Book,
-  LightNovel,
-  CartoonSeries,
-  CartoonMovie,
+import type {
   AnimeMovie,
+  AnimeSeries,
+  Book,
+  CartoonMovie,
+  CartoonSeries,
+  Game,
   Genre,
+  LightNovel,
+  Manga,
+  Movie,
   PaginatedResponse,
   RecommendedItem,
+  TVSeries,
 } from '@/types'
 
 /** Размер страницы для сеток медиа: кратен 2, 3, 4, 6 — равномерное заполнение при любом числе колонок. На десктопе (6 колонок) — 4 ряда. */
@@ -182,10 +182,10 @@ export const mediaApi = {
       types.map(async (type) => {
         const apiType = PATH_TYPE_TO_API_RECOMMENDATION[type] ?? type
         const res = await apiClient.get<{ recommendations: RecommendedItem[] }>(
-          `/recommendations?mediaType=${apiType}&limit=${limitPerType}`
+          `/recommendations?mediaType=${apiType}&limit=${limitPerType}`,
         )
         return [type, res.data.recommendations ?? []] as const
-      })
+      }),
     )
     return Object.fromEntries(entries)
   },
@@ -243,7 +243,7 @@ export const mediaApi = {
 
   getLightNovels: async (page = 1, pageSize = 20): Promise<PaginatedResponse<LightNovel>> => {
     const response = await apiClient.get<PaginatedResponse<LightNovel>>(
-      `/light-novels?page=${page}&pageSize=${pageSize}`
+      `/light-novels?page=${page}&pageSize=${pageSize}`,
     )
     return response.data
   },
@@ -262,7 +262,7 @@ export const mediaApi = {
 
   getCartoonSeriesList: async (page = 1, pageSize = 20): Promise<PaginatedResponse<CartoonSeries>> => {
     const response = await apiClient.get<PaginatedResponse<CartoonSeries>>(
-      `/cartoon-series?page=${page}&pageSize=${pageSize}`
+      `/cartoon-series?page=${page}&pageSize=${pageSize}`,
     )
     return response.data
   },
@@ -276,14 +276,14 @@ export const mediaApi = {
   },
   searchCartoonSeries: async (query: string, page = 1): Promise<PaginatedResponse<CartoonSeries>> => {
     const response = await apiClient.get<PaginatedResponse<CartoonSeries>>(
-      `/cartoon-series/search?q=${query}&page=${page}`
+      `/cartoon-series/search?q=${query}&page=${page}`,
     )
     return response.data
   },
 
   getCartoonMovies: async (page = 1, pageSize = 20): Promise<PaginatedResponse<CartoonMovie>> => {
     const response = await apiClient.get<PaginatedResponse<CartoonMovie>>(
-      `/cartoon-movies?page=${page}&pageSize=${pageSize}`
+      `/cartoon-movies?page=${page}&pageSize=${pageSize}`,
     )
     return response.data
   },
@@ -297,14 +297,14 @@ export const mediaApi = {
   },
   searchCartoonMovies: async (query: string, page = 1): Promise<PaginatedResponse<CartoonMovie>> => {
     const response = await apiClient.get<PaginatedResponse<CartoonMovie>>(
-      `/cartoon-movies/search?q=${query}&page=${page}`
+      `/cartoon-movies/search?q=${query}&page=${page}`,
     )
     return response.data
   },
 
   getAnimeMovies: async (page = 1, pageSize = 20): Promise<PaginatedResponse<AnimeMovie>> => {
     const response = await apiClient.get<PaginatedResponse<AnimeMovie>>(
-      `/anime-movies?page=${page}&pageSize=${pageSize}`
+      `/anime-movies?page=${page}&pageSize=${pageSize}`,
     )
     return response.data
   },
@@ -332,7 +332,7 @@ export const mediaApi = {
 
   getMediaByType: async (
     type: string,
-    id: number
+    id: number,
   ): Promise<
     Movie | AnimeSeries | Game | TVSeries | Manga | Book | LightNovel | CartoonSeries | CartoonMovie | AnimeMovie
   > => {

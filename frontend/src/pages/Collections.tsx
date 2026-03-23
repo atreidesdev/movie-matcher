@@ -1,10 +1,10 @@
+import { collectionsApi } from '@/api/collections'
+import { IconCollection } from '@/components/icons'
+import { IconPlus } from '@/components/icons'
+import type { Collection } from '@/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { IconCollection } from '@/components/icons'
-import { IconPlus } from '@/components/icons'
-import { collectionsApi } from '@/api/collections'
-import { Collection } from '@/types'
 
 export default function Collections() {
   const { t } = useTranslation()

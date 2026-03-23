@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
-import { AnimatePresence, motion } from 'framer-motion'
 import { IconCross } from '@/components/icons'
+import { AnimatePresence, motion } from 'framer-motion'
+import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface BaseModalProps {
   open: boolean

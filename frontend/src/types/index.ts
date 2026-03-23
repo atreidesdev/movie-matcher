@@ -1,4 +1,4 @@
-import type { RoleType, Profession, UserRole } from '@/constants/enums'
+import type { Profession, RoleType, UserRole } from '@/constants/enums'
 
 /** Роль в касте (БД: role_type). */
 export type { RoleType }

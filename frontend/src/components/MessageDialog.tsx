@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Check, CheckCheck } from 'lucide-react'
+import { type MessageItem, messagesApi } from '@/api/messages'
 import { IconCross, IconPerson, IconSend } from '@/components/icons'
 import { useAuthStore } from '@/store/authStore'
-import { messagesApi, type MessageItem } from '@/api/messages'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import type { User } from '@/types'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { Check, CheckCheck } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function displayName(u: User | null | undefined): string {
   if (!u) return ''

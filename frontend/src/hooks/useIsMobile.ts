@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 /** Returns true when viewport width is below the lg breakpoint (1024px). */
 export function useIsMobile(): boolean {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * True when the primary input can hover (e.g. mouse). False for touch-only devices.

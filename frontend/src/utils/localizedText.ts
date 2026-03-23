@@ -9,7 +9,7 @@ import type { LocalizedString } from '@/types'
 export function getLocalizedString(
   i18n: LocalizedString | null | undefined,
   fallback: string | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!i18n || typeof i18n !== 'object') return fallback ?? ''
   const code = (locale || '').toLowerCase().split('-')[0]
@@ -22,7 +22,7 @@ export function getLocalizedString(
 /** Название медиа с учётом titleI18n */
 export function getMediaTitle(
   media: { title: string; titleI18n?: LocalizedString } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!media) return ''
   return getLocalizedString(media.titleI18n, media.title, locale)
@@ -31,7 +31,7 @@ export function getMediaTitle(
 /** Описание медиа с учётом descriptionI18n */
 export function getMediaDescription(
   media: { description?: string; descriptionI18n?: LocalizedString } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!media) return ''
   return getLocalizedString(media.descriptionI18n, media.description, locale)
@@ -40,7 +40,7 @@ export function getMediaDescription(
 /** Имя персонажа с учётом nameI18n */
 export function getCharacterName(
   character: { name: string; nameI18n?: LocalizedString } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!character) return ''
   return getLocalizedString(character.nameI18n, character.name, locale)
@@ -49,7 +49,7 @@ export function getCharacterName(
 /** Имя жанра/темы/студии/издателя/разработчика с учётом nameI18n */
 export function getEntityName(
   entity: { name: string; nameI18n?: LocalizedString } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!entity) return ''
   return getLocalizedString(entity.nameI18n, entity.name, locale)
@@ -58,7 +58,7 @@ export function getEntityName(
 /** Описание сущности (жанр/тема и т.д.) с учётом descriptionI18n */
 export function getEntityDescription(
   entity: { description?: string; descriptionI18n?: LocalizedString } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!entity) return ''
   return getLocalizedString(entity.descriptionI18n, entity.description, locale)
@@ -67,7 +67,7 @@ export function getEntityDescription(
 /** Биография персоны с учётом biographyI18n */
 export function getPersonBiography(
   person: { biography?: string; biographyI18n?: LocalizedString } | null | undefined,
-  locale?: string
+  locale?: string,
 ): string {
   if (!person) return ''
   return getLocalizedString(person.biographyI18n, person.biography, locale)
@@ -87,7 +87,7 @@ const SEASON_KEYS: Record<string, string> = {
  */
 export function getMediaYearSeason(
   media: { releaseDate?: string; season?: string } | null | undefined,
-  t: (key: string) => string
+  t: (key: string) => string,
 ): string {
   if (!media) return ''
   const year = media.releaseDate ? new Date(media.releaseDate).getFullYear() : null

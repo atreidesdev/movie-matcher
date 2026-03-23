@@ -1,20 +1,14 @@
-import type { ListItem } from '@/types'
 import type { ListEntityType } from '@/api/lists'
-import { getMediaChaptersFromVolumes } from '@/utils/typeGuards'
+import type { ListItem } from '@/types'
 import type { Media } from '@/types'
+import { getMediaChaptersFromVolumes } from '@/utils/typeGuards'
 
-const SERIES_TYPES: ListEntityType[] = [
-  'anime',
-  'tv-series',
-  'cartoon-series',
-  'anime-movies',
-  'cartoon-movies',
-]
+const SERIES_TYPES: ListEntityType[] = ['anime', 'tv-series', 'cartoon-series', 'anime-movies', 'cartoon-movies']
 
 export function getListItemProgressText(
   item: ListItem,
   listType: ListEntityType,
-  t: (key: string, opts?: Record<string, unknown>) => string
+  t: (key: string, opts?: Record<string, unknown>) => string,
 ): string {
   // Multi-episode (anime, tv, cartoons)
   const seriesMedia = item.animeSeries ?? item.tvSeries ?? item.cartoonSeries

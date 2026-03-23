@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
-import { Link, useSearchParams, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { authApi } from '@/api/auth'
+import { IconAlert, IconEyeClose, IconEyeOpen } from '@/components/icons'
 import { Lock } from 'lucide-react'
-import { IconAlert, IconEyeOpen, IconEyeClose } from '@/components/icons'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 
 export default function ResetPassword() {
   const { t } = useTranslation()

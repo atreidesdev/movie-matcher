@@ -74,7 +74,7 @@ const CYRILLIC_TO_LATIN: Record<string, string> = {
 /** Преобразует строку в URL-безопасный slug (латиница, цифры, дефис). */
 export function titleToSlug(title: string | null | undefined): string {
   if (!title || typeof title !== 'string') return ''
-  let s = title.trim()
+  const s = title.trim()
   const out: string[] = []
   for (let i = 0; i < s.length; i++) {
     const c = s[i]
@@ -96,6 +96,6 @@ export function titleToSlug(title: string | null | undefined): string {
  */
 export function parseMediaIdFromParam(idOrSlug: string | undefined): number {
   if (idOrSlug == null || idOrSlug === '') return 0
-  const num = parseInt(idOrSlug, 10)
+  const num = Number.parseInt(idOrSlug, 10)
   return Number.isNaN(num) ? 0 : num
 }

@@ -1,18 +1,23 @@
-import { useEffect, useState } from 'react'
-import { useParams, useOutletContext } from 'react-router-dom'
-import type { UserProfileLayoutContext } from '@/pages/user/UserProfileLayout'
-import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
-import { favoritesApi, type FavoritesResponse, type FavoriteCharacterEntry, type FavoritePersonEntry } from '@/api/favorites'
-import type { Media } from '@/types'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import { useAuthStore } from '@/store/authStore'
-import { useToastStore } from '@/store/toastStore'
+import {
+  type FavoriteCharacterEntry,
+  type FavoritePersonEntry,
+  type FavoritesResponse,
+  favoritesApi,
+} from '@/api/favorites'
 import MediaCard from '@/components/MediaCard'
 import CharacterCard from '@/components/cards/CharacterCard'
 import PersonCard from '@/components/cards/PersonCard'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
+import type { UserProfileLayoutContext } from '@/pages/user/UserProfileLayout'
+import { useAuthStore } from '@/store/authStore'
+import { useToastStore } from '@/store/toastStore'
+import type { Media } from '@/types'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
 import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useOutletContext, useParams } from 'react-router-dom'
 
 type FavoriteMediaItem = {
   id: number
@@ -73,7 +78,7 @@ function getItemsBySection(
   data: FavoritesResponse | null,
   key: keyof FavoritesResponse,
   idField: string,
-  objField: string
+  objField: string,
 ): FavoriteMediaItem[] {
   const items = data?.[key] as { [k: string]: unknown }[] | undefined
   if (!items?.length) return []
@@ -173,8 +178,7 @@ export default function UserFavoritesPage() {
   }
 
   const hasPeopleFavorites =
-    favorites &&
-    (getCharacterItems(favorites).length > 0 || getPersonItems(favorites).length > 0)
+    favorites && (getCharacterItems(favorites).length > 0 || getPersonItems(favorites).length > 0)
   const hasMediaFavorites =
     favorites &&
     FAVORITES_SECTIONS.some((s) => {
@@ -183,7 +187,8 @@ export default function UserFavoritesPage() {
     })
   const hasAnyFavorites = hasPeopleFavorites || hasMediaFavorites
 
-  const activeTab = !hasMediaFavorites && hasPeopleFavorites ? 'people' : !hasPeopleFavorites && hasMediaFavorites ? 'media' : tab
+  const activeTab =
+    !hasMediaFavorites && hasPeopleFavorites ? 'people' : !hasPeopleFavorites && hasMediaFavorites ? 'media' : tab
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-10 mt-6 space-y-6">
@@ -193,7 +198,7 @@ export default function UserFavoritesPage() {
         <p className="text-profile-muted">{t('profile.noFavorites')}</p>
       ) : (
         <>
-          {(hasPeopleFavorites && hasMediaFavorites) && (
+          {hasPeopleFavorites && hasMediaFavorites && (
             <div className="flex gap-0.5 p-0.5 rounded-lg bg-[var(--theme-surface)] border border-[var(--theme-border)] w-fit">
               <button
                 type="button"
@@ -202,7 +207,7 @@ export default function UserFavoritesPage() {
                   'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
                   activeTab === 'people'
                     ? 'bg-[var(--theme-primary)] text-white'
-                    : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-bg)]'
+                    : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-bg)]',
                 )}
               >
                 {t('profile.favoritesTabPeople')}
@@ -214,7 +219,7 @@ export default function UserFavoritesPage() {
                   'px-3 py-1.5 text-sm font-medium rounded-md transition-colors',
                   activeTab === 'media'
                     ? 'bg-[var(--theme-primary)] text-white'
-                    : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-bg)]'
+                    : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-bg)]',
                 )}
               >
                 {t('profile.favoritesTabMedia')}
@@ -225,10 +230,7 @@ export default function UserFavoritesPage() {
           {activeTab === 'people' && (
             <div className="space-y-6">
               {PEOPLE_SECTIONS.map((section) => {
-                const items =
-                  section.key === 'characters'
-                    ? getCharacterItems(favorites!)
-                    : getPersonItems(favorites!)
+                const items = section.key === 'characters' ? getCharacterItems(favorites!) : getPersonItems(favorites!)
                 if (items.length === 0) return null
                 return (
                   <section key={section.key} className="space-y-3">
@@ -262,7 +264,7 @@ export default function UserFavoritesPage() {
                                       setFavorites((prev) => {
                                         if (!prev) return prev
                                         const next = (prev.characters ?? []).filter(
-                                          (x) => (x.characterId ?? x.character?.id) !== id
+                                          (x) => (x.characterId ?? x.character?.id) !== id,
                                         )
                                         return { ...prev, characters: next }
                                       })
@@ -306,7 +308,7 @@ export default function UserFavoritesPage() {
                                     setFavorites((prev) => {
                                       if (!prev) return prev
                                       const next = (prev.persons ?? []).filter(
-                                        (x) => (x.personId ?? x.person?.id) !== id
+                                        (x) => (x.personId ?? x.person?.id) !== id,
                                       )
                                       return { ...prev, persons: next }
                                     })
@@ -375,7 +377,7 @@ export default function UserFavoritesPage() {
                                           | 'cartoon-series'
                                           | 'cartoon-movies'
                                           | 'anime-movies',
-                                        item.id
+                                        item.id,
                                       )
                                       .then(() => {
                                         setFavorites((prev) => {

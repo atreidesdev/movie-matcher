@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { IconCross } from '@/components/icons'
-import { useTranslation } from 'react-i18next'
-import { ListStatus } from '@/types'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
 import type { ListEntityType } from '@/api/lists'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
 import CustomSelect from '@/components/CustomSelect'
+import { IconCross } from '@/components/icons'
+import type { ListStatus } from '@/types'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const STATUS_OPTIONS: ListStatus[] = ['planned', 'watching', 'completed', 'onHold', 'dropped', 'rewatching']
 
@@ -95,7 +95,7 @@ export default function AddToListModal({
                   max={maxEpisode}
                   value={currentEpisode}
                   onChange={(e) =>
-                    setCurrentEpisode(Math.min(maxEpisode, Math.max(0, parseInt(e.target.value, 10) || 0)))
+                    setCurrentEpisode(Math.min(maxEpisode, Math.max(0, Number.parseInt(e.target.value, 10) || 0)))
                   }
                   className="input w-24"
                 />

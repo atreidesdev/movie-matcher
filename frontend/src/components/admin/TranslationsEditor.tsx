@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FileJson, Trash2 } from 'lucide-react'
 import { IconPlus } from '@/components/icons'
 import type { LocalizedString } from '@/types'
+import { FileJson, Trash2 } from 'lucide-react'
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const DEFAULT_LOCALES = ['ru', 'en']
 
@@ -75,7 +75,7 @@ export default function TranslationsEditor({
       delete next[locale]
       onChange(next)
     },
-    [value, onChange]
+    [value, onChange],
   )
 
   const setLocaleValue = useCallback(
@@ -88,7 +88,7 @@ export default function TranslationsEditor({
         onChange({ ...value, [locale]: text })
       }
     },
-    [value, onChange]
+    [value, onChange],
   )
 
   return (

@@ -42,14 +42,14 @@ const REVIEW_TARGET_BY_MEDIA: Record<string, ReviewTargetType> = {
 export const reactionsApi = {
   getReviewReactions: async (targetType: ReviewTargetType, targetId: number): Promise<ReviewReactionsResponse> => {
     const response = await apiClient.get<ReviewReactionsResponse>(
-      `/review-reactions/${encodeURIComponent(targetType)}/${targetId}`
+      `/review-reactions/${encodeURIComponent(targetType)}/${targetId}`,
     )
     return response.data
   },
 
   /** Пакетная загрузка реакций по списку отзывов. items = "movie_review:1,movie_review:2" */
   getReviewReactionsBatch: async (
-    items: string
+    items: string,
   ): Promise<{ reactions: Record<string, { counts: Record<string, number>; myReaction: string | null }> }> => {
     const response = await apiClient.get<{
       reactions: Record<string, { counts: Record<string, number>; myReaction: string | null }>
@@ -62,7 +62,7 @@ export const reactionsApi = {
   setReviewReaction: async (
     targetType: ReviewTargetType,
     targetId: number,
-    reaction: ReviewReactionType
+    reaction: ReviewReactionType,
   ): Promise<{ counts: Record<string, number>; myReaction: string }> => {
     const response = await apiClient.post<{ counts: Record<string, number>; myReaction: string }>('/review-reactions', {
       targetType,
@@ -74,14 +74,14 @@ export const reactionsApi = {
 
   deleteReviewReaction: async (targetType: ReviewTargetType, targetId: number): Promise<ReviewReactionsResponse> => {
     const response = await apiClient.delete<ReviewReactionsResponse>(
-      `/review-reactions/${encodeURIComponent(targetType)}/${targetId}`
+      `/review-reactions/${encodeURIComponent(targetType)}/${targetId}`,
     )
     return response.data
   },
 
   getCommentEmojiReactions: async (
     entityType: string,
-    commentIds: number[]
+    commentIds: number[],
   ): Promise<CommentEmojiReactionsResponse> => {
     if (commentIds.length === 0) return { reactions: {} }
     const params = new URLSearchParams({
@@ -95,21 +95,21 @@ export const reactionsApi = {
   setCommentEmojiReaction: async (
     entityType: string,
     commentId: number,
-    emoji: CommentEmojiType
+    emoji: CommentEmojiType,
   ): Promise<{ counts: Record<string, number>; myReaction: string }> => {
     const response = await apiClient.post<{ counts: Record<string, number>; myReaction: string }>(
       '/comment-emoji-reactions',
-      { entityType, commentId, emoji }
+      { entityType, commentId, emoji },
     )
     return response.data
   },
 
   deleteCommentEmojiReaction: async (
     entityType: string,
-    commentId: number
+    commentId: number,
   ): Promise<{ counts: Record<string, number>; myReaction: string }> => {
     const response = await apiClient.delete<{ counts: Record<string, number>; myReaction: string }>(
-      `/comment-emoji-reactions/${encodeURIComponent(entityType)}/${commentId}`
+      `/comment-emoji-reactions/${encodeURIComponent(entityType)}/${commentId}`,
     )
     return response.data
   },

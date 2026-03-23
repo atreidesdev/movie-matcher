@@ -1,12 +1,12 @@
-import { useEffect, useState, useCallback } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Search, Users as UsersIcon, Heart } from 'lucide-react'
+import { type SimilarUserEnriched, type UserListItem, usersApi } from '@/api/users'
 import { IconPerson } from '@/components/icons'
-import { usersApi, type UserListItem, type SimilarUserEnriched } from '@/api/users'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { formatLastSeenLabel } from '@/utils/formatLastSeen'
 import { useAuthStore } from '@/store/authStore'
+import { formatLastSeenLabel } from '@/utils/formatLastSeen'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { Heart, Search, Users as UsersIcon } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useSearchParams } from 'react-router-dom'
 
 function displayName(u: UserListItem | SimilarUserEnriched): string {
   const id = 'id' in u ? u.id : (u as SimilarUserEnriched).userId

@@ -4,7 +4,7 @@
 export function formatLastSeenLabel(
   iso: string,
   t: (key: string, opts?: Record<string, string | number>) => string,
-  now: Date = new Date()
+  now: Date = new Date(),
 ): string {
   const d = new Date(iso)
   const diffMs = now.getTime() - d.getTime()

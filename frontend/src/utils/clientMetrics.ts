@@ -43,7 +43,7 @@ export interface ClientMetricsSnapshot {
 export function getSnapshot(): ClientMetricsSnapshot {
   if (SAMPLES.length === 0 && typeof console !== 'undefined' && import.meta.env?.DEV) {
     console.info(
-      '[clientMetrics] Пока нет записей. Сделайте запросы через приложение (откройте страницу тайтла, /users, поиск и т.д.), затем снова вызовите __clientMetrics.getSnapshot()'
+      '[clientMetrics] Пока нет записей. Сделайте запросы через приложение (откройте страницу тайтла, /users, поиск и т.д.), затем снова вызовите __clientMetrics.getSnapshot()',
     )
   }
   const byPath: Record<string, { count: number; totalMs: number; errors: number }> = {}

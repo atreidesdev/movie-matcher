@@ -1,13 +1,13 @@
+import { IconRepeat } from '@/components/icons/CommonIcons'
+import type { IconProps } from '@/components/icons/types'
+import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
+import type { ListStatus } from '@/types'
 /**
  * Иконки статусов списка (status-*.svg) и маппинг ListStatus → иконка.
  * Для rewatching используется repeat.svg.
  */
 import { useId } from 'react'
 import type { ComponentType } from 'react'
-import type { ListStatus } from '@/types'
-import type { IconProps } from '@/components/icons/types'
-import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
-import { IconRepeat } from '@/components/icons/CommonIcons'
 
 const iconProps = (p: IconProps) => {
   const size = p.size ?? DEFAULT_ICON_SIZE
@@ -170,7 +170,7 @@ export type ListStatusBadgeOptions = { singleColor?: boolean }
 export function getListStatusBadgeClasses(
   status: ListStatus,
   _mediaType?: string,
-  options?: ListStatusBadgeOptions
+  options?: ListStatusBadgeOptions,
 ): { bg: string; text: string } {
   const darkText = 'text-thistle-100 dark:text-thistle-900'
   const singleColor = options?.singleColor

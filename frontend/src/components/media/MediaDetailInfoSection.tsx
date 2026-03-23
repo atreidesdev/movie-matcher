@@ -1,7 +1,7 @@
-import { ExternalLink } from 'lucide-react'
-import { getEntityName } from '@/utils/localizedText'
-import { getGenreBadgeClass, getGenreBadgeVariant } from '@/utils/genreColors'
 import type { Media } from '@/types'
+import { getGenreBadgeClass, getGenreBadgeVariant } from '@/utils/genreColors'
+import { getEntityName } from '@/utils/localizedText'
+import { ExternalLink } from 'lucide-react'
 
 type SiteLink = { url: string; linkType?: string | null; site?: { name: string; url: string } | null }
 

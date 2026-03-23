@@ -5,7 +5,7 @@ export function lineRectHit(
   from: { x: number; y: number },
   toCenter: { x: number; y: number },
   halfW: number,
-  halfH: number
+  halfH: number,
 ): { x: number; y: number } {
   const dx = toCenter.x - from.x
   const dy = toCenter.y - from.y

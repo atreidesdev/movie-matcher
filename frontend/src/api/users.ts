@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import { PublicProfile, User } from '@/types'
+import type { PublicProfile, User } from '@/types'
 import type { AchievementWithProgress } from '@/types'
 
 /** Элемент списка пользователей (поиск, активность): id, username, name, avatar, lastSeenAt */
@@ -49,7 +49,7 @@ export const usersApi = {
   /** Пользователи с похожими вкусами (по спискам и оценкам). Требует авторизации. */
   getSimilarUsers: async (limit = 20): Promise<SimilarUserEnriched[]> => {
     const response = await apiClient.get<{ similarUsers: SimilarUserEnriched[] }>(
-      `/recommendations/similar-users?limit=${limit}`
+      `/recommendations/similar-users?limit=${limit}`,
     )
     return response.data.similarUsers ?? []
   },
@@ -72,7 +72,7 @@ export const usersApi = {
   /** Ачивки пользователя с прогрессом. Доступно только если профиль не скрыт или мы в друзьях. */
   getAchievementsByUsername: async (username: string): Promise<{ achievements: AchievementWithProgress[] }> => {
     const response = await apiClient.get<{ achievements: AchievementWithProgress[] }>(
-      `/users/username/${encodeURIComponent(username)}/achievements`
+      `/users/username/${encodeURIComponent(username)}/achievements`,
     )
     return response.data
   },

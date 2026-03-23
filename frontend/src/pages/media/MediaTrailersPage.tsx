@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { ArrowLeft } from 'lucide-react'
-import { IconCross } from '@/components/icons'
 import { mediaApi } from '@/api/media'
-import { getMediaPath, type MediaTypeForPath } from '@/utils/mediaPaths'
-import { normalizeMediaVideos } from '@/utils/mediaVideos'
-import { getYouTubeEmbedUrl, getVideoStreamUrl, getVideoStreamQualitySources } from '@/utils/videoUtils'
 import VideoPlayer from '@/components/VideoPlayer'
 import VideoThumbnail from '@/components/VideoThumbnail'
-import { getMediaTitle } from '@/utils/localizedText'
+import { IconCross } from '@/components/icons'
 import type { Media } from '@/types'
+import { getMediaTitle } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaPath } from '@/utils/mediaPaths'
+import { normalizeMediaVideos } from '@/utils/mediaVideos'
+import { getVideoStreamQualitySources, getVideoStreamUrl, getYouTubeEmbedUrl } from '@/utils/videoUtils'
+import { ArrowLeft } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 interface MediaTrailersPageProps {
   type: MediaTypeForPath
@@ -24,7 +24,7 @@ export default function MediaTrailersPage({ type }: MediaTrailersPageProps) {
   const [loading, setLoading] = useState(true)
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
 
-  const numId = id ? parseInt(id, 10) : 0
+  const numId = id ? Number.parseInt(id, 10) : 0
   const withUrl = normalizeMediaVideos(media?.videos)
 
   useEffect(() => {

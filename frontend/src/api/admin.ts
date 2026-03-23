@@ -1,17 +1,17 @@
 import apiClient from '@/api/client'
 import type {
-  Genre,
-  Theme,
-  Studio,
-  Developer,
-  Publisher,
-  Person,
-  Movie,
-  Media,
-  Character,
   Cast,
+  Character,
+  Developer,
+  Genre,
   LocalizedString,
+  Media,
+  Movie,
+  Person,
+  Publisher,
   PublisherPublicationType,
+  Studio,
+  Theme,
 } from '@/types'
 import type { Achievement } from '@/types'
 
@@ -121,7 +121,7 @@ export const adminApi = {
       mediaTypes: string[]
       nameI18n?: LocalizedString
       descriptionI18n?: LocalizedString
-    }>
+    }>,
   ) => {
     const { data } = await apiClient.put<Genre>(`/admin/genres/${id}`, payload)
     return data
@@ -154,7 +154,7 @@ export const adminApi = {
       mediaTypes: string[]
       nameI18n?: LocalizedString
       descriptionI18n?: LocalizedString
-    }>
+    }>,
   ) => {
     const { data } = await apiClient.put<Theme>(`/admin/themes/${id}`, payload)
     return data
@@ -187,7 +187,7 @@ export const adminApi = {
       poster: string
       nameI18n?: LocalizedString
       descriptionI18n?: LocalizedString
-    }>
+    }>,
   ) => {
     const { data } = await apiClient.put<Studio>(`/admin/studios/${id}`, payload)
     return data
@@ -236,7 +236,7 @@ export const adminApi = {
       poster: string
       nameI18n?: LocalizedString
       descriptionI18n?: LocalizedString
-    }>
+    }>,
   ) => {
     const { data } = await apiClient.put<Developer>(`/admin/developers/${id}`, payload)
     return data
@@ -271,7 +271,7 @@ export const adminApi = {
       publicationTypes: PublisherPublicationType[]
       nameI18n?: LocalizedString
       descriptionI18n?: LocalizedString
-    }>
+    }>,
   ) => {
     const { data } = await apiClient.put<Publisher>(`/admin/publishers/${id}`, payload)
     return data
@@ -310,7 +310,7 @@ export const adminApi = {
       firstNameI18n?: LocalizedString
       lastNameI18n?: LocalizedString
       biographyI18n?: LocalizedString
-    }
+    },
   ) => {
     const { data } = await apiClient.put<Person>(`/admin/persons/${id}`, payload)
     return data
@@ -336,7 +336,7 @@ export const adminApi = {
       images?: { url: string; caption?: string; width?: number; height?: number }[]
       nameI18n?: LocalizedString
       descriptionI18n?: LocalizedString
-    }
+    },
   ) => {
     const { data } = await apiClient.put<Character>(`/admin/characters/${id}`, payload)
     return data
@@ -425,7 +425,7 @@ export const adminApi = {
       isHidden?: boolean
       status?: string
       sites?: { siteId: number; url: string }[]
-    }
+    },
   ) => {
     const { data } = await apiClient.put<Movie>(`/admin/movies/${id}`, payload)
     return data
@@ -474,7 +474,7 @@ export const adminApi = {
       currentChapter?: number
       pages?: number
       readingDurationMinutes?: number
-    }
+    },
   ) => {
     const { data } = await apiClient.put<Media>(`/admin/media/${type}/${id}`, payload)
     return data
@@ -484,7 +484,7 @@ export const adminApi = {
   uploadFile: async (
     file: File,
     type: 'poster' | 'image' | 'trailer' | 'video',
-    options?: { baseName?: string }
+    options?: { baseName?: string },
   ): Promise<{ path: string; width?: number; height?: number }> => {
     const formData = new FormData()
     formData.append('file', file)
@@ -495,7 +495,7 @@ export const adminApi = {
       formData,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
-      }
+      },
     )
     return data
   },
@@ -504,7 +504,7 @@ export const adminApi = {
   setCommentBan: async (
     userId: number,
     until: string,
-    options?: { commentText?: string; reason?: string; reportId?: number }
+    options?: { commentText?: string; reason?: string; reportId?: number },
   ): Promise<void> => {
     await apiClient.put(`/admin/users/${userId}/comment-ban`, {
       until,
@@ -517,7 +517,7 @@ export const adminApi = {
   /** История банов на комментарии для пользователя (для модалки «Вынести решение»). */
   getCommentBanHistory: async (userId: number): Promise<CommentBanHistoryEntry[]> => {
     const { data } = await apiClient.get<{ history: CommentBanHistoryEntry[] }>(
-      `/admin/users/${userId}/comment-ban-history`
+      `/admin/users/${userId}/comment-ban-history`,
     )
     return data.history ?? []
   },
@@ -537,7 +537,7 @@ export const adminApi = {
   addMediaCast: async (
     mediaType: string,
     mediaId: number,
-    body: { personId: number; characterId?: number; role?: string; roleType?: string }
+    body: { personId: number; characterId?: number; role?: string; roleType?: string },
   ): Promise<Cast> => {
     const { data } = await apiClient.post<Cast>(`/admin/media/${mediaType}/${mediaId}/cast`, body)
     return data
@@ -552,7 +552,7 @@ export const adminApi = {
   addMediaStaff: async (
     mediaType: string,
     mediaId: number,
-    body: { personId: number; profession: string }
+    body: { personId: number; profession: string },
   ): Promise<StaffWithMediaId> => {
     const { data } = await apiClient.post<StaffWithMediaId>(`/admin/media/${mediaType}/${mediaId}/staff`, body)
     return data
@@ -603,7 +603,7 @@ export const adminApi = {
         imageUrl?: string
       }[]
       targets?: { mediaType: string; mediaId: number }[]
-    }
+    },
   ): Promise<Achievement> => {
     const { data } = await apiClient.put<Achievement>(`/admin/achievements/${id}`, payload)
     return data

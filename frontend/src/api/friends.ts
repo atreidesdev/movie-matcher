@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import { User } from '@/types'
+import type { User } from '@/types'
 
 export interface FriendRequestItem {
   id: number

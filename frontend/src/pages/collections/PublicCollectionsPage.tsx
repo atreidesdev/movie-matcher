@@ -1,7 +1,7 @@
+import { type PublicCollectionListItem, publicCollectionsApi } from '@/api/collections'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { publicCollectionsApi, type PublicCollectionListItem } from '@/api/collections'
+import { Link } from 'react-router-dom'
 
 export default function PublicCollectionsPage() {
   const { t } = useTranslation()

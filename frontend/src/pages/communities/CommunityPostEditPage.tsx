@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Image, Video, Trash2 } from 'lucide-react'
-import { RichTextEditor } from '@/components/richText/RichTextEditor'
 import {
-  communitiesApi,
   type CommunityDetail,
-  type CommunityPostItem,
   type CommunityPostAttachment,
+  type CommunityPostItem,
+  communitiesApi,
 } from '@/api/communities'
+import { RichTextEditor } from '@/components/richText/RichTextEditor'
 import { useAuthStore } from '@/store/authStore'
-import { RICH_TEXT_MAX_REVIEW_HTML, isRichTextEmpty } from '@/utils/richText'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { RICH_TEXT_MAX_REVIEW_HTML, isRichTextEmpty } from '@/utils/richText'
 import { buildUploadBaseName } from '@/utils/uploadNames'
+import { Image, Trash2, Video } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 export default function CommunityPostEditPage() {
   const { t } = useTranslation()
@@ -72,17 +72,9 @@ export default function CommunityPostEditPage() {
       const file = input.files?.[0]
       if (!file) return
       try {
-        const assetKind = setPreview
-          ? 'preview'
-          : `${type === 'image' ? 'attachment-image' : 'attachment-video'}`
+        const assetKind = setPreview ? 'preview' : `${type === 'image' ? 'attachment-image' : 'attachment-video'}`
         const nextIndex = setPreview ? undefined : attachments.filter((a) => a.type === type).length + 1
-        const baseName = buildUploadBaseName(
-          title || 'post',
-          'community-post',
-          community.id,
-          assetKind,
-          nextIndex
-        )
+        const baseName = buildUploadBaseName(title || 'post', 'community-post', community.id, assetKind, nextIndex)
         const { path } = await communitiesApi.uploadPostImage(community.id, file, type, {
           baseName: baseName ?? undefined,
         })
@@ -186,11 +178,7 @@ export default function CommunityPostEditPage() {
           <div className="flex flex-wrap gap-2 items-center">
             {previewImage ? (
               <div className="relative">
-                <img
-                  src={getMediaAssetUrl(previewImage)}
-                  alt=""
-                  className="w-32 h-20 object-cover rounded-lg"
-                />
+                <img src={getMediaAssetUrl(previewImage)} alt="" className="w-32 h-20 object-cover rounded-lg" />
                 <button
                   type="button"
                   onClick={() => setPreviewImage('')}
@@ -218,11 +206,7 @@ export default function CommunityPostEditPage() {
             {attachments.map((att, i) => (
               <div key={i} className="relative">
                 {att.type === 'image' ? (
-                  <img
-                    src={getMediaAssetUrl(att.path)}
-                    alt=""
-                    className="w-24 h-16 object-cover rounded"
-                  />
+                  <img src={getMediaAssetUrl(att.path)} alt="" className="w-24 h-16 object-cover rounded" />
                 ) : (
                   <video src={getMediaAssetUrl(att.path)} className="w-24 h-16 rounded object-cover" muted />
                 )}

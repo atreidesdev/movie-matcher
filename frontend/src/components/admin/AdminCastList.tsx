@@ -1,13 +1,13 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { type CastWithMediaId, adminApi } from '@/api/admin'
+import { IconCross } from '@/components/icons'
+import { ROLE_TYPES } from '@/constants/enums'
+import { getCharacterName } from '@/utils/localizedText'
+import { getMediaPath } from '@/utils/mediaPaths'
+import { getPersonDisplayName } from '@/utils/personUtils'
+import { Pencil } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Pencil } from 'lucide-react'
-import { IconCross } from '@/components/icons'
-import { adminApi, type CastWithMediaId } from '@/api/admin'
-import { getMediaPath } from '@/utils/mediaPaths'
-import { getCharacterName } from '@/utils/localizedText'
-import { getPersonDisplayName } from '@/utils/personUtils'
-import { ROLE_TYPES } from '@/constants/enums'
 
 /** Только каст (актёры и роли): записи с персонажем. Без персонала (режиссёры и т.д.). */
 function isCastEntry(entry: CastWithMediaId): boolean {

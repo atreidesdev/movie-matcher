@@ -1,29 +1,29 @@
-import { useMemo, type RefObject } from 'react'
-import { Link } from 'react-router-dom'
-import clsx from 'clsx'
-import { motion } from 'framer-motion'
-import { IconFavorite, IconCross, getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
-import {
-  getMediaAssetUrl,
-  getMediaCastPath,
-  getMediaStaffPath,
-  getMediaSimilarPath,
-  getMediaFranchisePath,
-  getMediaPath,
-  type MediaTypeForPath,
-} from '@/utils/mediaPaths'
-import { getMediaTitle, getCharacterName, getLocalizedString } from '@/utils/localizedText'
-import { getPersonDisplayName } from '@/utils/personUtils'
+import { favoritesApi } from '@/api/favorites'
+import type { FranchiseLinkItem } from '@/api/franchise'
+import RatingEmoji from '@/components/RatingEmoji'
+import { IconCross, IconFavorite, getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
+import type { Profession } from '@/constants/enums'
+import { useToastStore } from '@/store/toastStore'
+import type { Cast, ListStatus, Media, Person } from '@/types'
 import { getFranchiseRelationKey } from '@/utils/franchiseRelation'
 import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getCharacterName, getLocalizedString, getMediaTitle } from '@/utils/localizedText'
+import {
+  type MediaTypeForPath,
+  getMediaAssetUrl,
+  getMediaCastPath,
+  getMediaFranchisePath,
+  getMediaPath,
+  getMediaSimilarPath,
+  getMediaStaffPath,
+} from '@/utils/mediaPaths'
+import { getPersonDisplayName } from '@/utils/personUtils'
 import { normalizeRatingToPercent } from '@/utils/rating'
-import { favoritesApi } from '@/api/favorites'
-import { useToastStore } from '@/store/toastStore'
-import type { Media, Cast, Person, ListStatus } from '@/types'
-import type { FranchiseLinkItem } from '@/api/franchise'
-import type { Profession } from '@/constants/enums'
-import RatingEmoji from '@/components/RatingEmoji'
-import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
+import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import { type RefObject, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 
 const LANGUAGE_LABELS: Record<string, string> = {
   ru: 'Русский',
@@ -113,7 +113,7 @@ export function MediaDetailCastFranchiseSection({
   }, [franchiseLinks])
 
   const fullCastList = ('cast' in media && Array.isArray(media.cast) ? (media.cast as Cast[]) : []).filter(
-    (c) => c != null && (c.person || c.character)
+    (c) => c != null && (c.person || c.character),
   )
   const actingCast = fullCastList.filter((c) => c.characterId)
   const mainPreview = actingCast.filter((c) => c.roleType === 'main').slice(0, 8)
@@ -200,14 +200,12 @@ export function MediaDetailCastFranchiseSection({
                                   s.delete(entry.id)
                                   return s
                                 })
-                                useToastStore
-                                  .getState()
-                                  .show({
-                                    title: t('toast.removedFromFavorites'),
-                                    description: t('toast.removedFromFavoritesEntity', {
-                                      name: name || String(entry.id),
-                                    }),
-                                  })
+                                useToastStore.getState().show({
+                                  title: t('toast.removedFromFavorites'),
+                                  description: t('toast.removedFromFavoritesEntity', {
+                                    name: name || String(entry.id),
+                                  }),
+                                })
                               })
                               .catch(() => {})
                           } else {
@@ -215,12 +213,10 @@ export function MediaDetailCastFranchiseSection({
                               .add('cast', entry.id)
                               .then(() => {
                                 setFavoriteCastIds((prev) => new Set([...prev, entry.id]))
-                                useToastStore
-                                  .getState()
-                                  .show({
-                                    title: t('toast.addedToFavorites'),
-                                    description: t('toast.addedToFavoritesEntity', { name: name || String(entry.id) }),
-                                  })
+                                useToastStore.getState().show({
+                                  title: t('toast.addedToFavorites'),
+                                  description: t('toast.addedToFavoritesEntity', { name: name || String(entry.id) }),
+                                })
                               })
                               .catch(() => {})
                           }
@@ -423,7 +419,7 @@ export function MediaDetailCastFranchiseSection({
                                   const s = new Set(prev)
                                   s.delete(person.id)
                                   return s
-                                })
+                                }),
                               )
                               .catch(() => {})
                           } else {
@@ -481,7 +477,7 @@ export function MediaDetailCastFranchiseSection({
                   name: getLocalizedString(
                     franchiseLinks[0].franchiseNameI18n,
                     franchiseLinks[0].franchiseName,
-                    locale
+                    locale,
                   ),
                 })}
               </p>
@@ -537,7 +533,7 @@ export function MediaDetailCastFranchiseSection({
                               className={clsx(
                                 'absolute top-1 left-1 z-10 w-7 h-7 rounded-lg backdrop-blur-sm flex items-center justify-center shadow-lg',
                                 badgeClasses.bg,
-                                badgeClasses.text
+                                badgeClasses.text,
                               )}
                               title={status ? getListStatusLabel(t, pathType, status) : ''}
                             >
@@ -618,7 +614,7 @@ export function MediaDetailCastFranchiseSection({
                                 className={clsx(
                                   'absolute top-1 left-1 z-10 w-7 h-7 rounded-lg backdrop-blur-sm flex items-center justify-center shadow-lg',
                                   badgeClasses.bg,
-                                  badgeClasses.text
+                                  badgeClasses.text,
                                 )}
                                 title={status ? getListStatusLabel(t, type, status) : ''}
                               >
@@ -676,14 +672,12 @@ export function MediaDetailCastFranchiseSection({
                             s.delete(castModalEntry.id)
                             return s
                           })
-                          useToastStore
-                            .getState()
-                            .show({
-                              title: t('toast.removedFromFavorites'),
-                              description: t('toast.removedFromFavoritesEntity', {
-                                name: name || String(castModalEntry.id),
-                              }),
-                            })
+                          useToastStore.getState().show({
+                            title: t('toast.removedFromFavorites'),
+                            description: t('toast.removedFromFavoritesEntity', {
+                              name: name || String(castModalEntry.id),
+                            }),
+                          })
                         })
                         .catch(() => {})
                     } else {
@@ -691,14 +685,12 @@ export function MediaDetailCastFranchiseSection({
                         .add('cast', castModalEntry.id)
                         .then(() => {
                           setFavoriteCastIds((prev) => new Set([...prev, castModalEntry.id]))
-                          useToastStore
-                            .getState()
-                            .show({
-                              title: t('toast.addedToFavorites'),
-                              description: t('toast.addedToFavoritesEntity', {
-                                name: name || String(castModalEntry.id),
-                              }),
-                            })
+                          useToastStore.getState().show({
+                            title: t('toast.addedToFavorites'),
+                            description: t('toast.addedToFavoritesEntity', {
+                              name: name || String(castModalEntry.id),
+                            }),
+                          })
                         })
                         .catch(() => {})
                     }

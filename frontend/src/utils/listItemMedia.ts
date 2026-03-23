@@ -1,5 +1,5 @@
-import type { ListItem } from '@/types'
 import type { ListEntityType } from '@/api/lists'
+import type { ListItem } from '@/types'
 import type { Genre } from '@/types'
 import type { AnimeSeason } from '@/types'
 import type { Theme } from '@/types'
@@ -38,7 +38,7 @@ export interface MediaFromListItem {
 /** Returns basic media info (id, title, poster) from a list item. */
 export function getMediaFromItem(
   item: ListItem,
-  listType: ListEntityType
+  listType: ListEntityType,
 ): { id: number; title: string; poster?: string } | null {
   const key = ENTITY_KEY_MAP[listType]
   const m = key ? (item[key] as { id: number; title: string; poster?: string } | undefined) : null
@@ -46,10 +46,7 @@ export function getMediaFromItem(
 }
 
 /** Returns full media object from a list item (includes genres, releaseDate, season for filtering). */
-export function getMediaFullFromItem(
-  item: ListItem,
-  listType: ListEntityType
-): MediaFromListItem | null {
+export function getMediaFullFromItem(item: ListItem, listType: ListEntityType): MediaFromListItem | null {
   const key = ENTITY_KEY_MAP[listType]
   const m = key ? (item[key] as MediaFromListItem | undefined) : null
   return m && typeof m === 'object' && m.id ? m : null

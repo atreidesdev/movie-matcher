@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import type { Studio, Publisher, Developer } from '@/types'
+import type { Developer, Publisher, Studio } from '@/types'
 
 export interface EntityProjectEntry {
   type: string

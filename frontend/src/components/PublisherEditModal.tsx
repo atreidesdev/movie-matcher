@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Upload } from 'lucide-react'
 import { adminApi } from '@/api/admin'
-import type { Publisher, LocalizedString, PublisherPublicationType } from '@/types'
 import TranslationsEditor from '@/components/admin/TranslationsEditor'
+import BaseModal from '@/components/ui/BaseModal'
+import { PUBLISHER_PUBLICATION_TYPE_OPTIONS } from '@/constants/publisherPublicationTypes'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import type { LocalizedString, Publisher, PublisherPublicationType } from '@/types'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import { buildUploadBaseName } from '@/utils/uploadNames'
-import BaseModal from '@/components/ui/BaseModal'
-import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
-import { PUBLISHER_PUBLICATION_TYPE_OPTIONS } from '@/constants/publisherPublicationTypes'
+import { Upload } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface PublisherEditModalProps {
   open: boolean
@@ -138,7 +138,7 @@ export default function PublisherEditModal({ open, onClose, publisher, onSaved }
                     checked={checked}
                     onChange={(e) =>
                       setEditPublicationTypes((prev) =>
-                        e.target.checked ? [...prev, option.value] : prev.filter((value) => value !== option.value)
+                        e.target.checked ? [...prev, option.value] : prev.filter((value) => value !== option.value),
                       )
                     }
                   />

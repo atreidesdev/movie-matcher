@@ -1,6 +1,6 @@
+import { type ListEntityType, listsApi } from '@/api/lists'
+import type { ListItem, ListStatus } from '@/types'
 import { create } from 'zustand'
-import { ListItem, ListStatus } from '@/types'
-import { listsApi, ListEntityType } from '@/api/lists'
 
 interface ListState {
   listByType: Record<string, ListItem[]>
@@ -14,7 +14,7 @@ interface ListState {
     entityId: number,
     status: ListStatus,
     comment?: string,
-    currentEpisode?: number
+    currentEpisode?: number,
   ) => Promise<void>
   updateInList: (type: ListEntityType, entityId: number, data: Partial<ListItem>) => Promise<void>
   removeFromList: (type: ListEntityType, entityId: number) => Promise<void>

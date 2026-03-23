@@ -1,12 +1,12 @@
-import { useEffect, useState, useCallback } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { ArrowLeft } from 'lucide-react'
-import { IconCross } from '@/components/icons'
 import { mediaApi } from '@/api/media'
-import { getMediaAssetUrl, getMediaPath, type MediaTypeForPath } from '@/utils/mediaPaths'
-import { getMediaTitle } from '@/utils/localizedText'
+import { IconCross } from '@/components/icons'
 import type { Media } from '@/types'
+import { getMediaTitle } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { ArrowLeft } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 interface MediaGalleryPageProps {
   type: MediaTypeForPath
@@ -38,7 +38,7 @@ export default function MediaGalleryPage({ type }: MediaGalleryPageProps) {
   const [loading, setLoading] = useState(true)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
-  const numId = id ? parseInt(id, 10) : 0
+  const numId = id ? Number.parseInt(id, 10) : 0
   const images = media && Array.isArray(media.images) ? media.images : []
   const galleryItems: GalleryItem[] = images
     .map((img) => {

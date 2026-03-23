@@ -1,6 +1,6 @@
+import type { Discussion } from '@/api/discussions'
 import CommentSectionV2 from '@/components/CommentSectionV2'
 import { IconPlus } from '@/components/icons'
-import type { Discussion } from '@/api/discussions'
 
 interface MediaDetailDiscussionsSectionProps {
   user: { id: number } | null

@@ -42,7 +42,7 @@ export default function DevBlogPostPage() {
       <div className="space-y-4">
         <Link to="/devblog" className="inline-flex items-center gap-1 text-thistle-600 hover:underline">
           <ArrowLeft className="w-4 h-4" />
-          {t('devblog.backToList')}
+          {t('common.backToList')}
         </Link>
         <p className="text-gray-500">{t('devblog.notFound')}</p>
       </div>
@@ -53,7 +53,7 @@ export default function DevBlogPostPage() {
     <article className="space-y-6">
       <Link to="/devblog" className="inline-flex items-center gap-1 text-thistle-600 hover:underline text-sm">
         <ArrowLeft className="w-4 h-4" />
-        {t('devblog.backToList')}
+        {t('common.backToList')}
       </Link>
       <header>
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-200 flex items-center gap-2">

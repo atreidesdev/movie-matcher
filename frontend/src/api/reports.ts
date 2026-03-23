@@ -67,7 +67,7 @@ export const reportsApi = {
 
   updateStatus: async (
     reportId: number,
-    data: { status: 'resolved' | 'rejected'; moderatorNote?: string }
+    data: { status: 'resolved' | 'rejected'; moderatorNote?: string },
   ): Promise<Report> => {
     const response = await apiClient.patch<Report>(`/admin/reports/${reportId}`, data)
     return response.data
@@ -77,7 +77,7 @@ export const reportsApi = {
   bulkUpdate: async (
     ids: number[],
     status: 'resolved' | 'rejected',
-    moderatorNote?: string
+    moderatorNote?: string,
   ): Promise<{ updated: number }> => {
     const { data } = await apiClient.patch<{ updated: number }>('/admin/reports/bulk', {
       ids,

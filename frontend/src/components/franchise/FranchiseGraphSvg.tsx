@@ -1,15 +1,15 @@
+import type { FranchiseMediaLink } from '@/api/franchise'
+import { getFranchiseRelationKey } from '@/utils/franchiseRelation'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getLocalizedString } from '@/utils/localizedText'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { forceCenter, forceCollide, forceLink, forceManyBody, forceSimulation } from 'd3-force-3d'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide } from 'd3-force-3d'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
-import { getLocalizedString } from '@/utils/localizedText'
-import { getFranchiseRelationKey } from '@/utils/franchiseRelation'
-import { lineRectHit, getLinkStyle, getLinkDistance, withArrow } from './franchiseGraphUtils'
-import { nodeKey, type MediaNodeForGraph } from './FranchiseGraph'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import type { FranchiseMediaLink } from '@/api/franchise'
+import { type MediaNodeForGraph, nodeKey } from './FranchiseGraph'
+import { getLinkDistance, getLinkStyle, lineRectHit, withArrow } from './franchiseGraphUtils'
 
 const NODE_W = 100
 const NODE_H = 150
@@ -172,13 +172,13 @@ export default function FranchiseGraphSvg({
         'link',
         forceLink(links as unknown as { source: SvgNode; target: SvgNode }[])
           .id((d: SvgNode) => d.graphId)
-          .distance((l: SvgLink) => getLinkDistance(l.relationType))
+          .distance((l: SvgLink) => getLinkDistance(l.relationType)),
       )
       .force('charge', forceManyBody().strength(-200))
       .force('center', forceCenter((minX + maxX) / 2, (minY + maxY) / 2))
       .force(
         'collide',
-        forceCollide().radius(() => Math.sqrt(NODE_W * NODE_W + NODE_H * NODE_H) / 2 + 10)
+        forceCollide().radius(() => Math.sqrt(NODE_W * NODE_W + NODE_H * NODE_H) / 2 + 10),
       )
       .on('tick', () => {
         nodeList.forEach(clamp)
@@ -203,7 +203,7 @@ export default function FranchiseGraphSvg({
         setSelectedKey(node.graphId)
       }
     },
-    [selectedKey, onNodeClick]
+    [selectedKey, onNodeClick],
   )
 
   const getSvgCoords = useCallback((clientX: number, clientY: number) => {
@@ -234,7 +234,7 @@ export default function FranchiseGraphSvg({
       setDraggingKey(n.graphId)
       ;(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId)
     },
-    [nodeMap, getSvgCoords]
+    [nodeMap, getSvgCoords],
   )
 
   const handlePointerMove = useCallback(
@@ -256,7 +256,7 @@ export default function FranchiseGraphSvg({
       node.fy = newY
       setTick((n) => n + 1)
     },
-    [bounds, getSvgCoords]
+    [bounds, getSvgCoords],
   )
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {

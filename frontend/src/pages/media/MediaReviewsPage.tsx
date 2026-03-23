@@ -1,23 +1,23 @@
-import { useEffect, useState, useCallback } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { Pencil, Trash2, ArrowLeft, ThumbsUp, Heart, Laugh, Frown, Angry, ThumbsDown, CheckCircle } from 'lucide-react'
-import { IconPerson } from '@/components/icons'
-import { reviewsApi, type ReviewMediaType } from '@/api/reviews'
 import { mediaApi } from '@/api/media'
-import { reactionsApi, type ReviewReactionType } from '@/api/reactions'
-import { useAuthStore } from '@/store/authStore'
-import { getMediaPath, getMediaAssetUrl } from '@/utils/mediaPaths'
-import { getMediaTitle } from '@/utils/localizedText'
-import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import type { Review, ReviewStatus } from '@/types'
-import { REVIEW_STATUS_EMOJIS } from '@/types'
+import { type ReviewReactionType, reactionsApi } from '@/api/reactions'
+import { type ReviewMediaType, reviewsApi } from '@/api/reviews'
 import ReviewStars from '@/components/ReviewStars'
 import ReviewStatusDisplay from '@/components/ReviewStatusDisplay'
-import { RichTextEditor } from '@/components/richText/RichTextEditor'
+import { IconPerson } from '@/components/icons'
 import { RichTextContent } from '@/components/richText/RichTextContent'
-import { isRichTextEmpty, sanitizeRichHtml, RICH_TEXT_MAX_REVIEW_HTML } from '@/utils/richText'
+import { RichTextEditor } from '@/components/richText/RichTextEditor'
+import { useAuthStore } from '@/store/authStore'
 import { useToastStore } from '@/store/toastStore'
+import type { Review, ReviewStatus } from '@/types'
+import { REVIEW_STATUS_EMOJIS } from '@/types'
+import { getMediaTitle } from '@/utils/localizedText'
+import { getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { RICH_TEXT_MAX_REVIEW_HTML, isRichTextEmpty, sanitizeRichHtml } from '@/utils/richText'
+import { Angry, ArrowLeft, CheckCircle, Frown, Heart, Laugh, Pencil, ThumbsDown, ThumbsUp, Trash2 } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 const REVIEW_REACTION_CONFIG: {
   value: ReviewReactionType
@@ -77,7 +77,7 @@ export default function MediaReviewsPage({ type }: MediaReviewsPageProps) {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
 
-  const entityId = id ? parseInt(id, 10) : 0
+  const entityId = id ? Number.parseInt(id, 10) : 0
   const reviewMediaType = TYPE_TO_REVIEW_MEDIA[type]
   const myReview = reviews.find((r) => user && r.userId === user.id)
   const isMovie = type === 'movie'
@@ -103,7 +103,7 @@ export default function MediaReviewsPage({ type }: MediaReviewsPageProps) {
         setReviewReactions((prev) => ({ ...prev, ...next }))
       } catch {}
     },
-    [reviewTargetType]
+    [reviewTargetType],
   )
 
   useEffect(() => {
@@ -120,7 +120,7 @@ export default function MediaReviewsPage({ type }: MediaReviewsPageProps) {
             ? getMediaTitle(media as { title: string; titleI18n?: Record<string, string> }, locale) ||
                 (media as { title?: string }).title ||
                 ''
-            : ''
+            : '',
         )
         if (reviewsList.length > 0) {
           loadReviewReactions(reviewsList)

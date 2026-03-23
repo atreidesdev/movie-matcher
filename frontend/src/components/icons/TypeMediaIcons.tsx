@@ -1,9 +1,9 @@
+import { MANGA_PATH, RANOBE_PATH } from '@/components/icons/typeMediaPaths'
 /**
  * Иконки типов медиа из assets (type-*.svg).
  */
 import type { IconProps } from '@/components/icons/types'
 import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
-import { MANGA_PATH, RANOBE_PATH } from '@/components/icons/typeMediaPaths'
 
 const iconProps = (p: IconProps) => {
   const size = p.size ?? DEFAULT_ICON_SIZE

@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { authApi } from '@/api/auth'
-import { IconLetter, IconAlert } from '@/components/icons'
+import { IconAlert, IconLetter } from '@/components/icons'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 export default function ForgotPassword() {
   const { t } = useTranslation()

@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import { Comment } from '@/types'
+import type { Comment } from '@/types'
 
 const entityCommentPaths: Record<string, string> = {
   movies: 'movies',
@@ -29,11 +29,11 @@ export const commentsApi = {
     entityType: CommentEntityType,
     entityId: number,
     page = 0,
-    pageSize = 10
+    pageSize = 10,
   ): Promise<GetCommentsResponse> => {
     const path = entityCommentPaths[entityType] ?? entityType
     const response = await apiClient.get<GetCommentsResponse>(
-      `/${path}/${entityId}/comments?page=${page}&pageSize=${pageSize}`
+      `/${path}/${entityId}/comments?page=${page}&pageSize=${pageSize}`,
     )
     return response.data
   },
@@ -42,7 +42,7 @@ export const commentsApi = {
     entityType: CommentEntityType,
     entityId: number,
     commentId: number,
-    options?: { limit?: number; offset?: number }
+    options?: { limit?: number; offset?: number },
   ): Promise<{ replies: Comment[]; total: number }> => {
     const path = entityCommentPaths[entityType] ?? entityType
     const params = new URLSearchParams()
@@ -58,7 +58,7 @@ export const commentsApi = {
     entityType: CommentEntityType,
     entityId: number,
     text: string,
-    parentId?: number
+    parentId?: number,
   ): Promise<Comment> => {
     const path = entityCommentPaths[entityType] ?? entityType
     const response = await apiClient.post<Comment>(`/comments/${path}/${entityId}`, {
@@ -83,13 +83,13 @@ export const commentsApi = {
     entityType: CommentEntityType,
     entityId: number,
     commentId: number,
-    value: 1 | -1
+    value: 1 | -1,
   ): Promise<{ plusCount: number; minusCount: number }> => {
     const path = entityCommentPaths[entityType] ?? entityType
     const base = path === 'light-novels' ? 'light-novels' : path
     const res = await apiClient.post<{ plusCount: number; minusCount: number }>(
       `/${base}/${entityId}/comments/${commentId}/reaction`,
-      { value }
+      { value },
     )
     return res.data
   },

@@ -5,7 +5,7 @@ export function buildUploadBaseName(
   entityType: string,
   entityId: number | null | undefined,
   assetKind: string,
-  index?: number
+  index?: number,
 ): string | undefined {
   if (!rawTitle || !entityId) return undefined
 

@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import { Review, UserReviewsResponse } from '@/types'
+import type { Review, UserReviewsResponse } from '@/types'
 
 /** Оценка из списка пользователя с похожим вкусом (similarityScore 0–1, на UI в %). */
 export interface SimilarUserListRating {
@@ -69,14 +69,14 @@ export const reviewsApi = {
   /** Оценки тайтла из списков (list item) только от пользователей с похожими вкусами. Без ревью. */
   getSimilarUsersRatings: async (mediaType: ReviewMediaType, entityId: number): Promise<SimilarUserListRating[]> => {
     const response = await apiClient.get<SimilarUserListRating[]>(
-      `/media/${mediaType}/${entityId}/similar-users-ratings`
+      `/media/${mediaType}/${entityId}/similar-users-ratings`,
     )
     return Array.isArray(response.data) ? response.data : []
   },
 
   createMovieReview: async (
     movieId: number,
-    data: { overallRating: number; review?: string; reviewStatus?: string }
+    data: { overallRating: number; review?: string; reviewStatus?: string },
   ): Promise<Review> => {
     const response = await apiClient.post<Review>(`/reviews/movies/${movieId}`, data)
     return response.data
@@ -84,7 +84,7 @@ export const reviewsApi = {
 
   updateMovieReview: async (
     movieId: number,
-    data: { overallRating?: number; review?: string; reviewStatus?: string }
+    data: { overallRating?: number; review?: string; reviewStatus?: string },
   ): Promise<Review> => {
     const response = await apiClient.put<Review>(`/reviews/movies/${movieId}`, data)
     return response.data
@@ -98,7 +98,7 @@ export const reviewsApi = {
   createReview: async (
     mediaType: ReviewMediaType,
     entityId: number,
-    data: { overallRating: number; review?: string; reviewStatus?: string }
+    data: { overallRating: number; review?: string; reviewStatus?: string },
   ): Promise<Review> => {
     const path = REVIEW_PATH_BY_TYPE[mediaType]
     const response = await apiClient.post<Review>(`/reviews/${path}/${entityId}`, data)
@@ -109,7 +109,7 @@ export const reviewsApi = {
   updateReview: async (
     mediaType: ReviewMediaType,
     entityId: number,
-    data: { overallRating?: number; review?: string; reviewStatus?: string }
+    data: { overallRating?: number; review?: string; reviewStatus?: string },
   ): Promise<Review> => {
     const path = REVIEW_PATH_BY_TYPE[mediaType]
     const response = await apiClient.put<Review>(`/reviews/${path}/${entityId}`, data)

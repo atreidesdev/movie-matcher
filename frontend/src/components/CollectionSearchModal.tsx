@@ -1,11 +1,11 @@
-import { useState, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { IconCross, IconSearch, IconPlus } from '@/components/icons'
-import { mediaApi } from '@/api/media'
 import { collectionsApi } from '@/api/collections'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { mediaApi } from '@/api/media'
+import { IconCross, IconPlus, IconSearch } from '@/components/icons'
 import { useToastStore } from '@/store/toastStore'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
 import type { MediaTypeForPath } from '@/utils/mediaPaths'
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const COLLECTION_TYPES: MediaTypeForPath[] = ['movie', 'anime', 'game', 'manga', 'book', 'light-novel']
 

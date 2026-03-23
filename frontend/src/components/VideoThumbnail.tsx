@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
 import { IconVideoPlay } from '@/components/icons'
 import { getVideoStreamUrl } from '@/utils/videoUtils'
+import { useEffect, useMemo, useState } from 'react'
 
 interface VideoThumbnailProps {
   videoUrl: string

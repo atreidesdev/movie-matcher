@@ -4,7 +4,7 @@
  * Чтобы уведомления отображались при получении push, в SW должен быть обработчик события 'push'
  * (например при использовании Vite PWA injectManifest с кастомным sw).
  */
-import { notificationsApi, type PushSubscriptionPayload } from '@/api/notifications'
+import { type PushSubscriptionPayload, notificationsApi } from '@/api/notifications'
 
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined
 

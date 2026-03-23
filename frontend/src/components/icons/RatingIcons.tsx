@@ -1,6 +1,6 @@
-import type { ComponentType } from 'react'
 import type { IconProps } from '@/components/icons/types'
 import { DEFAULT_ICON_SIZE } from '@/components/icons/types'
+import type { ComponentType } from 'react'
 
 const iconProps = (p: IconProps) => {
   const size = p.size ?? DEFAULT_ICON_SIZE

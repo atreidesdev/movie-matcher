@@ -323,7 +323,7 @@ export default function PersonDetail() {
                                 />
                               ) : (
                                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                                  <span className="text-gray-400 text-sm">No Image</span>
+                                  <span className="text-gray-400 text-sm">{t('common.noImage')}</span>
                                 </div>
                               )}
                               {StatusIcon && badgeClasses && (
@@ -401,7 +401,7 @@ export default function PersonDetail() {
                                 />
                               ) : (
                                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                                  <span className="text-gray-400 text-sm">No Image</span>
+                                  <span className="text-gray-400 text-sm">{t('common.noImage')}</span>
                                 </div>
                               )}
                               {StatusIcon && badgeClasses && (

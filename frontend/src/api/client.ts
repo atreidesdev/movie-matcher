@@ -1,10 +1,10 @@
-import axios, { type InternalAxiosRequestConfig } from 'axios'
-import { useAuthStore } from '@/store/authStore'
-import { getDeviceName } from '@/utils/device'
 import { authApi } from '@/api/auth'
-import { createMockAdapter, isMockEnabled } from '@/mock/mockAdapter'
 import i18n from '@/i18n'
+import { createMockAdapter, isMockEnabled } from '@/mock/mockAdapter'
+import { useAuthStore } from '@/store/authStore'
 import { recordRequest } from '@/utils/clientMetrics'
+import { getDeviceName } from '@/utils/device'
+import axios, { type InternalAxiosRequestConfig } from 'axios'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1'
 
@@ -17,7 +17,7 @@ if (import.meta.env.DEV) {
   console.debug('[API] baseURL:', API_BASE_URL, '→ полный адрес:', full, '| MODE:', import.meta.env.MODE)
   if (mockEnabled) {
     console.info(
-      '[API] Mock mode ON — запросы перехватываются axios mock adapter (данные из src/mock/mockData.ts). Запуск: npm run dev:mock или vite --mode mock'
+      '[API] Mock mode ON — запросы перехватываются axios mock adapter (данные из src/mock/mockData.ts). Запуск: npm run dev:mock или vite --mode mock',
     )
   }
 }
@@ -115,7 +115,7 @@ apiClient.interceptors.response.use(
     originalRequest._retry = true
     originalRequest.headers.Authorization = `Bearer ${useAuthStore.getState().accessToken}`
     return apiClient(originalRequest)
-  }
+  },
 )
 
 export default apiClient

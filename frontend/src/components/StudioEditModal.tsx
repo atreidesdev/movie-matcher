@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Upload } from 'lucide-react'
 import { adminApi } from '@/api/admin'
-import type { Studio, LocalizedString } from '@/types'
 import TranslationsEditor from '@/components/admin/TranslationsEditor'
-import { getMediaAssetUrl } from '@/utils/mediaPaths'
-import { buildUploadBaseName } from '@/utils/uploadNames'
 import BaseModal from '@/components/ui/BaseModal'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import type { LocalizedString, Studio } from '@/types'
+import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { buildUploadBaseName } from '@/utils/uploadNames'
+import { Upload } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export interface StudioEditModalProps {
   open: boolean

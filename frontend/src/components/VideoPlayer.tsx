@@ -1,15 +1,15 @@
-import { useRef, useState, useEffect, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
 import {
-  IconVideoPlay,
-  IconVideoPause,
-  IconVideoVolumeMax,
-  IconVideoVolumeMin,
-  IconVideoVolumeMid,
-  IconVideoVolumeMute,
   IconVideoFullscreenEnter,
   IconVideoFullscreenExit,
+  IconVideoPause,
+  IconVideoPlay,
+  IconVideoVolumeMax,
+  IconVideoVolumeMid,
+  IconVideoVolumeMin,
+  IconVideoVolumeMute,
 } from '@/components/icons/PlayerIcons'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export type VideoQualityOption = { label: string; url: string }
 
@@ -96,7 +96,7 @@ export default function VideoPlayer({
       video.currentTime = t
       setCurrentTime(t)
     },
-    [video, duration]
+    [video, duration],
   )
 
   const toggleMute = useCallback(() => {
@@ -114,7 +114,7 @@ export default function VideoPlayer({
       setMuted(val === 0)
       video.muted = val === 0
     },
-    [video]
+    [video],
   )
 
   const toggleFullscreen = useCallback(() => {
@@ -275,7 +275,7 @@ export default function VideoPlayer({
               max={1}
               step={0.05}
               value={muted ? 0 : volume}
-              onChange={(e) => setVol(parseFloat(e.target.value))}
+              onChange={(e) => setVol(Number.parseFloat(e.target.value))}
               onClick={(e) => e.stopPropagation()}
               className="w-16 h-1 accent-thistle-400 cursor-pointer"
               aria-label={t('video.volume', 'Громкость')}

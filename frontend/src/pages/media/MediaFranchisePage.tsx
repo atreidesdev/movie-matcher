@@ -1,26 +1,26 @@
-import { useEffect, useState, useRef, useMemo } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
-import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
-import { ArrowLeft, ArrowRight, List, Network } from 'lucide-react'
 import {
-  getFranchiseLinksByMedia,
-  franchiseApi,
-  type FranchiseMediaLink,
   type FranchiseLinkItem,
+  type FranchiseMediaLink,
+  franchiseApi,
+  getFranchiseLinksByMedia,
 } from '@/api/franchise'
 import { mediaApi } from '@/api/media'
-import { getListStatusIcon, getListStatusBadgeClasses } from '@/components/icons'
 import RatingEmoji from '@/components/RatingEmoji'
 import FranchiseGraph, { nodeKey as franchiseNodeKey } from '@/components/franchise/FranchiseGraph'
 import FranchiseGraphSvg from '@/components/franchise/FranchiseGraphSvg'
-import { getMediaAssetUrl, getMediaPath, getMediaPathFromApiType, type MediaTypeForPath } from '@/utils/mediaPaths'
-import { getMediaTitle, getLocalizedString, getMediaDescription } from '@/utils/localizedText'
-import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getListStatusBadgeClasses, getListStatusIcon } from '@/components/icons'
+import { staggerContainerVariants, staggerItemVariants } from '@/components/ui/staggerVariants'
+import type { ListStatus, Media } from '@/types'
 import { getFranchiseRelationKey } from '@/utils/franchiseRelation'
-import type { Media, ListStatus } from '@/types'
+import { getListStatusLabel } from '@/utils/listStatusLabels'
+import { getLocalizedString, getMediaDescription, getMediaTitle } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath, getMediaPathFromApiType } from '@/utils/mediaPaths'
 import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import { ArrowLeft, ArrowRight, List, Network } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 /** API mediaType (backend) → тип для mediaApi.getMediaByType */
 const API_TYPE_TO_PATH_TYPE: Record<string, MediaTypeForPath> = {
@@ -82,7 +82,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
   const firstCurrentRefSet = useRef(false)
   const navigate = useNavigate()
 
-  const numId = id ? parseInt(id, 10) : 0
+  const numId = id ? Number.parseInt(id, 10) : 0
 
   const pathTypeForApi = (apiType: string): MediaTypeForPath => API_TYPE_TO_PATH_TYPE[apiType] ?? 'movie'
 
@@ -121,7 +121,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
           const promises = Array.from(uniqueKeys).map((key) => {
             const [apiType, idStr] = key.split('\t')
             const pathType = pathTypeForApi(apiType)
-            const mediaId = parseInt(idStr, 10)
+            const mediaId = Number.parseInt(idStr, 10)
             return mediaApi
               .getMediaByType(pathType, mediaId)
               .then((m) => {
@@ -130,7 +130,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
                 const rating = (m as Media).rating != null ? Number((m as Media).rating) : null
                 const listStatus = (m as Media).listStatus as ListStatus | undefined
                 const releaseDate = (m as Media).releaseDate
-                const year = releaseDate ? parseInt(releaseDate.slice(0, 4), 10) : null
+                const year = releaseDate ? Number.parseInt(releaseDate.slice(0, 4), 10) : null
                 const description = getMediaDescription(m as Media, locale) || null
                 const genres = (m as Media).genres ?? null
                 return {
@@ -269,7 +269,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                 viewMode === 'list'
                   ? 'bg-[var(--theme-accent)] text-white'
-                  : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)]'
+                  : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)]',
               )}
               aria-pressed={viewMode === 'list'}
             >
@@ -283,7 +283,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                 viewMode === 'graph'
                   ? 'bg-[var(--theme-accent)] text-white'
-                  : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)]'
+                  : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)]',
               )}
               aria-pressed={viewMode === 'graph'}
             >
@@ -297,7 +297,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                 viewMode === 'graph-svg'
                   ? 'bg-[var(--theme-accent)] text-white'
-                  : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)]'
+                  : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)]',
               )}
               aria-pressed={viewMode === 'graph-svg'}
             >
@@ -398,7 +398,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
                               className={clsx(
                                 'absolute top-1.5 left-1.5 z-10 w-8 h-8 rounded-lg backdrop-blur-sm flex items-center justify-center shadow-lg',
                                 badgeClasses.bg,
-                                badgeClasses.text
+                                badgeClasses.text,
                               )}
                               title={getListStatusLabel(t, mainNode.pathType, mainNode.listStatus)}
                             >
@@ -473,7 +473,7 @@ export default function MediaFranchisePage({ type }: MediaFranchisePageProps) {
                                       className={clsx(
                                         'absolute top-1 left-1 z-10 w-6 h-6 rounded backdrop-blur-sm flex items-center justify-center shadow',
                                         badgeClasses.bg,
-                                        badgeClasses.text
+                                        badgeClasses.text,
                                       )}
                                       title={getListStatusLabel(t, toNode.pathType, toNode.listStatus)}
                                     >

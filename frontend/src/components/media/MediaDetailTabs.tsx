@@ -1,9 +1,9 @@
-import { Info, Image, MessageCircle, MessagesSquare, Star } from 'lucide-react'
 import CommentSectionV2 from '@/components/CommentSectionV2'
+import { MediaDetailGallerySection } from '@/components/media/MediaDetailGallerySection'
+import { MediaDetailInfoSection } from '@/components/media/MediaDetailInfoSection'
 import type { Media } from '@/types'
 import type { MediaTypeForPath } from '@/utils/mediaPaths'
-import { MediaDetailInfoSection } from '@/components/media/MediaDetailInfoSection'
-import { MediaDetailGallerySection } from '@/components/media/MediaDetailGallerySection'
+import { Image, Info, MessageCircle, MessagesSquare, Star } from 'lucide-react'
 
 export interface DetailTab {
   key: 'info' | 'gallery' | 'comments' | 'discussions' | 'reviews'

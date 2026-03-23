@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
-import { getMediaTitle } from '@/utils/localizedText'
-import { getPersonDisplayName } from '@/utils/personUtils'
 import { mediaApi } from '@/api/media'
-import { getMediaAssetUrl, getMediaPath, type MediaTypeForPath } from '@/utils/mediaPaths'
-import type { Media, Cast, Person, MediaStaff } from '@/types'
 import type { Profession } from '@/constants/enums'
+import type { Cast, Media, MediaStaff, Person } from '@/types'
+import { getMediaTitle } from '@/utils/localizedText'
+import { type MediaTypeForPath, getMediaAssetUrl, getMediaPath } from '@/utils/mediaPaths'
+import { getPersonDisplayName } from '@/utils/personUtils'
+import { ArrowLeft } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useParams } from 'react-router-dom'
 
 const CREW_ORDER: { key: string; professions: Profession[] }[] = [
   { key: 'media.directors', professions: ['director'] },
@@ -71,7 +71,7 @@ export default function MediaStaffPage({ type }: MediaStaffPageProps) {
     setMedia(null)
     setLoading(true)
     mediaApi
-      .getMediaByType(type, parseInt(id, 10))
+      .getMediaByType(type, Number.parseInt(id, 10))
       .then(setMedia)
       .catch(() => setMedia(null))
       .finally(() => setLoading(false))
@@ -106,7 +106,7 @@ export default function MediaStaffPage({ type }: MediaStaffPageProps) {
   }
 
   const fullCastList = ('cast' in media && Array.isArray(media.cast) ? (media.cast as Cast[]) : []).filter(
-    (c) => c != null
+    (c) => c != null,
   )
   const crewByRole = groupCrewByRole(fullCastList)
   const staffList = 'staff' in media && Array.isArray(media.staff) ? (media.staff as MediaStaff[]) : []

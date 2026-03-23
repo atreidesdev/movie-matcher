@@ -1,5 +1,5 @@
+import { LayoutGrid, LayoutList, List } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { LayoutList, List, LayoutGrid } from 'lucide-react'
 
 export type ListViewMode = 'detailed' | 'compact' | 'cards'
 

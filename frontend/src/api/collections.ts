@@ -1,5 +1,5 @@
 import apiClient from '@/api/client'
-import { Collection } from '@/types'
+import type { Collection } from '@/types'
 
 /** Публичные (сайтовые) коллекции — без авторизации */
 export interface PublicCollectionListItem {

@@ -1,14 +1,14 @@
-import { useState, useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Pencil, Trash2 } from 'lucide-react'
-import { IconPlus, IconSearch, IconCross } from '@/components/icons'
 import { adminApi } from '@/api/admin'
-import type { Genre, Theme, Studio, Developer, Publisher, LocalizedString, PublisherPublicationType } from '@/types'
 import type { Platform } from '@/api/admin'
-import TranslationsEditor from '@/components/admin/TranslationsEditor'
 import AdminPagination, { ADMIN_PAGE_SIZE } from '@/components/admin/AdminPagination'
-import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import TranslationsEditor from '@/components/admin/TranslationsEditor'
+import { IconCross, IconPlus, IconSearch } from '@/components/icons'
 import { PUBLISHER_PUBLICATION_TYPE_OPTIONS } from '@/constants/publisherPublicationTypes'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import type { Developer, Genre, LocalizedString, Publisher, PublisherPublicationType, Studio, Theme } from '@/types'
+import { Pencil, Trash2 } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type EntityKey = 'genres' | 'themes' | 'studios' | 'platforms' | 'developers' | 'publishers'
 
@@ -379,7 +379,7 @@ export default function AdminEntityList({
                             setNewPublicationTypes((prev) =>
                               e.target.checked
                                 ? [...prev, option.value]
-                                : prev.filter((value) => value !== option.value)
+                                : prev.filter((value) => value !== option.value),
                             )
                           }
                         />
@@ -506,7 +506,7 @@ export default function AdminEntityList({
                                     setEditPublicationTypes((prev) =>
                                       e.target.checked
                                         ? [...prev, option.value]
-                                        : prev.filter((value) => value !== option.value)
+                                        : prev.filter((value) => value !== option.value),
                                     )
                                   }
                                 />

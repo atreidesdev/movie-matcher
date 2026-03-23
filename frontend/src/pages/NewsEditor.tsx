@@ -141,7 +141,7 @@ export default function NewsEditorPage() {
       <div className="space-y-4">
         <p className="text-[var(--theme-text-muted)]">{t('news.admin.accessDenied')}</p>
         <Link to="/news" className="text-[var(--theme-primary)] hover:underline title-hover-theme">
-          {t('news.backToList')}
+          {t('common.backToList')}
         </Link>
       </div>
     )
@@ -158,7 +158,7 @@ export default function NewsEditorPage() {
         className="inline-flex items-center gap-1 text-[var(--theme-primary)] hover:underline text-sm title-hover-theme"
       >
         <ArrowLeft className="w-4 h-4" />
-        {t('news.backToList')}
+        {t('common.backToList')}
       </Link>
 
       <h1 className="text-2xl font-bold text-[var(--theme-text)]">

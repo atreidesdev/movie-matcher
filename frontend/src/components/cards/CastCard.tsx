@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { getMediaAssetUrl } from '@/utils/mediaPaths'
+import { Link } from 'react-router-dom'
 
 export interface CastCardProps {
   castId: number
