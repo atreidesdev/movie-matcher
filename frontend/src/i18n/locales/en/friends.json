@@ -1,0 +1,18 @@
+{
+  "requests": "Friend requests",
+  "myFriends": "My friends",
+  "received": "Received",
+  "sent": "Sent",
+  "pending": "Pending",
+  "accept": "Accept",
+  "reject": "Reject",
+  "rejectConfirm": "Reject friend request from {{name}}?",
+  "removeFromFriends": "Remove from friends",
+  "removeConfirm": "Remove {{name}} from friends?",
+  "addFriend": "Add friend",
+  "acceptRequest": "Accept request",
+  "requestSent": "Request sent",
+  "inFriends": "In friends",
+  "noFriends": "No friends yet",
+  "noRequests": "No pending requests"
+}

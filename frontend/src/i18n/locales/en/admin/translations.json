@@ -1,0 +1,11 @@
+{
+  "translationsOptional": "Translations (optional, by language code)",
+  "translationsPasteJson": "Paste JSON",
+  "translationsApplyJson": "Apply JSON",
+  "translationsJsonInvalid": "Invalid JSON. Use object with string values, e.g. {\"ru\": \"...\", \"en\": \"...\"}",
+  "translationsByLanguage": "By language",
+  "translationsAddLanguage": "Add language",
+  "translationsLanguageCode": "Language code (e.g. en, ru, ja)",
+  "translationsName": "Name (translations)",
+  "translationsDescription": "Description (translations)"
+}

@@ -1,0 +1,18 @@
+{
+  "requests": "Заявки в друзья",
+  "myFriends": "Мои друзья",
+  "received": "Входящие",
+  "sent": "Исходящие",
+  "pending": "Ожидает",
+  "accept": "Принять",
+  "reject": "Отклонить",
+  "rejectConfirm": "Отклонить заявку от {{name}}?",
+  "removeFromFriends": "Удалить из друзей",
+  "removeConfirm": "Удалить {{name}} из друзей?",
+  "addFriend": "Добавить в друзья",
+  "acceptRequest": "Принять заявку",
+  "requestSent": "Запрос отправлен",
+  "inFriends": "В друзьях",
+  "noFriends": "Пока нет друзей",
+  "noRequests": "Нет ожидающих заявок"
+}

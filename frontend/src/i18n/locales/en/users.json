@@ -1,0 +1,11 @@
+{
+  "pageTitle": "Users",
+  "searchPlaceholder": "Search by username or name",
+  "searchResults": "Search results",
+  "noUsersFound": "No users found",
+  "recentlyActive": "Users",
+  "noUsersYet": "No users yet",
+  "similarTaste": "Similar taste",
+  "noSimilarUsers": "No users with similar lists and ratings yet",
+  "similarityScore": "Taste similarity"
+}

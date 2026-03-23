@@ -1,0 +1,21 @@
+{
+  "enterQuery": "Enter a search query",
+  "query": "Query",
+  "mediaType": "Content type",
+  "allTypes": "All types",
+  "genre": "Genre",
+  "allGenres": "All genres",
+  "year": "Year",
+  "byTitle": "By title",
+  "byMeaning": "By meaning",
+  "byMeaningHint": "Find content by description, mood or theme (e.g. \"space adventure\", \"sad romance\")",
+  "noSemanticResults": "No results for this query. Try different words or use search by title.",
+  "whereToSearch": "Where to search",
+  "inMedia": "In media",
+  "inCompanies": "In companies",
+  "searchPersons": "Search people",
+  "searchCharacters": "Search characters",
+  "noPersons": "No people found",
+  "noCharacters": "No characters found",
+  "companyType": "Company type"
+}

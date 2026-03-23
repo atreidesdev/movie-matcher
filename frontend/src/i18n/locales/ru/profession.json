@@ -1,0 +1,12 @@
+{
+  "actor": "Актёр",
+  "actress": "Актриса",
+  "director": "Режиссёр",
+  "producer": "Продюсер",
+  "writer": "Сценарист",
+  "cinematographer": "Оператор",
+  "composer": "Композитор",
+  "editor": "Монтажёр",
+  "animator": "Аниматор",
+  "voiceActor": "Актёр озвучки"
+}

@@ -1,0 +1,23 @@
+{
+  "poster": "Постер",
+  "backdrop": "Задник",
+  "uploadImage": "Загрузить изображение",
+  "gallery": "Галерея",
+  "imageCaption": "Подпись",
+  "imageDimensions": "Размеры (для коллажа)",
+  "trailers": "Трейлеры / видео",
+  "uploadVideo": "Загрузить видео",
+  "noTitle": "Без названия",
+  "mockModeHint": "В режиме мока (VITE_USE_MOCK=true) список подставляется из мок-данных.",
+  "apiNotImplemented": "API не реализован",
+  "searchPlatform": "Поиск платформы",
+  "searchPublisher": "Поиск издателя",
+  "animeTitleRomaji": "Транслит (ромадзи)",
+  "animeTitleKatakana": "Оригинальное название (катакана)",
+  "searchAuthor": "Поиск автора",
+  "searchIllustrator": "Поиск иллюстратора",
+  "volumes": "Тома",
+  "pages": "Страницы",
+  "currentVolume": "Текущий том",
+  "currentChapter": "Текущая глава"
+}

@@ -1,0 +1,23 @@
+{
+  "addedToCollection": "Added to collection",
+  "addedToCollectionDescription": "Title added to the selected collection",
+  "addedToList": "Added to list",
+  "addedToListDescription": "Title added to your list with the selected status",
+  "listUpdated": "List entry updated",
+  "listUpdatedDescription": "Changes saved",
+  "ratingUpdated": "Rating updated",
+  "ratingUpdatedDescription": "Your rating has been saved",
+  "ratingLabel": "Rating — {{rating}}",
+  "addedToFavorites": "Added to favorites",
+  "addedToFavoritesDescription": "«{{title}}» added to favorites",
+  "removedFromFavorites": "Removed from favorites",
+  "removedFromFavoritesDescription": "«{{title}}» removed from favorites",
+  "addedToFavoritesEntity": "«{{name}}» added to favorites",
+  "removedFromFavoritesEntity": "«{{name}}» removed from favorites",
+  "removedFromCollection": "Removed from collection",
+  "removedFromCollectionDescription": "Title removed from collection",
+  "removedFromList": "Removed from list",
+  "removedFromListDescription": "Title removed from your list",
+  "statusChanged": "Status changed",
+  "statusChangedDescription": "List entry updated"
+}

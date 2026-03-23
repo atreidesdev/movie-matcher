@@ -1,0 +1,16 @@
+{
+  "add": "Add",
+  "addTitleToCollection": "Add «{{title}}» to collection",
+  "noCollections": "You have no collections yet. Create one in the Collections section.",
+  "addError": "Could not add. The title may already be in this collection.",
+  "removeError": "Could not remove from collection.",
+  "inCollection": "In collection",
+  "titlesInCollection": "Titles in collection",
+  "edit": "Edit",
+  "addBySearch": "Add by search",
+  "removeFromCollection": "Remove from collection",
+  "emptyInEditMode": "Collection is empty. Add titles via search.",
+  "removedFromCollection": "Removed from collection",
+  "publicDescription": "Editorial picks: themed collections of movies, anime, and more.",
+  "publicEmpty": "No public collections yet."
+}

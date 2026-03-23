@@ -1,0 +1,16 @@
+{
+  "play": "Play",
+  "pause": "Pause",
+  "mute": "Mute",
+  "unmute": "Unmute",
+  "volume": "Volume",
+  "seek": "Seek",
+  "quality": "Quality",
+  "qualityAuto": "Auto",
+  "quality1080": "1080p",
+  "quality720": "720p",
+  "quality480": "480p",
+  "quality360": "360p",
+  "fullscreen": "Fullscreen",
+  "exitFullscreen": "Exit fullscreen"
+}

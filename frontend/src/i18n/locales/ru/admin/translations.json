@@ -1,0 +1,11 @@
+{
+  "translationsOptional": "Переводы (необязательно, по коду языка)",
+  "translationsPasteJson": "Вставить JSON",
+  "translationsApplyJson": "Применить JSON",
+  "translationsJsonInvalid": "Неверный JSON. Нужен объект со строковыми значениями, например {\"ru\": \"...\", \"en\": \"...\"}",
+  "translationsByLanguage": "По языкам",
+  "translationsAddLanguage": "Добавить язык",
+  "translationsLanguageCode": "Код языка (например en, ru, ja)",
+  "translationsName": "Название (переводы)",
+  "translationsDescription": "Описание (переводы)"
+}

@@ -1,0 +1,25 @@
+{
+  "empty": "Нет уведомлений",
+  "markAllRead": "Прочитать все",
+  "enablePush": "Включить push-уведомления",
+  "markRead": "Прочитано",
+  "types": {
+    "friend_accepted": {
+      "title": "<0>{{username}}</0> принял заявку в друзья",
+      "body": "Теперь вы друзья."
+    },
+    "media_update": {
+      "statusTitle": "Обновление статуса: <0>{{title}}</0>",
+      "statusBody": "{{status}}",
+      "releaseTitle": "Установлена дата выхода: <0>{{title}}</0>",
+      "releaseBody": "{{date}}"
+    },
+    "comment_reply": {
+      "title": "Ответ на комментарий",
+      "body": "{{preview}}"
+    },
+    "new_follower": {
+      "title": "<0>{{username}}</0> подписался на вас"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "franchise": "Франшиза",
+  "partOfFranchise": "Часть франшизы «{{name}}»",
+  "franchiseRelation": {
+    "sequel": "Сиквел",
+    "prequel": "Приквел",
+    "adaptation": "Адаптация",
+    "spinOff": "Спин-офф",
+    "alternativeVersion": "Альтернативная версия",
+    "sideStory": "Побочная история",
+    "crossover": "Кроссовер",
+    "compilation": "Сборник",
+    "remake": "Римейк",
+    "remaster": "Ремастер",
+    "other": "Часть франшизы"
+  },
+  "similar": "Похожее",
+  "similarTo": "Похожее на {{title}}",
+  "allSimilar": "Всё похожее",
+  "allFranchise": "Вся франшиза",
+  "franchiseList": "Список",
+  "franchiseGraph": "Граф",
+  "franchiseGraphSvg": "Граф (SVG)",
+  "franchiseGraphYear": "Год",
+  "franchiseGraphRating": "Рейтинг",
+  "franchiseGraphInList": "В списке",
+  "franchiseGraphYouAreHere": "Вы здесь",
+  "franchiseGraphGoToPage": "Перейти на страницу",
+  "noSimilar": "Нет похожего"
+}

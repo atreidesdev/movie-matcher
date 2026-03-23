@@ -1,0 +1,16 @@
+{
+  "title": "Dev blog",
+  "noPosts": "No posts yet.",
+  "notFound": "Post not found.",
+  "admin": {
+    "hint": "Dev blog is visible to everyone (site updates). Only developer, admin and owner can write posts.",
+    "create": "New post",
+    "edit": "Edit post",
+    "title": "Title",
+    "body": "Body (text)",
+    "slug": "Slug (optional)",
+    "titleRequired": "Title is required",
+    "bodyRequired": "Body is required",
+    "confirmDelete": "Delete post «{{title}}»?"
+  }
+}

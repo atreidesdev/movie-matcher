@@ -1,0 +1,23 @@
+{
+  "addedToCollection": "Добавлено в коллекцию",
+  "addedToCollectionDescription": "Тайтл добавлен в выбранную коллекцию",
+  "addedToList": "Добавлено в список",
+  "addedToListDescription": "Тайтл добавлен в ваш список с выбранным статусом",
+  "listUpdated": "Запись в списке обновлена",
+  "listUpdatedDescription": "Изменения сохранены",
+  "ratingUpdated": "Оценка обновлена",
+  "ratingUpdatedDescription": "Ваша оценка сохранена",
+  "ratingLabel": "Оценка — {{rating}}",
+  "addedToFavorites": "В избранное",
+  "addedToFavoritesDescription": "«{{title}}» добавлено в избранное",
+  "removedFromFavorites": "Удалено из избранного",
+  "removedFromFavoritesDescription": "«{{title}}» удалено из избранного",
+  "addedToFavoritesEntity": "«{{name}}» добавлено в избранное",
+  "removedFromFavoritesEntity": "«{{name}}» удалено из избранного",
+  "removedFromCollection": "Удалено из коллекции",
+  "removedFromCollectionDescription": "Тайтл удалён из коллекции",
+  "removedFromList": "Удалено из списка",
+  "removedFromListDescription": "Тайтл удалён из вашего списка",
+  "statusChanged": "Статус изменён",
+  "statusChangedDescription": "Запись в списке обновлена"
+}

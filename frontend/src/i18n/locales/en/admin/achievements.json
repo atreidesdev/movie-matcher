@@ -1,0 +1,23 @@
+{
+  "achievementCreate": "Create achievement",
+  "achievementEdit": "Edit achievement",
+  "achievementSlug": "Slug (optional, auto from title)",
+  "achievementTitle": "Achievement name",
+  "achievementRarity": "Rarity",
+  "achievementTargetType": "Target type",
+  "achievementTargetGenre": "By genre",
+  "achievementTargetFranchise": "By franchise",
+  "achievementTargetMediaList": "By media list (IDs per type)",
+  "achievementGenre": "Genre",
+  "achievementFranchise": "Franchise",
+  "achievementFranchiseSearchHint": "Type to search for a franchise",
+  "achievementOrderNum": "Order",
+  "achievementLevels": "Levels (rewards)",
+  "achievementLevelOrder": "Level order",
+  "achievementThresholdPercent": "Threshold % (progress needed to earn this reward)",
+  "achievementLevelTitle": "Reward name (e.g. Beginner dreamer)",
+  "achievementAddLevel": "Add level",
+  "achievementMediaIdsJson": "Paste JSON: {\"movie\": [1,2], \"manga\": [3]}",
+  "achievementMediaIdsByType": "Media IDs by type",
+  "achievementImageUrl": "Image URL"
+}

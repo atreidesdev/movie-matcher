@@ -1,0 +1,11 @@
+{
+  "pageTitle": "Пользователи",
+  "searchPlaceholder": "Поиск по никнейму или имени",
+  "searchResults": "Результаты поиска",
+  "noUsersFound": "Никого не найдено",
+  "recentlyActive": "Юзеры",
+  "noUsersYet": "Пока нет пользователей",
+  "similarTaste": "С похожими вкусами",
+  "noSimilarUsers": "Пока нет пользователей с похожими списками и оценками",
+  "similarityScore": "Схожесть вкусов"
+}

@@ -1,0 +1,23 @@
+{
+  "poster": "Poster",
+  "backdrop": "Backdrop",
+  "uploadImage": "Upload image",
+  "gallery": "Gallery",
+  "imageCaption": "Caption",
+  "imageDimensions": "Dimensions (for collage)",
+  "trailers": "Trailers / videos",
+  "uploadVideo": "Upload video",
+  "noTitle": "Untitled",
+  "mockModeHint": "In mock mode (VITE_USE_MOCK=true) the list is filled from mock data.",
+  "apiNotImplemented": "API not implemented",
+  "searchPlatform": "Search platform",
+  "searchPublisher": "Search publisher",
+  "animeTitleRomaji": "Romanized title (romaji)",
+  "animeTitleKatakana": "Original title (katakana)",
+  "searchAuthor": "Search author",
+  "searchIllustrator": "Search illustrator",
+  "volumes": "Volumes",
+  "pages": "Pages",
+  "currentVolume": "Current volume",
+  "currentChapter": "Current chapter"
+}

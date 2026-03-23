@@ -1,0 +1,15 @@
+{
+  "title": "Messages",
+  "newChat": "New chat",
+  "noConversations": "No conversations. Tap «New chat» and choose a friend.",
+  "selectConversation": "Select a conversation or start a new one",
+  "noMessages": "No messages",
+  "placeholder": "Type a message…",
+  "send": "Send",
+  "allFriendsHaveChats": "You already have chats with all friends",
+  "openChat": "Message",
+  "readAt": "Read",
+  "notRead": "Not read",
+  "notFriend": "User is not in your friends list",
+  "openConversationError": "Failed to open conversation"
+}

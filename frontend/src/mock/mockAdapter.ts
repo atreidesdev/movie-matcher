@@ -2,84 +2,84 @@
  * Axios-адаптер: в dev при VITE_USE_MOCK=true подменяет ответы API мок-данными.
  */
 
-import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios'
-import type {
-  Movie,
-  Genre,
-  Theme,
-  Studio,
-  Person,
-  ListStatus,
-  DevBlogPost,
-  NewsListItem,
-  NewsDetail,
-  NewsComment,
-  NewsAttachment,
-} from '@/types'
-import { isRecord } from '@/utils/typeGuards'
 import {
-  mockGenres,
-  mockThemes,
-  mockStudios,
-  mockPlatforms,
-  mockSites,
-  mockDevelopers,
-  mockPublishers,
-  mockMovies,
-  mockAnime,
-  mockGames,
-  mockTVSeries,
-  mockManga,
-  mockBooks,
-  mockLightNovels,
-  mockCartoonSeries,
-  mockCartoonMovies,
-  mockAnimeMovies,
-  mockCurrentUser,
-  mockSessions,
+  filterAndSortMedia,
+  getFiltersGenresAndThemesForMediaType,
+  getListStatusByMediaId,
+  getMockAchievements,
+  getMockCharacterAppearances,
+  getMockFranchiseLinksByFranchiseId,
+  getMockFranchiseLinksByMedia,
   getMockProfileByUsername,
-  mockListItems,
-  mockListItemsAlice,
-  mockListItemsBob,
-  mockFavorites,
-  mockFavoritesBob,
-  mockFavoritesAlice,
-  mockCollections,
-  mockRecommendations,
-  mockReviews,
-  mockComments,
-  mockFriendRequests,
-  mockFriends,
-  mockNotifications,
-  mockFollowers,
-  mockFollowing,
-  mockConversations,
-  mockMessages,
   mockActivity,
   mockActivityFeed,
+  mockAnime,
+  mockAnimeMovies,
+  mockBooks,
+  mockCartoonMovies,
+  mockCartoonSeries,
   mockCast,
   mockCastByMovieId,
   mockCharacters,
-  getMockCharacterAppearances,
-  mockPersons,
-  mockPersonWorksByPersonId,
-  paginate,
-  getMockFranchiseLinksByMedia,
-  getMockFranchiseLinksByFranchiseId,
-  mockFranchises,
-  filterAndSortMedia,
-  getListStatusByMediaId,
-  getFiltersGenresAndThemesForMediaType,
-  getMockAchievements,
-  mockReports,
+  mockCollections,
   mockCommentBannedUsers,
+  mockComments,
+  mockConversations,
+  mockCurrentUser,
+  mockDevelopers,
+  mockFavorites,
+  mockFavoritesAlice,
+  mockFavoritesBob,
+  mockFollowers,
+  mockFollowing,
+  mockFranchises,
+  mockFriendRequests,
+  mockFriends,
+  mockGames,
+  mockGenres,
+  mockLightNovels,
+  mockListItems,
+  mockListItemsAlice,
+  mockListItemsBob,
+  mockManga,
+  mockMessages,
+  mockMovies,
+  mockNotifications,
+  mockPersonWorksByPersonId,
+  mockPersons,
+  mockPlatforms,
+  mockPublishers,
+  mockRecommendations,
   mockReportTemplatesSeed,
-  past,
+  mockReports,
+  mockReviews,
+  mockSessions,
+  mockSites,
+  mockStudios,
+  mockTVSeries,
+  mockThemes,
   mockUsers,
+  paginate,
+  past,
 } from '@/mock/mockData'
+import type {
+  DevBlogPost,
+  Genre,
+  ListStatus,
+  Movie,
+  NewsAttachment,
+  NewsComment,
+  NewsDetail,
+  NewsListItem,
+  Person,
+  Studio,
+  Theme,
+} from '@/types'
+import { isRecord } from '@/utils/typeGuards'
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 // Мутабельные копии для мока (жалобы, баны, шаблоны ответов)
-let mockReportsState = [...mockReports]
+const mockReportsState = [...mockReports]
 let mockCommentBannedState = [...mockCommentBannedUsers]
 
 function findCommentById(comments: typeof mockComments, id: number): (typeof mockComments)[0] | undefined {
@@ -112,7 +112,7 @@ function getCommentEmojiReaction(commentId: number): CommentEmojiReactionState {
   return mockCommentEmojiReactions[commentId]
 }
 
-let mockReportTemplates = [...mockReportTemplatesSeed]
+const mockReportTemplates = [...mockReportTemplatesSeed]
 
 // ——— Discussions mock (in-memory) ———
 type MockDiscussion = {
@@ -169,24 +169,66 @@ type MockCommunityPost = {
 }
 type MockCommunitySubscription = { userId: number; communityId: number }
 function communitySlugify(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '') || 'community'
+  return (
+    name
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '') || 'community'
+  )
 }
 const _communitiesNow = new Date().toISOString()
 const mockCommunitiesSeed: MockCommunity[] = [
-  { id: 1, name: 'Кинолюбители', slug: 'kinolyubiteli', description: 'Сообщество любителей кино', creatorId: mockCurrentUser.id },
-  { id: 2, name: 'Аниме-клуб', slug: 'anime-klub', description: 'Обсуждаем аниме и мангу', creatorId: mockUsers[1]?.id ?? 2 },
+  {
+    id: 1,
+    name: 'Кинолюбители',
+    slug: 'kinolyubiteli',
+    description: 'Сообщество любителей кино',
+    creatorId: mockCurrentUser.id,
+  },
+  {
+    id: 2,
+    name: 'Аниме-клуб',
+    slug: 'anime-klub',
+    description: 'Обсуждаем аниме и мангу',
+    creatorId: mockUsers[1]?.id ?? 2,
+  },
   { id: 3, name: 'Игроманы', slug: 'igromany', description: 'Новости и обзоры игр', creatorId: mockUsers[2]?.id ?? 3 },
 ]
 const mockCommunityPostsSeed: MockCommunityPost[] = [
-  { id: 1, communityId: 1, authorId: mockCurrentUser.id, title: 'Добро пожаловать!', body: 'Первая запись в сообществе Кинолюбители.', createdAt: _communitiesNow },
-  { id: 2, communityId: 1, authorId: mockCurrentUser.id, title: 'Топ фильмов недели', body: 'Рекомендую посмотреть...', createdAt: past(1) },
-  { id: 3, communityId: 2, authorId: mockUsers[1]?.id ?? 2, title: 'Новый сезон аниме', body: 'Обсуждаем премьеры весны.', createdAt: past(2) },
-  { id: 4, communityId: 3, authorId: mockUsers[2]?.id ?? 3, title: 'Игра года', body: 'Мои впечатления от релиза.', createdAt: past(3) },
+  {
+    id: 1,
+    communityId: 1,
+    authorId: mockCurrentUser.id,
+    title: 'Добро пожаловать!',
+    body: 'Первая запись в сообществе Кинолюбители.',
+    createdAt: _communitiesNow,
+  },
+  {
+    id: 2,
+    communityId: 1,
+    authorId: mockCurrentUser.id,
+    title: 'Топ фильмов недели',
+    body: 'Рекомендую посмотреть...',
+    createdAt: past(1),
+  },
+  {
+    id: 3,
+    communityId: 2,
+    authorId: mockUsers[1]?.id ?? 2,
+    title: 'Новый сезон аниме',
+    body: 'Обсуждаем премьеры весны.',
+    createdAt: past(2),
+  },
+  {
+    id: 4,
+    communityId: 3,
+    authorId: mockUsers[2]?.id ?? 3,
+    title: 'Игра года',
+    body: 'Мои впечатления от релиза.',
+    createdAt: past(3),
+  },
 ]
 const mockCommunitySubsSeed: MockCommunitySubscription[] = [
   { userId: mockCurrentUser.id, communityId: 1 },
@@ -199,7 +241,7 @@ let mockDiscussionNextId = 2
 function getMockDiscussionsList(entityType: string, entityId: number): MockDiscussion[] {
   const norm = (s: string) => (s || '').replace(/-/g, '_')
   const forThisMedia = mockDiscussionsState.filter(
-    (d) => norm(d.entityType) === norm(entityType) && d.entityId === entityId
+    (d) => norm(d.entityType) === norm(entityType) && d.entityId === entityId,
   )
   if (forThisMedia.length > 0) return forThisMedia
   // В моке для любого медиа показываем обсуждение «Начало» (id 1), подменяя entityType/entityId для отображения
@@ -215,7 +257,7 @@ function mockDiscussionCreate(
   entityType: string,
   entityId: number,
   title: string,
-  description: string
+  description: string,
 ): MockDiscussion {
   const now = new Date().toISOString()
   const normType = (entityType || '').replace(/-/g, '_')
@@ -431,7 +473,7 @@ function mockNewsUpdate(
     previewTitle?: string
     tags?: string
     attachments?: NewsAttachment[]
-  }
+  },
 ): NewsDetail | null {
   const idx = mockNewsState.findIndex((n) => n.id === id)
   if (idx === -1) return null
@@ -578,7 +620,7 @@ function getApiPathAndQuery(config: InternalAxiosRequestConfig): { path: string;
 }
 
 export function createMockAdapter(
-  defaultAdapter: (config: InternalAxiosRequestConfig) => Promise<AxiosResponse>
+  defaultAdapter: (config: InternalAxiosRequestConfig) => Promise<AxiosResponse>,
 ): (config: InternalAxiosRequestConfig) => Promise<AxiosResponse> {
   return (config: InternalAxiosRequestConfig) => {
     if (MOCK_LOG && typeof console !== 'undefined') {
@@ -618,7 +660,7 @@ export function createMockAdapter(
         body?.entityType ?? '',
         body?.entityId ?? 0,
         body?.title ?? '',
-        body?.description ?? ''
+        body?.description ?? '',
       )
       return mockResponse(created, 201, 'discussion create')
     }
@@ -649,7 +691,7 @@ export function createMockAdapter(
       return method === 'put'
         ? mockResponse(
             { id: 1, text: '', userId: 0, depth: 0, createdAt: now, plusCount: 0, minusCount: 0, repliesCount: 0 },
-            200
+            200,
           )
         : mockResponse(undefined, 204)
     }
@@ -699,7 +741,7 @@ export function createMockAdapter(
 
     if (p === 'communities' && method === 'get') {
       const list = mockCommunitiesState.map((c) =>
-        toCommunityListItem(c, getSubCount(c.id), isUserSubscribed(mockCurrentUser.id, c.id))
+        toCommunityListItem(c, getSubCount(c.id), isUserSubscribed(mockCurrentUser.id, c.id)),
       )
       return mockResponse({ communities: list }, 200, 'communities list')
     }
@@ -724,9 +766,7 @@ export function createMockAdapter(
       return mockResponse(toCommunityListItem(comm, subCount, false), 201, 'community create')
     }
     if (p === 'communities/feed' && method === 'get') {
-      const subbedIds = mockCommunitySubsState
-        .filter((s) => s.userId === mockCurrentUser.id)
-        .map((s) => s.communityId)
+      const subbedIds = mockCommunitySubsState.filter((s) => s.userId === mockCurrentUser.id).map((s) => s.communityId)
       const posts = mockCommunityPostsState
         .filter((p) => subbedIds.includes(p.communityId))
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -734,14 +774,20 @@ export function createMockAdapter(
         .map(toPostItem)
       return mockResponse({ posts }, 200, 'community feed')
     }
-    if (p.match(/^communities\/[^/]+$/) && !p.includes('/posts') && !p.includes('/subscribe') && !p.includes('/unsubscribe') && method === 'get') {
+    if (
+      p.match(/^communities\/[^/]+$/) &&
+      !p.includes('/posts') &&
+      !p.includes('/subscribe') &&
+      !p.includes('/unsubscribe') &&
+      method === 'get'
+    ) {
       const idOrSlug = p.replace('communities/', '')
       const comm = resolveCommunity(idOrSlug)
       if (!comm) return mockResponse(null as never, 404)
       return mockResponse(
         toCommunityListItem(comm, getSubCount(comm.id), isUserSubscribed(mockCurrentUser.id, comm.id)),
         200,
-        'community detail'
+        'community detail',
       )
     }
     if (p.match(/^communities\/[^/]+$/) && !p.includes('/posts') && method === 'put') {
@@ -764,7 +810,7 @@ export function createMockAdapter(
       return mockResponse(
         toCommunityListItem(updated, getSubCount(updated.id), isUserSubscribed(mockCurrentUser.id, updated.id)),
         200,
-        'community update'
+        'community update',
       )
     }
     if (p.match(/^communities\/[^/]+$/) && !p.includes('/posts') && method === 'delete') {
@@ -791,7 +837,7 @@ export function createMockAdapter(
       const comm = resolveCommunity(idOrSlug)
       if (!comm) return mockResponse(null as never, 404)
       mockCommunitySubsState = mockCommunitySubsState.filter(
-        (s) => !(s.userId === mockCurrentUser.id && s.communityId === comm.id)
+        (s) => !(s.userId === mockCurrentUser.id && s.communityId === comm.id),
       )
       return mockResponse({ subscribed: false }, 200, 'community unsubscribe')
     }
@@ -870,15 +916,13 @@ export function createMockAdapter(
     }
     if (p.match(/^users\/username\/[^/]+\/community-subscriptions$/) && method === 'get') {
       const username = decodeURIComponent(
-        p.replace(/^users\/username\//, '').replace(/\/community-subscriptions$/, '') || ''
+        p.replace(/^users\/username\//, '').replace(/\/community-subscriptions$/, '') || '',
       ).toLowerCase()
       const profile = getMockProfileByUsername(username)
       if (!profile) return mockResponse({ error: 'User not found' } as never, 404)
       const targetUser = mockUsers.find((u) => (u.username || '').toLowerCase() === username)
       const targetId = targetUser?.id ?? profile.id
-      const subbedIds = mockCommunitySubsState
-        .filter((s) => s.userId === targetId)
-        .map((s) => s.communityId)
+      const subbedIds = mockCommunitySubsState.filter((s) => s.userId === targetId).map((s) => s.communityId)
       const list = mockCommunitiesState
         .filter((c) => subbedIds.includes(c.id))
         .map((c) => toCommunityListItem(c, getSubCount(c.id), isUserSubscribed(mockCurrentUser.id, c.id)))
@@ -959,7 +1003,7 @@ export function createMockAdapter(
           userId: 0,
           repliesCount: 0,
         },
-        200
+        200,
       )
     }
     if (p.match(/^news\/\d+\/comments\/\d+$/) && method === 'delete') {
@@ -999,7 +1043,7 @@ export function createMockAdapter(
     }
     if (p.match(/^users\/username\/[^/]+\/achievements$/) && method === 'get') {
       const username = decodeURIComponent(
-        p.replace(/^users\/username\//, '').replace(/\/achievements$/, '') || ''
+        p.replace(/^users\/username\//, '').replace(/\/achievements$/, '') || '',
       ).toLowerCase()
       const profile = getMockProfileByUsername(username)
       if (!profile) return mockResponse({ error: 'User not found' } as never, 404)
@@ -1075,7 +1119,7 @@ export function createMockAdapter(
       const ids = idsStr
         ? idsStr
             .split(',')
-            .map((x) => parseInt(x.trim(), 10))
+            .map((x) => Number.parseInt(x.trim(), 10))
             .filter((x) => !Number.isNaN(x))
         : []
       let list = mockStudios
@@ -1092,7 +1136,7 @@ export function createMockAdapter(
       const ids = idsStr
         ? idsStr
             .split(',')
-            .map((x) => parseInt(x.trim(), 10))
+            .map((x) => Number.parseInt(x.trim(), 10))
             .filter((x) => !Number.isNaN(x))
         : []
       let list = mockDevelopers
@@ -1107,7 +1151,7 @@ export function createMockAdapter(
       const ids = idsStr
         ? idsStr
             .split(',')
-            .map((x) => parseInt(x.trim(), 10))
+            .map((x) => Number.parseInt(x.trim(), 10))
             .filter((x) => !Number.isNaN(x))
         : []
       let list = mockPublishers
@@ -1496,7 +1540,7 @@ export function createMockAdapter(
           orderOptions: ['ASC', 'DESC'],
         },
         200,
-        'movies/filters (genres, sortOptions)'
+        'movies/filters (genres, sortOptions)',
       )
     }
     if (/^movies\/\d+$/.test(p) && method === 'get') {
@@ -1543,8 +1587,8 @@ export function createMockAdapter(
 
     // ——— Franchises ———
     if (p === 'franchises' && method === 'get') {
-      const page = parseInt(query.page || '1', 10)
-      const pageSize = parseInt(query.pageSize || '20', 10)
+      const page = Number.parseInt(query.page || '1', 10)
+      const pageSize = Number.parseInt(query.pageSize || '20', 10)
       const result = paginate(mockFranchises, page, pageSize)
       return mockResponse(result)
     }
@@ -1806,7 +1850,7 @@ export function createMockAdapter(
     }
     if (p.match(/^users\/username\/[^/]+\/favorites$/) && method === 'get') {
       const username = decodeURIComponent(
-        p.replace(/^users\/username\//, '').replace(/\/favorites$/, '') || ''
+        p.replace(/^users\/username\//, '').replace(/\/favorites$/, '') || '',
       ).toLowerCase()
       const profile = getMockProfileByUsername(username)
       if (!profile) return mockResponse({ error: 'User not found' } as never, 404)
@@ -1843,7 +1887,7 @@ export function createMockAdapter(
     // ——— Lists ———
     if (
       p.match(
-        /^lists\/(movies|anime|games|tv-series|manga|books|light-novels|cartoon-series|cartoon-movies|anime-movies)/
+        /^lists\/(movies|anime|games|tv-series|manga|books|light-novels|cartoon-series|cartoon-movies|anime-movies)/,
       ) &&
       method === 'get'
     ) {
@@ -1869,7 +1913,9 @@ export function createMockAdapter(
                           ? 'cartoonMovie'
                           : 'animeMovie'
       let filtered = mockListItems.filter((item) => item[key as keyof typeof item])
-      const statusParam = String(query.status ?? (config.params as Record<string, unknown> | undefined)?.status ?? '').trim()
+      const statusParam = String(
+        query.status ?? (config.params as Record<string, unknown> | undefined)?.status ?? '',
+      ).trim()
       if (statusParam) {
         filtered = filtered.filter((i) => i.status === statusParam)
       }
@@ -1877,7 +1923,7 @@ export function createMockAdapter(
     }
     if (
       p.match(
-        /^lists\/(movies|anime|games|tv-series|manga|books|light-novels|cartoon-series|cartoon-movies|anime-movies)\/\d+$/
+        /^lists\/(movies|anime|games|tv-series|manga|books|light-novels|cartoon-series|cartoon-movies|anime-movies)\/\d+$/,
       ) &&
       (method === 'post' || method === 'put' || method === 'delete')
     ) {
@@ -1906,7 +1952,7 @@ export function createMockAdapter(
                           : 'animeMovie'
       if (method === 'delete') return mockResponse(undefined as never, 204)
       const existing = mockListItems.find(
-        (i) => (i[entityKey as keyof typeof i] as { id?: number } | undefined)?.id === entityId
+        (i) => (i[entityKey as keyof typeof i] as { id?: number } | undefined)?.id === entityId,
       )
       const payload = asRecordOrEmpty(config.data)
       if (existing) {
@@ -2059,7 +2105,7 @@ export function createMockAdapter(
     }
     if (p.match(/^users\/username\/[^/]+\/reviews$/) && method === 'get') {
       const username = decodeURIComponent(
-        p.replace(/^users\/username\//, '').replace(/\/reviews$/, '') || ''
+        p.replace(/^users\/username\//, '').replace(/\/reviews$/, '') || '',
       ).toLowerCase()
       const profile = getMockProfileByUsername(username)
       if (!profile) return mockResponse({ error: 'User not found' } as never, 404)
@@ -2110,7 +2156,7 @@ export function createMockAdapter(
     }
     if (
       p.match(
-        /^users\/username\/[^/]+\/lists\/(movies|anime|games|tv-series|manga|books|light-novels|cartoon-series|cartoon-movies|anime-movies)$/
+        /^users\/username\/[^/]+\/lists\/(movies|anime|games|tv-series|manga|books|light-novels|cartoon-series|cartoon-movies|anime-movies)$/,
       ) &&
       method === 'get'
     ) {
@@ -2154,7 +2200,7 @@ export function createMockAdapter(
     }
     if (p.match(/^users\/username\/[^/]+\/friends$/) && method === 'get') {
       const username = decodeURIComponent(
-        p.replace(/^users\/username\//, '').replace(/\/friends$/, '') || ''
+        p.replace(/^users\/username\//, '').replace(/\/friends$/, '') || '',
       ).toLowerCase()
       const profile = getMockProfileByUsername(username)
       if (!profile) return mockResponse({ error: 'User not found' } as never, 404)
@@ -2172,7 +2218,7 @@ export function createMockAdapter(
     }
     if (p.match(/^users\/username\/[^/]+\/followers$/) && method === 'get') {
       const username = decodeURIComponent(
-        p.replace(/^users\/username\//, '').replace(/\/followers$/, '') || ''
+        p.replace(/^users\/username\//, '').replace(/\/followers$/, '') || '',
       ).toLowerCase()
       const profile = getMockProfileByUsername(username)
       if (!profile) return mockResponse({ error: 'User not found' } as never, 404)
@@ -2362,7 +2408,7 @@ export function createMockAdapter(
     if (p.match(/^reviews\/movies\/\d+$/) && method === 'put') {
       const movieId = Number(p.split('/').pop())
       const existing = mockReviews.find(
-        (r) => (r as { movieId?: number }).movieId === movieId && r.userId === mockCurrentUser.id
+        (r) => (r as { movieId?: number }).movieId === movieId && r.userId === mockCurrentUser.id,
       )
       const r = existing
         ? { ...existing, ...(config.data as object), movieId }
@@ -2413,7 +2459,7 @@ export function createMockAdapter(
           repliesCount: 0,
           replies: [],
         },
-        200
+        200,
       )
     }
     if (p.match(/^comments\/(movies|anime|games|manga|books)\/\d+$/) && method === 'delete') {
@@ -2474,7 +2520,7 @@ export function createMockAdapter(
       const commentIds = commentIdsStr
         ? commentIdsStr
             .split(',')
-            .map((id) => parseInt(id.trim(), 10))
+            .map((id) => Number.parseInt(id.trim(), 10))
             .filter((id) => !isNaN(id))
         : []
       const reactions: Record<string, { counts: Record<string, number>; myReaction: string }> = {}
@@ -2728,7 +2774,7 @@ export function createMockAdapter(
           (c) =>
             String(c.id).includes(search) ||
             (c.name ?? '').toLowerCase().includes(search) ||
-            (c.description ?? '').toLowerCase().includes(search)
+            (c.description ?? '').toLowerCase().includes(search),
         )
       }
       const result = paginate(list, page, pageSize)
@@ -2747,8 +2793,8 @@ export function createMockAdapter(
 
     // ——— Persons ———
     if (p === 'persons' && method === 'get') {
-      const page = parseInt(query.page || '1', 10)
-      const pageSize = parseInt(query.pageSize || '50', 10)
+      const page = Number.parseInt(query.page || '1', 10)
+      const pageSize = Number.parseInt(query.pageSize || '50', 10)
       const search = (query.search || '').toLowerCase()
       let list = mockPersons
       if (search) {
@@ -2756,7 +2802,7 @@ export function createMockAdapter(
           (pr) =>
             String(pr.id).includes(search) ||
             (pr.firstName ?? '').toLowerCase().includes(search) ||
-            (pr.lastName ?? '').toLowerCase().includes(search)
+            (pr.lastName ?? '').toLowerCase().includes(search),
         )
       }
       const result = paginate(list, page, pageSize)
@@ -2820,7 +2866,7 @@ export function createMockAdapter(
           poster: null,
           aliases: [],
         },
-        201
+        201,
       )
     }
     if (/^admin\/franchises\/\d+$/.test(p) && method === 'put') {
@@ -2851,7 +2897,7 @@ export function createMockAdapter(
           toMediaId: body?.toMediaId ?? 0,
           relationType: body?.relationType ?? 'sequel',
         },
-        201
+        201,
       )
     }
     if (/^admin\/franchises\/links\/\d+$/.test(p) && method === 'put') {
@@ -2868,7 +2914,7 @@ export function createMockAdapter(
           relationType: 'sequel',
           ...body,
         },
-        200
+        200,
       )
     }
     if (/^admin\/franchises\/links\/\d+$/.test(p) && method === 'delete') {

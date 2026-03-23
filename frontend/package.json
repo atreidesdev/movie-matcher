@@ -14,7 +14,10 @@
     "format:check": "biome format ./src",
     "check": "biome check ./src",
     "check:fix": "biome check --write ./src",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "i18n:validate": "node ./scripts/i18n-validate.mjs",
+    "i18n:validate:strict": "node ./scripts/i18n-validate.mjs --fail-on-unused",
+    "i18n:report": "node ./scripts/i18n-validate.mjs"
   },
   "dependencies": {
     "@ctrl/tinycolor": "^4.2.0",

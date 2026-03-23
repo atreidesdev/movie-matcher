@@ -1,0 +1,25 @@
+{
+  "empty": "No notifications",
+  "markAllRead": "Mark all as read",
+  "enablePush": "Enable push notifications",
+  "markRead": "Mark as read",
+  "types": {
+    "friend_accepted": {
+      "title": "<0>{{username}}</0> accepted your friend request",
+      "body": "You are now friends."
+    },
+    "media_update": {
+      "statusTitle": "Status update: <0>{{title}}</0>",
+      "statusBody": "{{status}}",
+      "releaseTitle": "Release date set: <0>{{title}}</0>",
+      "releaseBody": "{{date}}"
+    },
+    "comment_reply": {
+      "title": "Comment reply",
+      "body": "{{preview}}"
+    },
+    "new_follower": {
+      "title": "<0>{{username}}</0> subscribed to you"
+    }
+  }
+}

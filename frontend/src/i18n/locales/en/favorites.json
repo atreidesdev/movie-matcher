@@ -1,0 +1,20 @@
+{
+  "characters": "Characters",
+  "persons": "People",
+  "cast": "Cast (roles)",
+  "character": "Character",
+  "person": "Person",
+  "profession": {
+    "actor": "Actors",
+    "actress": "Actresses",
+    "director": "Directors",
+    "producer": "Producers",
+    "writer": "Writers",
+    "cinematographer": "Cinematographers",
+    "composer": "Composers",
+    "editor": "Editors",
+    "animator": "Animators",
+    "voiceActor": "Voice actors",
+    "other": "Other"
+  }
+}

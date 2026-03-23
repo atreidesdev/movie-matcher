@@ -1,0 +1,31 @@
+{
+  "title": "News",
+  "filterAll": "All",
+  "filterByTags": "Filter by tags",
+  "noNews": "No news yet.",
+  "notFound": "News not found.",
+  "attachments": "Attachments",
+  "comments": "Comments",
+  "replyTo": "Reply to",
+  "reply": "Reply",
+  "commentPlaceholder": "Write a comment…",
+  "loginToComment": "Log in to comment",
+  "noComments": "No comments yet.",
+  "admin": {
+    "create": "New news",
+    "edit": "Edit news",
+    "previewImage": "Preview image URL",
+    "previewTitle": "Title under preview",
+    "body": "Content",
+    "bodyPlaceholder": "Write your news text… You can select text and use Bold, Italic, or Link (link text only, URL hidden).",
+    "bodyHint": "Paragraphs and links are supported. Use the toolbar to format.",
+    "addLink": "Link",
+    "addLinkPrompt": "Enter URL for the selected text:",
+    "tags": "Tags (comma-separated)",
+    "attachments": "Attachments",
+    "uploadImage": "Upload image",
+    "uploadVideo": "Upload video",
+    "titleRequired": "Title is required",
+    "accessDenied": "You do not have permission to edit news."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "user": "User",
+  "admin": "Administrator",
+  "moderator": "Moderator",
+  "content_creator": "Content creator",
+  "developer": "Developer",
+  "owner": "Owner"
+}

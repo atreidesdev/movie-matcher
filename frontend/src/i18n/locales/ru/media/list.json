@@ -1,0 +1,71 @@
+{
+  "editInList": "В вашем списке",
+  "editListEntry": "Редактировать запись",
+  "listName": "Список: {{name}}",
+  "listPreviewStatus": "Статус",
+  "listPreviewEpisode": "Серия",
+  "listPreviewRating": "Оценка",
+  "episodeOfEpisodes": "{{current}} из {{total}} серий",
+  "listStatus": {
+    "label": "Статус",
+    "planned": "В планах",
+    "watching": "Смотрю",
+    "completed": "Просмотрено",
+    "onHold": "Отложено",
+    "dropped": "Брошено",
+    "rewatching": "Пересматриваю"
+  },
+  "listStatusByType": {
+    "games": {
+      "planned": "В планах",
+      "watching": "Прохожу",
+      "completed": "Прошёл",
+      "onHold": "Отложено",
+      "dropped": "Бросил",
+      "rewatching": "Перепрохожу"
+    },
+    "books": {
+      "planned": "В планах",
+      "watching": "Читаю",
+      "completed": "Прочитал",
+      "onHold": "Отложено",
+      "dropped": "Бросил",
+      "rewatching": "Перечитываю"
+    },
+    "manga": {
+      "planned": "В планах",
+      "watching": "Читаю",
+      "completed": "Прочитал",
+      "onHold": "Отложено",
+      "dropped": "Бросил",
+      "rewatching": "Перечитываю"
+    },
+    "light-novels": {
+      "planned": "В планах",
+      "watching": "Читаю",
+      "completed": "Прочитал",
+      "onHold": "Отложено",
+      "dropped": "Бросил",
+      "rewatching": "Перечитываю"
+    }
+  },
+  "currentEpisode": "Текущая серия",
+  "listWatchedHint": "Для фильма отметьте «Просмотрено» в статусе.",
+  "commentForList": "Комментарий к записи в списке",
+  "commentForListPlaceholder": "Заметка для себя...",
+  "saveListChanges": "Сохранить",
+  "removeFromList": "Убрать из списка",
+  "removeFromListConfirm": "Убрать из списка?",
+  "maxPages": "Макс. страниц",
+  "maxPagesPlaceholder": "Укажите количество страниц в вашей книге",
+  "currentPage": "Текущая страница",
+  "hoursPlayed": "Часов в игре",
+  "volume": "Том",
+  "volumeNum": "Том {{num}}",
+  "chapter": "Глава",
+  "chapterNum": "Глава {{num}}",
+  "currentVolume": "Текущий том",
+  "currentChapter": "Текущая глава",
+  "listRating": "Оценка (1–100)",
+  "titleReaction": "Реакция на тайтл"
+}

@@ -1,0 +1,30 @@
+{
+  "franchise": "Franchise",
+  "partOfFranchise": "Part of franchise \"{{name}}\"",
+  "franchiseRelation": {
+    "sequel": "Sequel",
+    "prequel": "Prequel",
+    "adaptation": "Adaptation",
+    "spinOff": "Spin-off",
+    "alternativeVersion": "Alternative version",
+    "sideStory": "Side story",
+    "crossover": "Crossover",
+    "compilation": "Compilation",
+    "remake": "Remake",
+    "remaster": "Remaster",
+    "other": "Part of franchise"
+  },
+  "similar": "Similar",
+  "similarTo": "Similar to {{title}}",
+  "allSimilar": "All similar",
+  "allFranchise": "Full franchise",
+  "franchiseList": "List",
+  "franchiseGraph": "Graph",
+  "franchiseGraphSvg": "Graph (SVG)",
+  "franchiseGraphYear": "Year",
+  "franchiseGraphRating": "Rating",
+  "franchiseGraphInList": "In list",
+  "franchiseGraphYouAreHere": "You are here",
+  "franchiseGraphGoToPage": "Go to page",
+  "noSimilar": "No similar"
+}

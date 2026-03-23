@@ -1,0 +1,20 @@
+{
+  "characters": "Персонажи",
+  "persons": "Люди",
+  "cast": "Каст (роли)",
+  "character": "Персонаж",
+  "person": "Персона",
+  "profession": {
+    "actor": "Актёры",
+    "actress": "Актрисы",
+    "director": "Режиссёры",
+    "producer": "Продюсеры",
+    "writer": "Сценаристы",
+    "cinematographer": "Операторы",
+    "composer": "Композиторы",
+    "editor": "Монтажёры",
+    "animator": "Аниматоры",
+    "voiceActor": "Актёры озвучки",
+    "other": "Другие"
+  }
+}

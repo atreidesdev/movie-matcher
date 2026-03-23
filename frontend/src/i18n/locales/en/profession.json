@@ -1,0 +1,12 @@
+{
+  "actor": "Actor",
+  "actress": "Actress",
+  "director": "Director",
+  "producer": "Producer",
+  "writer": "Writer",
+  "cinematographer": "Cinematographer",
+  "composer": "Composer",
+  "editor": "Editor",
+  "animator": "Animator",
+  "voiceActor": "Voice actor"
+}

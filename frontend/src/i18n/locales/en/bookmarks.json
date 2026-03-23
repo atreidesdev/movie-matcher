@@ -1,0 +1,12 @@
+{
+  "add": "Add to bookmarks",
+  "remove": "Remove from bookmarks",
+  "save": "Save",
+  "saved": "Saved",
+  "added": "Added to bookmarks",
+  "removed": "Removed from bookmarks",
+  "pageTitle": "Bookmarks",
+  "empty": "No bookmarks yet. Save other users' collections and news.",
+  "collection": "Collection",
+  "news": "News"
+}

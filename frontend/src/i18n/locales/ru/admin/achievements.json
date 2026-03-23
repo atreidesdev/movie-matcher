@@ -1,0 +1,23 @@
+{
+  "achievementCreate": "Создать ачивку",
+  "achievementEdit": "Редактировать ачивку",
+  "achievementSlug": "Slug (опционально, из названия)",
+  "achievementTitle": "Название ачивки",
+  "achievementRarity": "Редкость",
+  "achievementTargetType": "Тип цели",
+  "achievementTargetGenre": "По жанру",
+  "achievementTargetFranchise": "По франшизе",
+  "achievementTargetMediaList": "По списку медиа (ID по типам)",
+  "achievementGenre": "Жанр",
+  "achievementFranchise": "Франшиза",
+  "achievementFranchiseSearchHint": "Введите запрос для поиска франшизы",
+  "achievementOrderNum": "Порядок",
+  "achievementLevels": "Уровни (награды)",
+  "achievementLevelOrder": "Порядок уровня",
+  "achievementThresholdPercent": "Порог, % (при каком проценте цели выдать награду)",
+  "achievementLevelTitle": "Название награды (напр. Начинающий фантазёр)",
+  "achievementAddLevel": "Добавить уровень",
+  "achievementMediaIdsJson": "Вставка JSON: {\"movie\": [1,2], \"manga\": [3]}",
+  "achievementMediaIdsByType": "ID медиа по типам",
+  "achievementImageUrl": "URL картинки"
+}

@@ -1,0 +1,71 @@
+{
+  "editInList": "In your list",
+  "editListEntry": "Edit entry",
+  "listName": "List: {{name}}",
+  "listPreviewStatus": "Status",
+  "listPreviewEpisode": "Episode",
+  "listPreviewRating": "Rating",
+  "episodeOfEpisodes": "{{current}} of {{total}} episodes",
+  "listStatus": {
+    "label": "Status",
+    "planned": "Planned",
+    "watching": "Watching",
+    "completed": "Completed",
+    "onHold": "On Hold",
+    "dropped": "Dropped",
+    "rewatching": "Rewatching"
+  },
+  "listStatusByType": {
+    "games": {
+      "planned": "Planned",
+      "watching": "Playing",
+      "completed": "Completed",
+      "onHold": "On Hold",
+      "dropped": "Dropped",
+      "rewatching": "Replaying"
+    },
+    "books": {
+      "planned": "Planned",
+      "watching": "Reading",
+      "completed": "Read",
+      "onHold": "On Hold",
+      "dropped": "Dropped",
+      "rewatching": "Rereading"
+    },
+    "manga": {
+      "planned": "Planned",
+      "watching": "Reading",
+      "completed": "Read",
+      "onHold": "On Hold",
+      "dropped": "Dropped",
+      "rewatching": "Rereading"
+    },
+    "light-novels": {
+      "planned": "Planned",
+      "watching": "Reading",
+      "completed": "Read",
+      "onHold": "On Hold",
+      "dropped": "Dropped",
+      "rewatching": "Rereading"
+    }
+  },
+  "currentEpisode": "Current episode",
+  "listWatchedHint": "For a film, set status to «Completed».",
+  "commentForList": "List entry comment",
+  "commentForListPlaceholder": "Note to self...",
+  "saveListChanges": "Save",
+  "removeFromList": "Remove from list",
+  "removeFromListConfirm": "Remove from list?",
+  "maxPages": "Max pages",
+  "maxPagesPlaceholder": "Number of pages in your copy",
+  "currentPage": "Current page",
+  "hoursPlayed": "Hours played",
+  "volume": "Volume",
+  "volumeNum": "Volume {{num}}",
+  "chapter": "Chapter",
+  "chapterNum": "Chapter {{num}}",
+  "currentVolume": "Current volume",
+  "currentChapter": "Current chapter",
+  "listRating": "Rating (1–100)",
+  "titleReaction": "Reaction to title"
+}
