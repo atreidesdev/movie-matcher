@@ -16,6 +16,8 @@ func registerAdmin(api *gin.RouterGroup) {
 			adminOnly.POST("/popularity/recalculate", handlers.AdminRecalculatePopularity)
 			adminOnly.POST("/popularity/decay", handlers.AdminApplyDecay)
 			adminOnly.POST("/achievements/recalculate", handlers.AdminRecalculateAchievements)
+			adminOnly.POST("/similar-users/recalculate", handlers.AdminRecalculateSimilarUsers)
+			adminOnly.POST("/similar-content/recalculate", handlers.AdminRecalculateSimilarContent)
 			adminOnly.PUT("/users/:id/role", handlers.AdminSetUserRole)
 		}
 

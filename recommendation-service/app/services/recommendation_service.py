@@ -27,8 +27,7 @@ class RecommendationService:
     def __init__(self):
         self.embedding_service = get_embedding_service()
         self.vector_store = get_vector_store()
-        # Всегда используем реальную БД; демо-режим с mock-данными отключён.
-        self._demo_mode = False
+        # Работаем только от БД. Fixtures/demo-режим удалён.
         self.engine = create_engine(settings.database_url)
         self.Session = sessionmaker(bind=self.engine)
 
@@ -125,8 +124,6 @@ class RecommendationService:
         limit: int
     ) -> List[RecommendedItem]:
         """Recommendations from content_similar: get user's liked items, then similar items, aggregate and rank."""
-        if self._demo_mode:
-            return []
         session = self.Session()
         try:
             liked = self._get_user_liked_entity_ids(session, user_id)
@@ -279,43 +276,7 @@ class RecommendationService:
 
     def get_similar_users(self, user_id: int, limit: int = 20) -> SimilarUsersResponse:
         """Похожие пользователи по пересечению списков и оценок (по вкусам)."""
-        if self._demo_mode:
-            return self._get_demo_similar_users(user_id=user_id, limit=limit)
         return self._get_db_similar_users(user_id=user_id, limit=limit)
-
-    def _get_demo_similar_users(self, user_id: int, limit: int) -> SimilarUsersResponse:
-        """В demo: пересечение по mock_list_items (списки/оценки). Скор = число общих (media_type, media_id)."""
-        from app.services import demo_loader
-
-        list_items = demo_loader.get_demo_list_items()
-        # По каждому пользователю — множество (media_type, media_id)
-        user_sets: dict = {}
-        for row in list_items:
-            uid = int(row.get("user_id", 0))
-            mt = row.get("media_type") or "movie"
-            mid = int(row.get("media_id", 0))
-            if uid and mid:
-                if uid not in user_sets:
-                    user_sets[uid] = set()
-                user_sets[uid].add((mt, mid))
-
-        my_set = user_sets.get(user_id) or set()
-        if not my_set:
-            return SimilarUsersResponse(user_id=user_id, similar_users=[])
-
-        scored: List[SimilarUserItem] = []
-        for uid, other_set in user_sets.items():
-            if uid == user_id or not other_set:
-                continue
-            overlap = len(my_set & other_set)
-            if overlap == 0:
-                continue
-            # Нормализованный скор (Jaccard-like): overlap / sqrt(|my|*|other|), чтобы не завышать при огромных списках
-            denom = (len(my_set) * len(other_set)) ** 0.5
-            score = overlap / denom if denom > 0 else 0.0
-            scored.append(SimilarUserItem(user_id=uid, score=round(score, 4)))
-        scored.sort(key=lambda x: -x.score)
-        return SimilarUsersResponse(user_id=user_id, similar_users=scored[:limit])
 
     def _get_db_similar_users(self, user_id: int, limit: int) -> SimilarUsersResponse:
         """По БД: список entity (type, id) пользователя; для каждого ищем других юзеров в list/favorite; считаем пересечение."""
@@ -341,7 +302,14 @@ class RecommendationService:
             for et, table, col in tables:
                 try:
                     rows = session.execute(
-                        text(f"SELECT user_id, {col} FROM {table} WHERE user_id != :uid"),
+                        text(f"""
+                            SELECT t.user_id, t.{col}
+                            FROM {table} t
+                            JOIN users u ON u.id = t.user_id
+                            WHERE t.user_id != :uid
+                              AND u.last_seen_at IS NOT NULL
+                              AND u.last_seen_at >= NOW() - INTERVAL '31 days'
+                        """),
                         {"uid": user_id},
                     ).fetchall()
                     for row in rows:
@@ -397,16 +365,6 @@ class RecommendationService:
 
     def _get_media_embedding(self, media_id: int, media_type: str) -> Optional[np.ndarray]:
         """Get or create embedding for a specific media item (with full meta: cast, year, rating, etc.)."""
-        if self._demo_mode:
-            from app.services.demo_loader import DEMO_EMBEDDING_MAP
-            key = (media_type, media_id)
-            emb = DEMO_EMBEDDING_MAP.get(key)
-            if emb is not None:
-                return emb
-            norm = self._normalize_media_type(media_type)
-            if norm and norm != media_type:
-                return DEMO_EMBEDDING_MAP.get((norm, media_id))
-            return None
         session = self.Session()
         try:
             entity_type = self._normalize_media_type(media_type) or media_type

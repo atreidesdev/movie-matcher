@@ -10,6 +10,9 @@ type UserRecommendation struct {
 	UserID     uint      `gorm:"uniqueIndex:idx_user_rec;not null;index" json:"userId"`
 	EntityType string    `gorm:"uniqueIndex:idx_user_rec;not null;size:32" json:"entityType"` // movie, anime_series, game, ...
 	EntityID   uint      `gorm:"uniqueIndex:idx_user_rec;not null" json:"entityId"`
+	Title      string    `gorm:"type:text" json:"title"`
+	Poster     string    `gorm:"type:text" json:"poster"`
+	Description string   `gorm:"type:text" json:"description"`
 	Score      float64   `gorm:"default:0" json:"score"`
 	Position   int       `gorm:"default:0" json:"position"` // порядок выдачи
 }

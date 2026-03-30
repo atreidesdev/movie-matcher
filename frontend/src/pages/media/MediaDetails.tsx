@@ -594,7 +594,9 @@ export default function MediaDetails({ type }: MediaDetailsProps) {
           <p className="text-[var(--theme-text-muted)] text-sm">{t('common.loading')}</p>
         ) : (
           (() => {
-            const list = similarUsersRatings.length > 0 ? similarUsersRatings : MOCK_SIMILAR_USERS_RATINGS
+				const useMock = import.meta.env.VITE_USE_MOCK === 'true'
+				const list =
+					similarUsersRatings.length > 0 ? similarUsersRatings : useMock ? MOCK_SIMILAR_USERS_RATINGS : []
             if (list.length === 0) {
               return <p className="text-[var(--theme-text-muted)] text-sm">{t('media.noRatingsFromSimilar')}</p>
             }

@@ -18,6 +18,70 @@ logger = logging.getLogger(__name__)
 
 settings = get_settings()
 
+# Franchise filtering
+# -----------------------------------------------------------------------------
+# Требование: при предвычислении "похожего" НЕ добавлять тайтлы, которые в одной франшизе.
+# Франшизы хранятся в backend БД в таблице franchise_media_links:
+# (franchise_id, from_media_type, from_media_id, to_media_type, to_media_id, ...)
+#
+# В этой джобе media_type используется в snake_case (tv_series, anime_series, ...),
+# а в franchise_media_links — значения enum из backend (tvSeries, animeSeries, ...).
+
+def _normalize_backend_media_type(mt: str) -> str:
+    if not mt:
+        return mt
+    m = {
+        "movie": "movie",
+        "tvSeries": "tv_series",
+        "animeSeries": "anime_series",
+        "animeMovie": "anime_movie",
+        "cartoonSeries": "cartoon_series",
+        "cartoonMovie": "cartoon_movie",
+        "game": "game",
+        "manga": "manga",
+        "book": "book",
+        "lightNovel": "light_novel",
+        # safety: allow already-normalized
+        "tv_series": "tv_series",
+        "anime_series": "anime_series",
+        "anime_movie": "anime_movie",
+        "cartoon_series": "cartoon_series",
+        "cartoon_movie": "cartoon_movie",
+        "light_novel": "light_novel",
+    }
+    return m.get(mt, mt)
+
+
+def _load_franchise_map(session) -> Dict[Tuple[str, int], set]:
+    """Map (entity_type, entity_id) -> set(franchise_id)."""
+    franchise_map: Dict[Tuple[str, int], set] = defaultdict(set)
+    try:
+        rows = session.execute(text("""
+            SELECT franchise_id, from_media_type, from_media_id, to_media_type, to_media_id
+            FROM franchise_media_links
+        """)).fetchall()
+        for fid, fmt, fmid, tmt, tmid in rows:
+            et1 = _normalize_backend_media_type(str(fmt))
+            et2 = _normalize_backend_media_type(str(tmt))
+            if et1 and fmid:
+                franchise_map[(et1, int(fmid))].add(int(fid))
+            if et2 and tmid:
+                franchise_map[(et2, int(tmid))].add(int(fid))
+    except Exception as e:
+        logger.warning(f"Failed to load franchise map: {e}")
+    return franchise_map
+
+
+def _same_franchise(franchise_map: Dict[Tuple[str, int], set], a: Tuple[str, int], b: Tuple[str, int]) -> bool:
+    fa = franchise_map.get(a)
+    if not fa:
+        return False
+    fb = franchise_map.get(b)
+    if not fb:
+        return False
+    # пересечение множеств franchise_id
+    return bool(fa & fb)
+
 # Типы медиа и соответствующие таблицы БД (GORM snake_case)
 MEDIA_TYPES = [
     "movie", "tv_series", "anime_series", "cartoon_series", "cartoon_movie",
@@ -251,6 +315,8 @@ def compute_and_store_similar_by_content(media_type: Optional[str] = None, same_
     emb = get_embedding_service()
     types_to_run = [media_type] if media_type else MEDIA_TYPES
     try:
+        franchise_map = _load_franchise_map(session)
+
         all_embeddings = {}
         all_texts = {}
         for mt in types_to_run:
@@ -286,6 +352,9 @@ def compute_and_store_similar_by_content(media_type: Optional[str] = None, same_
             candidates = []
             for (st, sid), v in all_embeddings.items():
                 if (et, eid) == (st, sid):
+                    continue
+                # Не добавлять тайтлы из одной франшизы
+                if _same_franchise(franchise_map, (et, eid), (st, sid)):
                     continue
                 score = float(np.dot(vec, v.reshape(-1, 1))[0, 0])
                 candidates.append((st, sid, score))
@@ -323,6 +392,8 @@ def compute_and_store_similar_by_users(media_type: Optional[str] = None, same_li
     """По совпадению выборов пользователей: co-occurrence в списках/избранном, запись в content_similar."""
     session = get_session()
     try:
+        franchise_map = _load_franchise_map(session)
+
         user_items = defaultdict(set)
         for et, table, col in LIST_FAV_TABLES:
             if media_type and et != media_type:
@@ -342,6 +413,9 @@ def compute_and_store_similar_by_users(media_type: Optional[str] = None, same_li
                     a, b = items[i], items[j]
                     if a > b:
                         a, b = b, a
+                    # Не добавлять пары из одной франшизы
+                    if _same_franchise(franchise_map, (a[0], int(a[1])), (b[0], int(b[1]))):
+                        continue
                     item_pairs[a][b] += 1.0
                     item_pairs[b][a] += 1.0
 

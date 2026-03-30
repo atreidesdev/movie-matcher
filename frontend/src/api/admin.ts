@@ -96,6 +96,12 @@ export const adminApi = {
   recalculateAchievements: async (): Promise<void> => {
     await apiClient.post('/admin/achievements/recalculate')
   },
+  recalculateSimilarUsers: async (): Promise<void> => {
+    await apiClient.post('/admin/similar-users/recalculate')
+  },
+  recalculateSimilarContent: async (): Promise<void> => {
+    await apiClient.post('/admin/similar-content/recalculate')
+  },
 
   getGenres: async (): Promise<Genre[]> => {
     const { data } = await apiClient.get<Genre[]>('/genres')

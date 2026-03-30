@@ -162,3 +162,30 @@ func GetSemanticSearch(query, mediaType, limit string) (*SemanticSearchResponse,
 
 	return &result, nil
 }
+
+// ComputeSimilarPrecomputed запускает предвычисление похожего контента в recommendation-service
+// и запись в таблицу content_similar (используется backend endpoint /similar/store/...).
+func ComputeSimilarPrecomputed(mediaType string) error {
+	base := getRecommendationServiceURL()
+	reqURL := base + "/similar/compute"
+	if mediaType != "" {
+		reqURL += "?media_type=" + url.QueryEscape(mediaType)
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL, nil)
+	if err != nil {
+		return fmt.Errorf("failed to build request: %w", err)
+	}
+
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		return fmt.Errorf("failed to call recommendation service: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return fmt.Errorf("recommendation service returned status %d: %s", resp.StatusCode, string(body))
+	}
+	return nil
+}

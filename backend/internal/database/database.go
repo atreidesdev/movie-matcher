@@ -150,6 +150,8 @@ func AutoMigrate() error {
 		&models.ContentSimilar{},
 		// Личные рекомендации пользователя (тип 2)
 		&models.UserRecommendation{},
+		// Список похожих пользователей (кеш)
+		&models.UserSimilarUser{},
 
 		// Messaging (encrypted)
 		&models.Conversation{},

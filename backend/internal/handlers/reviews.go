@@ -9,8 +9,6 @@ import (
 	"github.com/movie-matcher/backend/internal/api"
 	"github.com/movie-matcher/backend/internal/deps"
 	"github.com/movie-matcher/backend/internal/models"
-	"github.com/movie-matcher/backend/internal/queue"
-	"github.com/movie-matcher/backend/internal/services"
 )
 
 func CreateMovieReview(c *gin.Context) {
@@ -1207,37 +1205,32 @@ func GetMediaReviewsFromSimilarUsers(c *gin.Context) {
 	}
 	id := uint(entityID)
 
-	q := deps.GetQueue(c)
-	res, err := q.Submit(c.Request.Context(), queue.Job{
-		Fn: func() (interface{}, error) {
-			return services.GetSimilarUsers(uid, "30")
-		},
-	})
-	if err != nil {
-		if err == c.Request.Context().Err() {
-			api.RespondError(c, http.StatusRequestTimeout, api.ErrCodeBadRequest, "Request cancelled or timeout", nil)
-			return
-		}
-		api.RespondInternal(c, "Failed to get similar users")
-		return
-	}
-	if res.Err != nil {
-		api.RespondInternal(c, "Failed to get similar users")
-		return
-	}
-	similarResp, _ := res.Data.(*services.SimilarUsersResponse)
-	similarIDs := make([]uint, 0)
-	if similarResp != nil {
-		for _, u := range similarResp.SimilarUsers {
-			similarIDs = append(similarIDs, u.UserID)
+	db := deps.GetDB(c)
+	const desiredSimilarLimit = 30
+
+	similarIDs := make([]uint, 0, desiredSimilarLimit)
+	{
+		var cached []models.UserSimilarUser
+		if err := db.Where("user_id = ?", uid).
+			Order("position ASC").
+			Limit(desiredSimilarLimit).
+			Find(&cached).Error; err == nil && len(cached) > 0 {
+			for _, row := range cached {
+				similarIDs = append(similarIDs, row.SimilarUserID)
+			}
 		}
 	}
+
 	if len(similarIDs) == 0 {
 		c.JSON(http.StatusOK, []interface{}{})
 		return
 	}
 
-	db := deps.GetDB(c)
+	if len(similarIDs) == 0 {
+		c.JSON(http.StatusOK, []interface{}{})
+		return
+	}
+
 	const limit = 20
 
 	switch mediaType {

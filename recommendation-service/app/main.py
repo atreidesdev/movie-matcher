@@ -40,10 +40,6 @@ app.add_middleware(PrometheusMiddleware)
 async def startup_event():
     """Initialize services on startup."""
     logger.info("Starting recommendation service...")
-    if settings.use_mock_data:
-        from app.services import demo_loader
-        demo_loader.load_and_index()
-        logger.info("Demo mode: loaded mock data from fixtures (no DB required)")
     get_recommendation_service()
     logger.info("Recommendation service started successfully")
 
@@ -137,10 +133,7 @@ async def index_media(
 ):
     """
     Index all media of a specific type from the database.
-    In demo mode (USE_MOCK_DATA=true) index is already filled from fixtures; this is a no-op.
     """
-    if settings.use_mock_data:
-        return {"status": "success", "message": "Demo mode: index already loaded from fixtures"}
     try:
         service = get_recommendation_service()
         service.index_media(media_type=media_type, batch_size=batch_size)
@@ -156,10 +149,7 @@ async def compute_similar(
 ):
     """
     Compute and store similar items in DB (content_similar).
-    Not available in demo mode (USE_MOCK_DATA=true).
     """
-    if settings.use_mock_data:
-        raise HTTPException(status_code=400, detail="Not available in demo mode (no database)")
     try:
         similar_compute.compute_all_similar(media_type=media_type)
         return {"status": "success", "message": f"Similar computed" + (f" for {media_type}" if media_type else " for all types")}

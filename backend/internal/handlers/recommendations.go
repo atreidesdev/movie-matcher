@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
-	"sort"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +11,7 @@ import (
 	"github.com/movie-matcher/backend/internal/models"
 	"github.com/movie-matcher/backend/internal/queue"
 	"github.com/movie-matcher/backend/internal/services"
+	"gorm.io/gorm"
 )
 
 type SimilarUserListRating struct {
@@ -26,59 +27,65 @@ type SimilarUserListRating struct {
 func GetRecommendations(c *gin.Context) {
 	userID, _ := c.Get("userID")
 	mediaType := c.DefaultQuery("mediaType", "movie")
-	limit := c.DefaultQuery("limit", "10")
+	limitStr := c.DefaultQuery("limit", "10")
 
 	uid := userID.(uint)
-	q := deps.GetQueue(c)
-	res, err := q.Submit(c.Request.Context(), queue.Job{
-		Fn: func() (interface{}, error) {
-			return services.GetRecommendations(uid, mediaType, limit)
-		},
-	})
-	if err != nil {
-		if err == c.Request.Context().Err() {
-			api.RespondError(c, http.StatusRequestTimeout, api.ErrCodeBadRequest, "Request cancelled or timeout", nil)
-			return
-		}
-		api.RespondInternal(c, "Failed to get recommendations")
-		return
-	}
-	if res.Err != nil {
-		api.RespondInternal(c, "Failed to get recommendations")
-		return
-	}
-
-	recResp, _ := res.Data.(*services.RecommendationResponse)
-	if recResp == nil || len(recResp.Recommendations) == 0 {
-		c.JSON(http.StatusOK, res.Data)
-		return
+	limitInt, err := strconv.Atoi(limitStr)
+	if err != nil || limitInt <= 0 {
+		limitInt = 10
 	}
 
 	db := deps.GetDB(c)
-	listed := getUserListedEntityIDs(db, uid, mediaType)
-	var filtered []services.RecommendedItem
-	for _, r := range recResp.Recommendations {
-		if _, inList := listed[r.MediaID]; inList {
-			continue
-		}
-		filtered = append(filtered, r)
-	}
-	recResp.Recommendations = filtered
-
 	entityType := apiMediaTypeToEntityType(mediaType)
-	_ = db.Where("user_id = ? AND entity_type = ?", uid, entityType).Delete(&models.UserRecommendation{}).Error
-	for i, r := range filtered {
-		rec := models.UserRecommendation{
-			UserID:     uid,
-			EntityType: entityType,
-			EntityID:   r.MediaID,
-			Score:      r.Score,
-			Position:   i + 1,
+
+	// Попробуем прочитать готовые рекомендации из БД.
+	var cached []models.UserRecommendation
+	if cacheErr := db.Where("user_id = ? AND entity_type = ?", uid, entityType).
+		Order("position ASC").
+		Limit(limitInt * 2).
+		Find(&cached).Error; cacheErr == nil && len(cached) > 0 {
+		// Если данные для старых записей неполные — считаем кеш "пустым" и пересчитываем.
+		hasDetails := false
+		for _, r := range cached {
+			if r.Title != "" || r.Poster != "" || r.Description != "" {
+				hasDetails = true
+				break
+			}
 		}
-		_ = db.Create(&rec).Error
+		if hasDetails {
+			listed := getUserListedEntityIDs(db, uid, mediaType)
+			out := make([]services.RecommendedItem, 0, len(cached))
+			for _, r := range cached {
+				if _, inList := listed[r.EntityID]; inList {
+					continue
+				}
+				out = append(out, services.RecommendedItem{
+					MediaID:     r.EntityID,
+					Title:       r.Title,
+					Score:       r.Score,
+					Poster:      r.Poster,
+					Description: r.Description,
+				})
+				if len(out) >= limitInt {
+					break
+				}
+			}
+			c.JSON(http.StatusOK, services.RecommendationResponse{
+				Recommendations: out,
+				UserID:          uid,
+				MediaType:       mediaType,
+			})
+			return
+		}
 	}
 
-	c.JSON(http.StatusOK, recResp)
+	// Кеш пустой/неполный: строго не пересчитываем по запросу.
+	c.JSON(http.StatusOK, services.RecommendationResponse{
+		Recommendations: []services.RecommendedItem{},
+		UserID:          uid,
+		MediaType:       mediaType,
+	})
+	return
 }
 
 func GetSimilarMedia(c *gin.Context) {
@@ -119,63 +126,54 @@ type SimilarUserEnriched struct {
 func GetSimilarUsers(c *gin.Context) {
 	userID, _ := c.Get("userID")
 	uid := userID.(uint)
-	limit := c.DefaultQuery("limit", "20")
-
-	q := deps.GetQueue(c)
-	res, err := q.Submit(c.Request.Context(), queue.Job{
-		Fn: func() (interface{}, error) {
-			return services.GetSimilarUsers(uid, limit)
-		},
-	})
-	if err != nil {
-		if err == c.Request.Context().Err() {
-			api.RespondError(c, http.StatusRequestTimeout, api.ErrCodeBadRequest, "Request cancelled or timeout", nil)
-			return
-		}
-		api.RespondInternal(c, "Failed to get similar users")
-		return
-	}
-	if res.Err != nil {
-		api.RespondInternal(c, "Failed to get similar users")
-		return
-	}
-
-	recResp, _ := res.Data.(*services.SimilarUsersResponse)
-	if recResp == nil || len(recResp.SimilarUsers) == 0 {
-		c.JSON(http.StatusOK, gin.H{"similarUsers": []SimilarUserEnriched{}})
-		return
+	limitStr := c.DefaultQuery("limit", "20")
+	limitInt, err := strconv.Atoi(limitStr)
+	if err != nil || limitInt <= 0 {
+		limitInt = 20
 	}
 
 	db := deps.GetDB(c)
-	ids := make([]uint, 0, len(recResp.SimilarUsers))
-	for _, u := range recResp.SimilarUsers {
-		ids = append(ids, u.UserID)
-	}
-	var users []models.User
-	if err := db.Where("id IN ?", ids).Find(&users).Error; err != nil {
-		api.RespondInternal(c, "Failed to load users")
+	var cached []models.UserSimilarUser
+	if cacheErr := db.Where("user_id = ?", uid).
+		Order("position ASC").
+		Limit(limitInt).
+		Find(&cached).Error; cacheErr == nil && len(cached) > 0 {
+		ids := make([]uint, 0, len(cached))
+		for _, row := range cached {
+			ids = append(ids, row.SimilarUserID)
+		}
+
+		var users []models.User
+		if err := db.Where("id IN ?", ids).Find(&users).Error; err != nil {
+			api.RespondInternal(c, "Failed to load users")
+			return
+		}
+		userByID := make(map[uint]models.User)
+		for _, u := range users {
+			userByID[u.ID] = u
+		}
+
+		out := make([]SimilarUserEnriched, 0, len(cached))
+		for _, row := range cached {
+			u, ok := userByID[row.SimilarUserID]
+			if !ok {
+				continue
+			}
+			out = append(out, SimilarUserEnriched{
+				UserID:   row.SimilarUserID,
+				Score:    row.Score,
+				Username: u.Username,
+				Name:     u.Name,
+				Avatar:   u.Avatar,
+			})
+		}
+		c.JSON(http.StatusOK, gin.H{"similarUsers": out})
 		return
 	}
-	userByID := make(map[uint]models.User)
-	for _, u := range users {
-		userByID[u.ID] = u
-	}
 
-	out := make([]SimilarUserEnriched, 0, len(recResp.SimilarUsers))
-	for _, item := range recResp.SimilarUsers {
-		u, ok := userByID[item.UserID]
-		if !ok {
-			continue
-		}
-		out = append(out, SimilarUserEnriched{
-			UserID:   item.UserID,
-			Score:    item.Score,
-			Username: u.Username,
-			Name:     u.Name,
-			Avatar:   u.Avatar,
-		})
-	}
-	c.JSON(http.StatusOK, gin.H{"similarUsers": out})
+	// Кеш пустой: строго не пересчитываем по запросу.
+	c.JSON(http.StatusOK, gin.H{"similarUsers": []SimilarUserEnriched{}})
+	return
 }
 
 // GET /api/v1/media/:type/:id/similar-users-ratings (OptionalAuth). Без авторизации — пустой массив.
@@ -195,192 +193,205 @@ func GetMediaListRatingsFromSimilarUsers(c *gin.Context) {
 	}
 	id := uint(entityID)
 
-	q := deps.GetQueue(c)
-	res, err := q.Submit(c.Request.Context(), queue.Job{
-		Fn: func() (interface{}, error) {
-			return services.GetSimilarUsers(uid, "30")
-		},
-	})
-	if err != nil {
-		if err == c.Request.Context().Err() {
-			api.RespondError(c, http.StatusRequestTimeout, api.ErrCodeBadRequest, "Request cancelled or timeout", nil)
-			return
-		}
-		api.RespondInternal(c, "Failed to get similar users")
-		return
-	}
-	if res.Err != nil {
-		api.RespondInternal(c, "Failed to get similar users")
-		return
-	}
-	similarResp, _ := res.Data.(*services.SimilarUsersResponse)
-	scoreByUser := make(map[uint]float64)
-	if similarResp != nil {
-		for _, u := range similarResp.SimilarUsers {
-			scoreByUser[u.UserID] = u.Score
-		}
-	}
-	if len(scoreByUser) == 0 {
-		c.JSON(http.StatusOK, []SimilarUserListRating{})
-		return
-	}
-
 	db := deps.GetDB(c)
-	const limit = 20
+	const (
+		desiredSimilarLimit = 30
+		answerLimit         = 5
+	)
 
-	type row struct {
-		UserID uint
-		Rating int
-	}
-	var rows []row
-
-	switch mediaType {
-	case "movies":
-		var list []models.MovieList
-		if e := db.Where("movie_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "tv-series":
-		var list []models.TVSeriesList
-		if e := db.Where("tv_series_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "cartoon-series":
-		var list []models.CartoonSeriesList
-		if e := db.Where("cartoon_series_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "cartoon-movies":
-		var list []models.CartoonMovieList
-		if e := db.Where("cartoon_movie_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "anime":
-		var list []models.AnimeSeriesList
-		if e := db.Where("anime_series_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "anime-movies":
-		var list []models.AnimeMovieList
-		if e := db.Where("anime_movie_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "games":
-		var list []models.GameList
-		if e := db.Where("game_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "manga":
-		var list []models.MangaList
-		if e := db.Where("manga_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "books":
-		var list []models.BookList
-		if e := db.Where("book_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	case "light-novels":
-		var list []models.LightNovelList
-		if e := db.Where("light_novel_id = ? AND user_id IN ? AND rating IS NOT NULL", id, mapKeys(scoreByUser)).Limit(limit).Find(&list).Error; e != nil {
-			api.RespondInternal(c, "Failed to fetch list ratings")
-			return
-		}
-		for _, l := range list {
-			if l.Rating != nil {
-				rows = append(rows, row{UserID: l.UserID, Rating: *l.Rating})
-			}
-		}
-	default:
+	var cached []models.UserSimilarUser
+	if err := db.Where("user_id = ?", uid).
+		Order("position ASC").
+		Limit(desiredSimilarLimit).
+		Find(&cached).Error; err != nil || len(cached) == 0 {
 		c.JSON(http.StatusOK, []SimilarUserListRating{})
 		return
 	}
 
-	userIDs := make([]uint, 0, len(rows))
-	for _, r := range rows {
+	type ratingRow struct {
+		UserID   uint
+		Rating   int
+		Similarity float64
+	}
+	ratingRows := make([]ratingRow, 0, answerLimit)
+
+	// Идём от самого похожего к менее похожему и добавляем rating,
+	// пока не наберём ровно 5 или пока не закончатся top-30.
+	for _, srow := range cached {
+		if len(ratingRows) >= answerLimit {
+			break
+		}
+
+		simScore := srow.Score
+		otherUserID := srow.SimilarUserID
+
+		switch mediaType {
+		case "movies":
+			var l models.MovieList
+			if e := db.Where("movie_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "tv-series":
+			var l models.TVSeriesList
+			if e := db.Where("tv_series_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "cartoon-series":
+			var l models.CartoonSeriesList
+			if e := db.Where("cartoon_series_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "cartoon-movies":
+			var l models.CartoonMovieList
+			if e := db.Where("cartoon_movie_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "anime":
+			var l models.AnimeSeriesList
+			if e := db.Where("anime_series_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "anime-movies":
+			var l models.AnimeMovieList
+			if e := db.Where("anime_movie_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "games":
+			var l models.GameList
+			if e := db.Where("game_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "manga":
+			var l models.MangaList
+			if e := db.Where("manga_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "books":
+			var l models.BookList
+			if e := db.Where("book_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		case "light-novels":
+			var l models.LightNovelList
+			if e := db.Where("light_novel_id = ? AND user_id = ? AND rating IS NOT NULL", id, otherUserID).First(&l).Error; e != nil {
+				if errors.Is(e, gorm.ErrRecordNotFound) {
+					continue
+				}
+				api.RespondInternal(c, "Failed to fetch list rating")
+				return
+			}
+			if l.Rating != nil {
+				ratingRows = append(ratingRows, ratingRow{UserID: otherUserID, Rating: *l.Rating, Similarity: simScore})
+			}
+		default:
+			c.JSON(http.StatusOK, []SimilarUserListRating{})
+			return
+		}
+	}
+
+	if len(ratingRows) == 0 {
+		c.JSON(http.StatusOK, []SimilarUserListRating{})
+		return
+	}
+
+	userIDs := make([]uint, 0, len(ratingRows))
+	seen := make(map[uint]struct{}, len(ratingRows))
+	for _, r := range ratingRows {
+		if _, ok := seen[r.UserID]; ok {
+			continue
+		}
+		seen[r.UserID] = struct{}{}
 		userIDs = append(userIDs, r.UserID)
 	}
+
 	var users []models.User
 	if err := db.Where("id IN ?", userIDs).Find(&users).Error; err != nil {
 		api.RespondInternal(c, "Failed to load users")
 		return
 	}
-	userByID := make(map[uint]models.User)
+	userByID := make(map[uint]models.User, len(users))
 	for _, u := range users {
 		userByID[u.ID] = u
 	}
 
-	out := make([]SimilarUserListRating, 0, len(rows))
-	for _, r := range rows {
-		score, ok := scoreByUser[r.UserID]
+	out := make([]SimilarUserListRating, 0, len(ratingRows))
+	for _, r := range ratingRows {
+		u, ok := userByID[r.UserID]
 		if !ok {
 			continue
 		}
-		u := userByID[r.UserID]
 		out = append(out, SimilarUserListRating{
 			UserID:          r.UserID,
 			Username:        u.Username,
 			Name:            u.Name,
 			Avatar:          u.Avatar,
-			SimilarityScore: score,
+			SimilarityScore: r.Similarity,
 			Rating:          r.Rating,
 		})
 	}
-	sort.Slice(out, func(i, j int) bool { return out[i].SimilarityScore > out[j].SimilarityScore })
 	c.JSON(http.StatusOK, out)
 }
 

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log/slog"
 	"net/http"
 	"strconv"
 	"strings"
@@ -2060,6 +2061,24 @@ func AdminRecalculateAchievements(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Achievement progress recalculated"})
+}
+
+func AdminRecalculateSimilarUsers(c *gin.Context) {
+	go func() {
+		if err := services.PrecomputeSimilarUsersForActiveUsersAll(); err != nil {
+			slog.Default().Error("similar users recalc (admin) failed", slog.String("error", err.Error()))
+		}
+	}()
+	c.JSON(http.StatusAccepted, gin.H{"message": "Similar users precompute started"})
+}
+
+func AdminRecalculateSimilarContent(c *gin.Context) {
+	go func() {
+		if err := services.ComputeSimilarPrecomputed(""); err != nil {
+			slog.Default().Error("content_similar recalc (admin) failed", slog.String("error", err.Error()))
+		}
+	}()
+	c.JSON(http.StatusAccepted, gin.H{"message": "content_similar precompute started"})
 }
 
 func toJSONArray(s []string) models.JSONArray {

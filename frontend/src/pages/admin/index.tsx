@@ -33,7 +33,7 @@ import {
 } from '@/components/icons'
 import { useAuthStore } from '@/store/authStore'
 import { getEntityDescription, getEntityName } from '@/utils/localizedText'
-import { Globe, RefreshCw, TrendingDown, Wrench } from 'lucide-react'
+import { Globe, RefreshCw, TrendingDown, Users, Wrench } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
@@ -129,6 +129,16 @@ export default function Admin() {
     adminApi.recalculateAchievements().finally(() => setActionLoading(false))
   }
 
+  const handleRecalculateSimilarUsers = () => {
+    setActionLoading(true)
+    adminApi.recalculateSimilarUsers().finally(() => setActionLoading(false))
+  }
+
+  const handleRecalculateSimilarContent = () => {
+    setActionLoading(true)
+    adminApi.recalculateSimilarContent().finally(() => setActionLoading(false))
+  }
+
   if (!user || !isModeratorOrAdmin) return null
 
   const tabsAll: { key: Tab; label: string; icon?: React.ReactNode }[] = [
@@ -208,6 +218,14 @@ export default function Admin() {
             >
               <IconAchievement className="w-5 h-5" />
               {t('admin.recalculateAchievements')}
+            </button>
+            <button onClick={handleRecalculateSimilarUsers} disabled={actionLoading} className="btn-secondary flex items-center gap-2">
+              <Users className="w-5 h-5" />
+              {t('admin.similarUsers')} — {t('admin.recalculate')}
+            </button>
+            <button onClick={handleRecalculateSimilarContent} disabled={actionLoading} className="btn-secondary flex items-center gap-2">
+              <Users className="w-5 h-5" />
+              {t('admin.similarContent')} — {t('admin.recalculate')}
             </button>
           </div>
         </section>

@@ -106,10 +106,11 @@ export default function UsersPage() {
       return
     }
     setLoadingSimilar(true)
+    const useMock = import.meta.env.VITE_USE_MOCK === 'true'
     usersApi
       .getSimilarUsers(20)
-      .then((list) => setSimilarUsers(list.length > 0 ? list : MOCK_SIMILAR_USERS))
-      .catch(() => setSimilarUsers(MOCK_SIMILAR_USERS))
+      .then((list) => setSimilarUsers(list.length > 0 ? list : useMock ? MOCK_SIMILAR_USERS : []))
+      .catch(() => setSimilarUsers(useMock ? MOCK_SIMILAR_USERS : []))
       .finally(() => setLoadingSimilar(false))
   }, [user])
 

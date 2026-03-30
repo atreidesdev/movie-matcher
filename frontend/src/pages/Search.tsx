@@ -132,19 +132,28 @@ export default function Search() {
 
   useEffect(() => {
     if (!query.trim() || searchMode !== 'by-meaning') return
-    const runSemantic = async () => {
-      setSemanticLoading(true)
+    const controller = new AbortController()
+    const q = query.trim()
+
+    setSemanticLoading(true)
+    const timer = window.setTimeout(async () => {
       try {
-        const res = await searchApi.semantic(query, { limit: 30 })
+        const res = await searchApi.semantic(q, { limit: 30, signal: controller.signal })
         setSemanticResults(res.results ?? [])
       } catch (error) {
+        // Отменённые запросы не считаем ошибкой UI
+        if ((error as { name?: string })?.name === 'CanceledError') return
         console.error('Semantic search failed:', error)
         setSemanticResults([])
       } finally {
         setSemanticLoading(false)
       }
+    }, 450)
+
+    return () => {
+      window.clearTimeout(timer)
+      controller.abort()
     }
-    runSemantic()
   }, [query, searchMode])
 
   if (!query.trim()) {

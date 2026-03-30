@@ -9,8 +9,6 @@ class Settings(BaseSettings):
     use_faiss: bool = True
     host: str = "0.0.0.0"
     port: int = 8000
-    # Режим без БД: тестовые данные из fixtures/mock_media.json, индексация в память (не нужны Docker и backend)
-    use_mock_data: bool = False
 
     class Config:
         env_file = ".env"
