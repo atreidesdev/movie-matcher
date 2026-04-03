@@ -518,7 +518,7 @@ export function MediaDetailCastFranchiseSection({
                         to={`/${link.relatedType}/${link.relatedMediaId}`}
                         className="flex-shrink-0 w-32 rounded-xl overflow-hidden transition-colors focus:outline-none"
                       >
-                        <div className="relative w-32 aspect-[2/3] bg-[var(--theme-bg-alt)] flex items-center justify-center text-[var(--theme-text-muted)] text-4xl">
+                        <div className="relative w-32 aspect-[2/3] bg-[var(--theme-bg-alt)] flex items-center justify-center text-[var(--theme-text-muted)] text-4xl rounded-xl overflow-hidden">
                           {link.relatedPoster ? (
                             <img
                               src={getMediaAssetUrl(link.relatedPoster)}

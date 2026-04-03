@@ -151,7 +151,7 @@ export default function Home() {
                     )}
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-gray-800 dark:text-gray-200 line-clamp-2">
+                    <h3 className="font-semibold text-[var(--theme-text)] dark:text-gray-200 line-clamp-2">
                       {item.previewTitle || item.title}
                     </h3>
                     <div className="flex items-center gap-3 mt-2 text-sm text-gray-500 dark:text-gray-400">

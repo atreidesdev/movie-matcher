@@ -695,7 +695,7 @@ export default function UserProfile() {
                 {username ? (
                   <Link
                     to={`/user/${username}/achievements`}
-                    className="inline-block text-sm font-semibold text-profile link-underline-animate"
+                    className="inline-block text-sm font-semibold text-profile link-underline-animate w-max"
                   >
                     {t('achievements.inProfile')}
                   </Link>
