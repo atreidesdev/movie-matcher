@@ -8,9 +8,9 @@ import { mockStreamPlugin } from './vite-plugin-mock-stream'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig(({ mode }) => {
-  // Явно загружаем .env, .env.[mode] (например .env.mock при --mode mock)
   const env = loadEnv(mode, process.cwd(), '')
-  const useMock = env.VITE_USE_MOCK === 'true' || mode === 'mock'
+  // Режим pages — статический деплой на GitHub Pages без бэкенда, всегда с моками API
+  const useMock = env.VITE_USE_MOCK === 'true' || mode === 'mock' || mode === 'pages'
 
   // Чтобы клиентский бандл точно получил флаг моков (Vite подставляет import.meta.env из process.env)
   if (useMock) {
@@ -18,7 +18,11 @@ export default defineConfig(({ mode }) => {
     process.env.MODE = mode
   }
 
+  const isPages = mode === 'pages'   // или mode === 'gh-pages'
+  const base = isPages ? '/movie-matcher/' : '/'
+
   return {
+  base,
   build: {
     rollupOptions: {
       output: {
