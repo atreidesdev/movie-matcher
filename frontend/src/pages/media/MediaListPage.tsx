@@ -523,7 +523,7 @@ export default function MediaListPage({ type }: MediaListPageProps) {
             animate="visible"
           >
             {items.map((item, index) => (
-              <motion.div key={item.id} variants={staggerItemVariants}>
+              <motion.div key={item.id} variants={staggerItemVariants} className="min-w-0">
                 <MediaCardDetailed
                   media={item}
                   type={type}

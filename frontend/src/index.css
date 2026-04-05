@@ -5177,9 +5177,10 @@ body {
   --media-background-text: hsl(260, 40%, 98%);
   --media-overlay-text: hsl(260, 30%, 85%);
   display: grid;
-  grid-template-columns: 185px 1fr;
+  grid-template-columns: 185px minmax(0, 1fr);
   height: 265px;
-  min-width: 320px;
+  min-width: 0;
+  width: 100%;
   max-width: 100%;
   border-radius: 4px;
   box-shadow:
@@ -5322,6 +5323,9 @@ body {
   overflow: hidden;
 }
 .media-card .media-card-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
   max-height: 100%;
   overflow: auto;
   overscroll-behavior: contain;
@@ -5369,6 +5373,8 @@ body {
   display: block;
   -webkit-line-clamp: unset;
   overflow: visible;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 .media-card .media-card-footer {
   display: flex;
